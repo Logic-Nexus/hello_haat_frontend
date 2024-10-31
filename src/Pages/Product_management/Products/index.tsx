@@ -248,6 +248,7 @@ const Products = () => {
   const handleNavigateToProductCategoryForm = () => {
     navigate("/vendor/products/create_product");
   };
+
   return (
     <MainCard
       title={`All Products ${showCountInData}`}

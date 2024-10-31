@@ -9,7 +9,10 @@ import CFileInput from "../../../../Utils/CFileInput/CFileInput";
 import { useCreateProductMutation } from "../../../../Store/feature/Product_management/Product/products_api_slice";
 import { cToastify } from "../../../../Shared";
 import { useNavigate } from "react-router-dom";
-import { useProductCategoryNameListDataQuery } from "../../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
+import {
+  useLazyProductCategoryNameListDataQuery,
+  useProductCategoryNameListDataQuery,
+} from "../../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
 import { convertDataForSelect } from "../../../../constant";
 import CTextArea from "../../../../Utils/CTextArea/CTextArea";
 
@@ -124,17 +127,14 @@ const AddNewProducts = () => {
   };
 
   //handleGetProductCategoryNameList
-  const {
-    data: getProductCategoryData,
-    isLoading: isLoadingGetProductCategory,
-    isFetching: isFetchingGetProductCategory,
-  } = useProductCategoryNameListDataQuery(
-    {},
+  const [
+    productCategoryNameListData,
     {
-      refetchOnMountOrArgChange: false,
-      refetchOnReconnect: true,
-    }
-  );
+      data: getProductCategoryData,
+      isLoading: isLoadingGetProductCategory,
+      isFetching: isFetchingGetProductCategory,
+    },
+  ] = useLazyProductCategoryNameListDataQuery();
 
   const productCategoryNameList = useMemo(() => {
     if (getProductCategoryData?.status === 200) {
@@ -144,6 +144,16 @@ const AddNewProducts = () => {
       );
     }
   }, [getProductCategoryData?.data, getProductCategoryData?.status]);
+
+  const handleGetProductCategoryNameList = async () => {
+    try {
+      await productCategoryNameListData({
+        status: "ACTIVE",
+      });
+    } catch (error) {
+      console.error("Error getting product category name list:", error);
+    }
+  };
 
   return (
     <main className="lg:h-auto h-[calc(100vh-9.9rem)]">
@@ -190,6 +200,7 @@ const AddNewProducts = () => {
                 loading={
                   isLoadingGetProductCategory || isFetchingGetProductCategory
                 }
+                onClick={handleGetProductCategoryNameList}
                 onChange={(e: any) => {
                   setData({
                     ...data,

@@ -1,6 +1,4 @@
-"use client";
-
-// import Select from "react-select/dist/declarations/src/Select";
+import React, { useState, useEffect, useRef } from "react";
 import Select, { components } from "react-select";
 import makeAnimated from "react-select/animated";
 import { themeColor } from "../../constant";
@@ -14,13 +12,13 @@ interface CSelectProps {
   id?: string;
   width?: string;
   label?: string;
-  options?: any;
+  options: any;
   isMulti?: boolean;
   classNamePrefix?: string;
   defaultValue?: any;
   disabled?: boolean;
   value?: any;
-  onClick?: (e: any) => void;
+  onClick?: () => void;
   loading?: boolean;
   errorQuery?: boolean;
   tooltip?: boolean;
@@ -63,8 +61,35 @@ const CSelect = ({
   tooltipVariant = "dark",
   ...props
 }: CSelectProps) => {
-  // const { theme } = useTheme();
   const animatedComponents = makeAnimated();
+  const [isFocused, setIsFocused] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  // Function to handle focus
+  const handleFocus = () => {
+    if (!isFocused) {
+      setIsFocused(true);
+      if (onClick) onClick();
+    }
+  };
+
+  // Handle outside click
+  const handleClickOutside = (event: any) => {
+    if (selectRef.current && !selectRef.current.contains(event.target)) {
+      setIsFocused(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
 
   const Control = ({ children, ...props }: any) => (
     <components.Control {...props} className="pl-[5px]">
@@ -73,7 +98,7 @@ const CSelect = ({
   );
 
   return (
-    <main onClick={onClick && onClick}>
+    <main ref={selectRef}>
       <section className="flex justify-between">
         <label
           htmlFor={label?.toLowerCase()}
@@ -104,13 +129,9 @@ const CSelect = ({
           <div data-tooltip-id={id}>
             <span>
               <FaQuestionCircle
-                className={`
-                  ${
-                    errorQuery
-                      ? "text-red-500 animate-animate-bounce"
-                      : "text-gray-500"
-                  }
-                `}
+                className={`${
+                  errorQuery ? "text-red-500 animate-bounce" : "text-gray-500"
+                }`}
               />
             </span>
           </div>
@@ -122,8 +143,10 @@ const CSelect = ({
           id={id}
           className={`${className} ${
             width ? width : "w-full"
-          }  border-0 border-primary rounded-md outline-none focus:ring-2 focus:bg-primary focus:border-transparent dark:bg-black/10 `}
+          } border-0 border-primary rounded-md outline-none focus:ring-2 focus:bg-primary focus:border-transparent dark:bg-black/10`}
           onChange={(selectedOptions) => onChange?.(selectedOptions)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           classNamePrefix={classNamePrefix || "select"}
           closeMenuOnSelect={true}
           components={isMulti ? animatedComponents : { Control }}
@@ -143,20 +166,16 @@ const CSelect = ({
             option: (defaultStyles, state) => ({
               ...defaultStyles,
               zIndex: 9999,
-              // backgroundColor: theme === "dark" ? "#0D1526" : "#0C5164",
               color: "#000",
               backgroundColor: "#fff",
-              height: "100%",
               "&:hover": {
-                // backgroundColor: theme === "dark" ? "#0C5164" : "#0D1526",
                 backgroundColor: "#f1f1f1",
                 color: "#000",
               },
             }),
             singleValue: (defaultStyles) => ({
               ...defaultStyles,
-              // color: theme === "dark" ? "#fff" : "#0C5164",
-              zIndex: 999,
+              // zIndex: 999,
             }),
             control: (provided, state) => ({
               ...provided,
@@ -165,10 +184,8 @@ const CSelect = ({
                 : `2px solid ${themeColor.primary}`,
               borderRadius: "0.375rem",
               outlineColor: themeColor.primary,
-              // zIndex: 9999,
               opacity: state.isDisabled ? ".5" : "1",
               cursor: state.isDisabled ? "not-allowed" : "default",
-              // backgroundColor: theme === "dark" ? "#0D1526" : "#fff",
               "&:hover": {
                 border: `2px solid ${themeColor.primary}`,
                 outlineColor: themeColor.primary,

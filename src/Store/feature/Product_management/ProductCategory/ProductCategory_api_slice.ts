@@ -78,7 +78,6 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
           ...(Object.keys(params)?.length > 0 && {
             ...params,
           }),
-          status: "ACTIVE",
         },
       }),
       providesTags: ["productCategoryNameListData"],
@@ -95,4 +94,5 @@ export const {
 
   // ================================
   useProductCategoryNameListDataQuery,
+  useLazyProductCategoryNameListDataQuery,
 } = productCategory_api_Slice;
