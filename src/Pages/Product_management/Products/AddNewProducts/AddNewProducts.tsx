@@ -11,6 +11,7 @@ import { cToastify } from "../../../../Shared";
 import { useNavigate } from "react-router-dom";
 import { useProductCategoryNameListDataQuery } from "../../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
 import { convertDataForSelect } from "../../../../constant";
+import CTextArea from "../../../../Utils/CTextArea/CTextArea";
 
 type productDataType = {
   product_name: string;
@@ -46,7 +47,32 @@ const AddNewProducts = () => {
   const [createProduct, { isLoading: isLoadingCreateProduct }] =
     useCreateProductMutation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      !data.product_name ||
+      !data.product_category_id ||
+      !data.product_quantity ||
+      !data.delivery_charge
+    ) {
+      setError({
+        ...error,
+        error_for_product_name: true,
+        error_for_product_category_id: true,
+        error_for_product_quantity: true,
+        error_for_delivery_charge: true,
+      });
+      return;
+    } else {
+      setError({
+        ...error,
+        error_for_product_name: false,
+        error_for_product_category_id: false,
+        error_for_product_quantity: false,
+        error_for_delivery_charge: false,
+      });
+    }
+
     const formData = new FormData();
     const files =
       data.product_images instanceof FileList ? data.product_images : [];
@@ -132,7 +158,7 @@ const AddNewProducts = () => {
                 placeholder="Enter your Product Name"
                 label="Product Name"
                 tooltip={error.error_for_product_name}
-                tooltipPosition="right"
+                tooltipPosition="top-start"
                 tooltipContent="Product category is required"
                 errorQuery={error.error_for_product_name}
                 value={data.product_name}
@@ -142,37 +168,25 @@ const AddNewProducts = () => {
                     ...data,
                     [e.target.name]: e.target.value,
                   });
-                }}
-              />
-            </section>
-            <section>
-              <CInput
-                type="text"
-                id="description"
-                name="description"
-                placeholder="Enter your Product Description"
-                label="Product Description"
-                tooltip={error.error_for_description}
-                tooltipPosition="right"
-                tooltipContent="Product category is required"
-                errorQuery={error.error_for_description}
-                value={data.description}
-                tooltipVariant="error"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setData({
-                    ...data,
-                    [e.target.name]: e.target.value,
+
+                  setError({
+                    ...error,
+                    error_for_product_name: false,
                   });
                 }}
               />
             </section>
-
             <section>
               <CSelect
                 id="product_category_id"
                 name="product_category_id"
                 label="Product Category"
                 value={data.product_category_id}
+                errorQuery={error.error_for_product_category_id}
+                tooltip={error.error_for_product_category_id}
+                tooltipPosition="top-start"
+                tooltipContent="Product category is required"
+                tooltipVariant="error"
                 loading={
                   isLoadingGetProductCategory || isFetchingGetProductCategory
                 }
@@ -180,6 +194,11 @@ const AddNewProducts = () => {
                   setData({
                     ...data,
                     product_category_id: e ? e.value : "",
+                  });
+
+                  setError({
+                    ...error,
+                    error_for_product_category_id: false,
                   });
                 }}
                 options={productCategoryNameList}
@@ -191,10 +210,20 @@ const AddNewProducts = () => {
                 name="product_quantity"
                 label="Product Quantity"
                 value={data.product_quantity}
+                errorQuery={error.error_for_product_quantity}
+                tooltip={error.error_for_product_quantity}
+                tooltipPosition="top-start"
+                tooltipContent="Product quantity is required"
+                tooltipVariant="error"
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     product_quantity: e ? e.value : "",
+                  });
+
+                  setError({
+                    ...error,
+                    error_for_product_quantity: false,
                   });
                 }}
                 options={PRODUCT_QUANTITY}
@@ -206,18 +235,27 @@ const AddNewProducts = () => {
                 id="delivery_charge"
                 name="delivery_charge"
                 label="Delivery Charge Type"
+                errorQuery={error.error_for_delivery_charge}
+                tooltip={error.error_for_delivery_charge}
+                tooltipPosition="top-start"
+                tooltipContent="Delivery charge is required"
+                tooltipVariant="error"
                 value={data.delivery_charge}
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     delivery_charge: e ? e.value : "",
                   });
+                  setError({
+                    ...error,
+                    error_for_delivery_charge: false,
+                  });
                 }}
                 options={DELIVERY_TYPE}
               />
             </section>
 
-            <section>
+            <section className="col-span-2">
               <CFileInput
                 id="product_images"
                 name="product_images"
@@ -233,6 +271,23 @@ const AddNewProducts = () => {
                 }}
               />
             </section>
+            <section className="col-span-2">
+              <section>
+                <CTextArea
+                  id="description"
+                  name="description"
+                  placeholder="Enter your Product Description"
+                  label="Product Description"
+                  value={data.description}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                    setData({
+                      ...data,
+                      [e.target.name]: e.target.value,
+                    });
+                  }}
+                />
+              </section>
+            </section>
           </aside>
 
           {/* //button  */}
@@ -241,7 +296,6 @@ const AddNewProducts = () => {
             <CButton
               variant="outline"
               type="submit"
-              onClick={handleSubmit}
               loading={isLoadingCreateProduct}
             >
               Submit
