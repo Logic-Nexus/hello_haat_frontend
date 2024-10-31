@@ -58,7 +58,7 @@ const Products = () => {
   );
 
   // ==================== delete product category ====================
-  const [productCategoryDelete, { isLoading: isLoadingDelete }] =
+  const [deleteProduct, { isLoading: isLoadingDelete }] =
     useDeleteProductMutation();
 
   const handleDelete = useCallback(
@@ -69,8 +69,8 @@ const Products = () => {
         if (result.isConfirmed) {
           setDeleteId(id);
           try {
-            const res = await productCategoryDelete({
-              categoryId: id,
+            const res = await deleteProduct({
+              productId: id,
             }).unwrap();
             if (res) {
               cToastify({
@@ -84,23 +84,12 @@ const Products = () => {
         }
       });
     },
-    [productCategoryDelete]
+    [deleteProduct]
   );
 
   // ==================== active inactive product category ====================
-  const [
-    productCategoryActiveInactive,
-    { isLoading: isActiveLoading, isSuccess: isActiveSuccess },
-  ] = useProductActiveInactiveStatusMutation();
-
-  useEffect(() => {
-    if (isActiveSuccess) {
-      cToastify({
-        type: "success",
-        message: "Product Status Updated Successfully",
-      });
-    }
-  }, [isActiveSuccess]);
+  const [productActiveInactiveStatus, { isLoading: isActiveLoading }] =
+    useProductActiveInactiveStatusMutation();
 
   const handleToggleStatus = useCallback(
     async (id: any, status: any) => {
@@ -111,17 +100,29 @@ const Products = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await productCategoryActiveInactive({
-              categoryId: id,
+            await productActiveInactiveStatus({
+              productId: id,
               body: { status: status === "ACTIVE" ? "INACTIVE" : "ACTIVE" },
+            });
+            cToastify({
+              type: "success",
+              message: `Product ${
+                status === "ACTIVE" ? "Inactive" : "Active"
+              } Successfully`,
             });
           } catch (error) {
             console.log(error);
+            cToastify({
+              type: "error",
+              message: `Product ${
+                status === "ACTIVE" ? "Inactive" : "Active"
+              } Failed`,
+            });
           }
         }
       });
     },
-    [productCategoryActiveInactive]
+    [productActiveInactiveStatus]
   );
 
   //==================== table data ======================
@@ -171,7 +172,7 @@ const Products = () => {
                 tooltipPosition="top-end"
                 className="w-8 h-8"
                 onClick={() => {
-                  // dispatch(setSelectSingleProductCategory(item));
+                  dispatch(setSelectSingleProduct(item));
                   setOpenEditModal(true);
                 }}
               >
