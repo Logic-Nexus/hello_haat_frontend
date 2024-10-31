@@ -1,5 +1,5 @@
 export const themeColor = {
-  primary: "#363062",
+  primary: "#7367f0",
   light_text_color: "#fff",
 };
 

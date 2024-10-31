@@ -120,7 +120,7 @@ const MainTable = forwardRef<HTMLTableElement, MainTableProps>(
               ? Object.keys(data[0]).map((key, i) => (
                   <th
                     key={i}
-                    className="px-3 py-2 text-center text-xs font-semibold bg-gray-800 text-white"
+                    className="px-3 py-2 text-center text-xs font-semibold bg-primary text-white"
                     style={{
                       textAlign: headerAlign[i] || "center",
                       ...tableHeaderDesign,
@@ -132,7 +132,7 @@ const MainTable = forwardRef<HTMLTableElement, MainTableProps>(
               : titles?.map((title, id) => (
                   <th
                     key={id}
-                    className="px-3 py-2 text-center text-xs font-semibold bg-gray-800 text-white"
+                    className="px-3 py-2 text-center text-xs font-semibold bg-primary text-white"
                     style={{
                       textAlign: headerAlign[id] || "center",
                       ...tableHeaderDesign,
