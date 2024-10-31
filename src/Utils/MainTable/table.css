@@ -9,8 +9,9 @@ td {
 table {
   border-spacing: 0;
   font-size: 0.875rem; /* Small font size */
-  width: 100%;
-  border-collapse: collapse;
+  /* width: 100%; */
+  /* border-collapse: collapse; */
+  /* display: block; */
 }
 
 /* Header styling */
@@ -48,6 +49,11 @@ tbody tr:nth-child(even) {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  table {
+    font-size: 0.75rem; /* Smaller font size on mobile */
+    width: calc(100vw - 5rem) !important;
+    display: block;
+  }
   th,
   td {
     padding: 0.5rem; /* Smaller padding on mobile */
@@ -63,7 +69,7 @@ tbody tr:nth-child(even) {
 @media (max-width: 480px) {
   table {
     font-size: 0.75rem; /* Smaller font size on mobile */
-    width: calc(100vw - 5rem) !important; /* Reduce table width on mobile */
+    width: calc(100vw - 5rem) !important;
     display: block;
   }
 }

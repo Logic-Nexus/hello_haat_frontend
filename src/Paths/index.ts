@@ -32,6 +32,7 @@ const AddNewProducts = React.lazy(
     import("../Pages/Product_management/Products/AddNewProducts/AddNewProducts")
 );
 
+const Zone = React.lazy(() => import("../Pages/Settings/Zone"));
 const Vendors = React.lazy(() => import("../Pages/Vendors"));
 export {
   Home,
@@ -46,4 +47,5 @@ export {
   Customers,
   AddNewProducts,
   Vendors,
+  Zone,
 };

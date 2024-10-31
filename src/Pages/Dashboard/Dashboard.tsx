@@ -64,7 +64,7 @@ const Dashboard = () => {
 
       {/* Active Users List */}
       <Show when={liveConnectedUsers?.length > 0}>
-        <section className="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+        <section className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mt-5">
           <h2 className="text-lg font-bold mb-4">Live Connected Users</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {liveConnectedUsers.map((user: any) => (
