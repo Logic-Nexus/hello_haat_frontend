@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "target": "es2021", // Ensure this is set to at least 'es2021'
+    "lib": ["dom", "es2021"], // Make sure 'es2021' is included in the 'lib'
+    "jsx": "react-jsx"
+  }
+}

@@ -1,0 +1,69 @@
+th,
+td {
+  border: 1px solid rgba(189, 185, 185, 0.175); /* Slightly stronger border */
+  padding: 0.75rem;
+  text-align: left; /* Left-align text by default */
+}
+
+/* Table adjustments */
+table {
+  border-spacing: 0;
+  font-size: 0.875rem; /* Small font size */
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Header styling */
+.header {
+  background-color: #111936; /* Dark header background */
+  color: #fff; /* White text */
+}
+
+/* Top corners rounded in the header */
+.header tr:first-child th:first-child {
+  border-top-left-radius: 0.3125rem;
+  border-left: none; /* Remove redundant border */
+  border-top: none;
+}
+.header tr:first-child th:last-child {
+  border-top-right-radius: 0.3125rem;
+  border-right: none;
+  border-top: none;
+}
+
+/* Remove borders from all header cells */
+.header tr:first-child th {
+  border: none;
+}
+
+/* Optional: Row hover effect */
+tbody tr:hover {
+  background-color: rgba(126, 121, 121, 0.05); /* Light hover effect */
+}
+
+/* Alternating row background colors for better readability */
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light grey */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 0.5rem; /* Smaller padding on mobile */
+    font-size: 0.8rem; /* Slightly smaller font size */
+  }
+
+  /* Ensure table overflow for mobile */
+  main {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+    font-size: 0.75rem; /* Smaller font size on mobile */
+    width: calc(100vw - 5rem) !important; /* Reduce table width on mobile */
+    display: block;
+  }
+}
