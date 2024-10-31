@@ -3,7 +3,9 @@
 //   FREE: "FREE",
 //   CHARGEABLE: "CHARGEABLE",
 
-export const PRODUCT_QUANTITY: string[] = [
+type array = { value: string; label: string }[];
+
+export const PRODUCT_QUANTITY: array = [
   "UNIT",
   "PIECE",
   "KG",
@@ -15,6 +17,9 @@ export const PRODUCT_QUANTITY: string[] = [
   "FEET",
   "LITER",
   "SET",
-];
+]?.map((item) => ({ value: item, label: item }));
 
-export const DELIVERY_TYPE: string[] = ["REGULAR", "CHARGEABLE"];
+export const DELIVERY_TYPE: array = ["REGULAR", "CHARGEABLE"]?.map((item) => ({
+  value: item,
+  label: item,
+}));

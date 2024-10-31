@@ -23,7 +23,7 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
         body,
       }),
       invalidatesTags: (result: any, error: any, body: any) => {
-        return result ? ["productCategory"] : [];
+        return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
     }),
 
@@ -38,7 +38,7 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
       },
 
       invalidatesTags: (result: any, error: any, body: any) => {
-        return result ? ["productCategory"] : [];
+        return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
     }),
 
@@ -51,7 +51,7 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
         };
       },
       invalidatesTags: (result: any, error: any, body: any) => {
-        return result ? ["productCategory"] : [];
+        return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
     }),
 
@@ -65,8 +65,23 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
         };
       },
       invalidatesTags: (result: any, error: any, body: any) => {
-        return result ? ["productCategory"] : [];
+        return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
+    }),
+
+    //product-category/name-list/dropdown
+    productCategoryNameListData: builder.query({
+      query: (params: any) => ({
+        url: "/product-category/name-list/dropdown",
+        method: "GET",
+        params: {
+          ...(Object.keys(params)?.length > 0 && {
+            ...params,
+          }),
+          status: "ACTIVE",
+        },
+      }),
+      providesTags: ["productCategoryNameListData"],
     }),
   }),
 });
@@ -77,4 +92,7 @@ export const {
   useProductCategoryUpdateMutation,
   useProductCategoryDeleteMutation,
   useProductCategoryActiveInactiveMutation,
+
+  // ================================
+  useProductCategoryNameListDataQuery,
 } = productCategory_api_Slice;

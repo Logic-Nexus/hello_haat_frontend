@@ -18,6 +18,8 @@ interface CSelectProps {
   defaultValue?: any;
   disabled?: boolean;
   value?: any;
+  onClick?: (e: any) => void;
+  loading?: boolean;
 }
 
 const CSelect = ({
@@ -33,6 +35,8 @@ const CSelect = ({
   onChange,
   disabled,
   value,
+  onClick,
+  loading,
   ...props
 }: CSelectProps) => {
   // const { theme } = useTheme();
@@ -45,12 +49,30 @@ const CSelect = ({
   );
 
   return (
-    <div className="">
+    <main onClick={onClick && onClick}>
       <label
         htmlFor={label?.toLowerCase()}
-        className="level text-sm text-gray-500"
+        className="level text-sm text-gray-500 flex items-center gap-2"
       >
         {label}
+        {loading && (
+          <span className="animate-spin">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              ></path>
+            </svg>
+          </span>
+        )}
       </label>
 
       <Select
@@ -58,7 +80,7 @@ const CSelect = ({
         id={id}
         className={`${className} ${
           width ? width : "w-full"
-        }  border-0 border-dark-primary rounded-md outline-none focus:ring-2 focus:bg-primary focus:border-transparent dark:bg-black/10`}
+        }  border-0 border-dark-primary rounded-md outline-none focus:ring-2 focus:bg-primary focus:border-transparent dark:bg-black/10 `}
         onChange={(selectedOptions) => onChange?.(selectedOptions)}
         classNamePrefix={classNamePrefix || "select"}
         closeMenuOnSelect={true}
@@ -92,7 +114,7 @@ const CSelect = ({
           singleValue: (defaultStyles) => ({
             ...defaultStyles,
             // color: theme === "dark" ? "#fff" : "#0C5164",
-            zIndex: 999,
+            zIndex: 9999,
           }),
           control: (provided, state) => ({
             ...provided,
@@ -111,7 +133,7 @@ const CSelect = ({
           }),
         }}
       />
-    </div>
+    </main>
   );
 };
 

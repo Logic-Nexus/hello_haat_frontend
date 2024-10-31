@@ -84,6 +84,12 @@ export const apiSlice = createApi({
   >,
 
   endpoints: (_build) => ({}),
-  tagTypes: ["productCategory", "customers", "products", "productImages"],
+  tagTypes: [
+    "productCategory",
+    "customers",
+    "products",
+    "productImages",
+    "productCategoryNameListData",
+  ],
   refetchOnReconnect: true,
 }) as any;
