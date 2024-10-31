@@ -7,7 +7,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Breadcrumb />
       <main
         className="
-      lg:h-[calc(100vh-7rem)]
+      lg:h-[calc(100vh-8rem)]
       h-full
       flex-1
       overflow-y-scroll no-scrollbar

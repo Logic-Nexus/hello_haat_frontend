@@ -12,6 +12,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import ToggleSwitch from "../../../Utils/ToggleSwitch/ToggleSwitch";
 import {
   CButton,
+  CInput,
   CModal,
   CPagination,
   CSelect,
@@ -28,6 +29,7 @@ import { FaImages } from "react-icons/fa6";
 import { setSelectSingleProduct } from "../../../Store/feature/Product_management/Product/products_slice";
 import ViewProductImages from "./ViewProductImages/ViewProductImages";
 import EditProducts from "./EditProducts/EditProducts";
+import { FaSearch } from "react-icons/fa";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -36,8 +38,10 @@ const Products = () => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [viewImageModal, setViewImageModal] = useState<boolean>(false);
-
+  const [search, setSearch] = useState<string>(""); // search state
   const [status, setStatus] = useState<string>("ACTIVE");
+
+  const [product_code, setProductCode] = useState<string>("");
 
   // ==================== get product category ====================
   const {
@@ -49,6 +53,7 @@ const Products = () => {
   } = useGetProductsQuery(
     {
       status: status,
+      ...(product_code && { product_code }),
       pagination: true,
       pageNumber: currentPage,
     },
@@ -223,7 +228,34 @@ const Products = () => {
   // ==================== filter section ====================
   const filterSection = () => {
     return (
-      <>
+      <section className="flex items-center space-x-2">
+        <CInput
+          width="md:w-[200px] w-[100px]"
+          placeholder="Search Product"
+          disabled={isLoading || isFetching}
+          onChange={(e: any) => {
+            if (e.target.value === "") {
+              setProductCode("");
+            }
+            setSearch(e.target.value);
+          }}
+          value={search}
+          id="search"
+          endIcon={
+            <FaSearch
+              color={themeColor?.primary}
+              className="cursor-pointer"
+              onClick={() => {
+                //before set search value remove space from start and end
+                const regex = /^\s+|\s+$/g;
+                const searchValue = search.replace(regex, "");
+                setProductCode(searchValue);
+                setCurrentPage(1);
+              }}
+            />
+          }
+        />
+
         <CSelect
           disabled={isLoading || isFetching}
           defaultValue={
@@ -235,13 +267,13 @@ const Products = () => {
             { value: "ACTIVE", label: "Active" },
             { value: "INACTIVE", label: "Inactive" },
           ]}
-          width="md:w-[400px] w-[200px]"
+          width="md:w-[200px] w-[100px]"
           classNamePrefix="Select Status"
           onChange={(e: any) => {
             setStatus(e?.value);
           }}
         />
-      </>
+      </section>
     );
   };
 
