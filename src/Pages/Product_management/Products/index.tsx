@@ -27,6 +27,7 @@ import { themeColor } from "../../../constant";
 import { FaImages } from "react-icons/fa6";
 import { setSelectSingleProduct } from "../../../Store/feature/Product_management/Product/products_slice";
 import ViewProductImages from "./ViewProductImages/ViewProductImages";
+import EditProducts from "./EditProducts/EditProducts";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -320,7 +321,7 @@ const Products = () => {
         onClose={() => setOpenEditModal(false)}
         title="Edit Product "
       >
-        {/* <EditProductCategory onClose={() => setOpenEditModal(false)} /> */}
+        <EditProducts setOpenEditModal={setOpenEditModal} />
       </CModal>
 
       {/* //view image modal */}

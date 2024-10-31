@@ -9,10 +9,7 @@ import CFileInput from "../../../../Utils/CFileInput/CFileInput";
 import { useCreateProductMutation } from "../../../../Store/feature/Product_management/Product/products_api_slice";
 import { cToastify } from "../../../../Shared";
 import { useNavigate } from "react-router-dom";
-import {
-  useLazyProductCategoryNameListDataQuery,
-  useProductCategoryNameListDataQuery,
-} from "../../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
+import { useLazyProductCategoryNameListDataQuery } from "../../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
 import { convertDataForSelect } from "../../../../constant";
 import CTextArea from "../../../../Utils/CTextArea/CTextArea";
 
