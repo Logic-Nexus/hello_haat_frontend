@@ -19,6 +19,9 @@ import {
   useLazyGetIsEmployeeAssignedInZoneQuery,
 } from "../../../../Store/feature/Zone/zone_api_slice";
 import { useNavigate } from "react-router-dom";
+import { Show } from "easy-beauty-components---react";
+import MainTable from "../../../../Utils/MainTable/MainTable";
+import SubCard from "../../../../Utils/CCard/SubCard";
 
 type zoneDataType = {
   village_name: string;
@@ -63,6 +66,8 @@ const CreateZone = () => {
     error_for_upazila_id: false,
     error_for_union_id: false,
     error_for_operatorId: false,
+
+    error_for_representatives: false,
   });
 
   //divisionsList====================================================== start
@@ -298,6 +303,18 @@ const CreateZone = () => {
           type: "error",
           message: error?.data?.message,
         });
+
+        if (queryFor === "REPRESENTATIVE") {
+          setError({
+            ...error,
+            error_for_representatives: true,
+          });
+        } else if (queryFor === "OPERATOR") {
+          setError({
+            ...error,
+            error_for_operatorId: true,
+          });
+        }
       }
     }
   };
@@ -357,6 +374,38 @@ const CreateZone = () => {
       }
     }
   };
+
+  //   ===================== table data =====================
+
+  const repseBableData = useMemo(() => {
+    const res = data?.representatives.map((item) => {
+      return representativesList?.find((rep) => rep.value === item);
+    });
+    return res?.map((item) => {
+      return {
+        employeeID: item?.employeeID,
+        name: item?.fullName,
+        email: item?.user?.email,
+        mobile: item?.user?.mobile,
+        address: item?.address,
+      };
+    });
+  }, [data?.representatives, representativesList]);
+
+  const ridersTableData = useMemo(() => {
+    const res = data?.riders.map((item) => {
+      return ridersList?.find((rep) => rep.value === item);
+    });
+    return res?.map((item) => {
+      return {
+        employeeID: item?.employeeID,
+        name: item?.fullName,
+        email: item?.user?.email,
+        mobile: item?.user?.mobile,
+        address: item?.address,
+      };
+    });
+  }, [data?.riders, ridersList]);
 
   return (
     <main className="lg:h-auto h-[calc(100vh-9.9rem)]">
@@ -620,8 +669,8 @@ const CreateZone = () => {
                       )
                     : []
                 }
-                // errorQuery={error.error_for_product_category_id}
-                // tooltip={error.error_for_product_category_id}
+                errorQuery={error.error_for_representatives}
+                tooltip={error.error_for_representatives}
                 tooltipPosition="top-start"
                 tooltipContent="Representatives is required"
                 tooltipVariant="error"
@@ -639,10 +688,10 @@ const CreateZone = () => {
                     e?.find((item: any) => item.value)?.value,
                     "REPRESENTATIVE"
                   );
-                  //   setError({
-                  //     ...error,
-                  //     error_for_product_category_id: false,
-                  //   });
+                  setError({
+                    ...error,
+                    error_for_representatives: false,
+                  });
                 }}
                 options={representativesList || []}
               />
@@ -660,8 +709,8 @@ const CreateZone = () => {
                       )
                     : []
                 }
-                // errorQuery={error.error_for_product_category_id}
-                // tooltip={error.error_for_product_category_id}
+                // errorQuery={error.error_for_riders}
+                // tooltip={error.error_for_riders}
                 tooltipPosition="top-start"
                 tooltipContent="Riders is required"
                 tooltipVariant="error"
@@ -673,11 +722,6 @@ const CreateZone = () => {
                     ...data,
                     riders: e ? e.map((item: any) => item?.value) : [],
                   });
-
-                  //   setError({
-                  //     ...error,
-                  //     error_for_product_category_id: false,
-                  //   });
                 }}
                 options={ridersList || []}
               />
@@ -696,6 +740,24 @@ const CreateZone = () => {
             </CButton>
           </section>
         </form>
+
+        {/* // section for representatives */}
+        <Show when={data.representatives.length > 0}>
+          <section className="mt-5">
+            <MainCard title="Selected Representatives">
+              <MainTable data={repseBableData} filter dense />
+            </MainCard>
+          </section>
+        </Show>
+
+        {/* // section for riders */}
+        <Show when={data.riders.length > 0}>
+          <section className="mt-5">
+            <MainCard title="Selected Riders">
+              <MainTable data={ridersTableData} filter dense />
+            </MainCard>
+          </section>
+        </Show>
       </MainCard>
     </main>
   );
