@@ -87,7 +87,8 @@ const Zone = () => {
           operator: (
             // <>{`${item?.operator?.fullName} (${item?.operator?.employeeID})`}</>
             <section>
-              <span className="font-semibold">{item?.operator?.fullName}</span>
+              <span className="font-semibold">{item?.operator?.fullName}</span>{" "}
+              &nbsp;
               <small>({item?.operator?.employeeID})</small>
             </section>
           ),
@@ -192,6 +193,10 @@ const Zone = () => {
     ? `(${zoneList?.data?.results?.length}/${zoneList?.data?.count})`
     : "";
 
+  // ==================== navigate to create zone form =================
+  const handleNavigateToCreateZoneForm = () => {
+    navigate("/vendor/zone/create_zone");
+  };
   return (
     <MainCard
       title={`Zone List ${showCountInData}`}
@@ -204,7 +209,7 @@ const Zone = () => {
             id="tooltip"
             tooltipContent="Create Product Category"
             tooltipPosition="top-end"
-            // onClick={handleNavigateToProductCategoryForm}
+            onClick={handleNavigateToCreateZoneForm}
           >
             <IoAddCircle size={30} />
           </CButton>
@@ -314,7 +319,10 @@ const RepsAndRiders = ({
     <>
       <h3 className="text-sm font-semibold mb-2">{formType}</h3>
       <hr className="border-t border-gray-200 mb-2" />
-      <ul className="space-y-2">
+      <ul
+        className="space-y-2 max-h-60 overflow-y-auto
+      "
+      >
         {selectedDatas?.map((data: any) => (
           <li key={data?.id} className="space-x-2 shadow p-1 rounded">
             <span className="font-semibold text-sm">{data?.fullName}</span>

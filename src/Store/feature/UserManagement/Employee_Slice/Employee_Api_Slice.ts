@@ -26,8 +26,26 @@ export const employee_Api_Slice = apiSlice.injectEndpoints({
       }),
       providesTags: ["employees"],
     }),
+
+    // employees-role/short-list?role=OPERATOR
+    getEmployeeByRole: builder.query({
+      query: (role: string) => ({
+        url: "/employees-role/short-list",
+        method: "GET",
+        params: {
+          role: role,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useCreateEmployeeMutation, useGetAllEmployeesQuery } =
-employee_Api_Slice;
+export const {
+  useCreateEmployeeMutation,
+  useGetAllEmployeesQuery,
+  useGetEmployeeByRoleQuery,
+
+  //lazy
+  useLazyGetAllEmployeesQuery,
+  useLazyGetEmployeeByRoleQuery,
+} = employee_Api_Slice;

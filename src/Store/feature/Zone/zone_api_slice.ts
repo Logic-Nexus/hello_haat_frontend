@@ -14,8 +14,42 @@ export const zone_api_slice = apiSlice.injectEndpoints({
           last_login: true,
         },
       }),
+      providesTags: ["zones"],
+    }),
+
+    //create
+    createZone: builder.mutation({
+      query: (zoneData: any) => ({
+        url: "/zones/",
+        method: "POST",
+        body: zoneData,
+      }),
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["zones"] : [];
+      },
+    }),
+
+    //checkEmployeeAssignedInZone
+    getIsEmployeeAssignedInZone: builder.query({
+      query: (params: any) => ({
+        url: "/checkEmployeeAssignedInZone",
+        method: "GET",
+        params: {
+          ...(Object.keys(params)?.length > 0 && {
+            ...params,
+          }),
+        },
+      }),
     }),
   }),
 });
 
-export const { useGetZoneListQuery } = zone_api_slice;
+export const {
+  useGetZoneListQuery,
+  useCreateZoneMutation,
+  useGetIsEmployeeAssignedInZoneQuery,
+
+  //lazy
+  useLazyGetZoneListQuery,
+  useLazyGetIsEmployeeAssignedInZoneQuery,
+} = zone_api_slice;

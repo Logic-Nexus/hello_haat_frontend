@@ -37,6 +37,7 @@ interface CSelectProps {
     | "left-end";
   tooltipContent?: React.ReactNode;
   tooltipVariant?: "error" | "dark" | "success" | "warning" | "info" | "light";
+  isClearable?: boolean;
 }
 
 const CSelect = ({
@@ -59,6 +60,7 @@ const CSelect = ({
   tooltipPosition = "right",
   tooltipContent = "",
   tooltipVariant = "dark",
+  isClearable = true,
   ...props
 }: CSelectProps) => {
   const animatedComponents = makeAnimated();
@@ -106,24 +108,6 @@ const CSelect = ({
             className="level text-sm text-gray-500 mb-1 flex items-center"
           >
             {label}
-            {loading && (
-              <span className="animate-spin">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  ></path>
-                </svg>
-              </span>
-            )}
           </label>
 
           {errorQuery && (
@@ -131,7 +115,9 @@ const CSelect = ({
               <span>
                 <FaQuestionCircle
                   className={`${
-                    errorQuery ? "text-red-500 animate-bounce" : "text-gray-500"
+                    errorQuery
+                      ? "text-red-500 animate-animate-bounce"
+                      : "text-gray-500"
                   }`}
                 />
               </span>
@@ -156,8 +142,9 @@ const CSelect = ({
           options={options}
           defaultValue={defaultValue}
           isDisabled={disabled}
-          isClearable={true}
+          isClearable={isClearable}
           isSearchable={true}
+          isLoading={loading}
           value={
             options?.find((item: any) => item?.value === value) ||
             defaultValue ||
@@ -172,24 +159,23 @@ const CSelect = ({
               backgroundColor: "#fff",
               "&:hover": {
                 backgroundColor: "#f1f1f1",
-                color: "#000",
+                color: themeColor.primary,
               },
             }),
             singleValue: (defaultStyles) => ({
               ...defaultStyles,
               // zIndex: 999,
+              outlineColor: themeColor.primary,
             }),
             control: (provided, state) => ({
               ...provided,
-              border: errorQuery
-                ? `1px solid red`
-                : `2px solid ${themeColor.primary}`,
+              border: errorQuery ? `1px solid red` : `1px solid #ccc`,
               borderRadius: "0.375rem",
               outlineColor: themeColor.primary,
               opacity: state.isDisabled ? ".5" : "1",
               cursor: state.isDisabled ? "not-allowed" : "default",
               "&:hover": {
-                border: `2px solid ${themeColor.primary}`,
+                border: `1px solid ${themeColor.primary}`,
                 outlineColor: themeColor.primary,
               },
               width: "100%",

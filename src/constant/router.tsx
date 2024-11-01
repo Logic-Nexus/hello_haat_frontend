@@ -15,6 +15,7 @@ import {
   AddNewProducts,
   Vendors,
   Zone,
+  CreateZone,
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -95,6 +96,7 @@ const router = [
           },
         ],
       },
+
       //zone
       {
         path: "zone",
@@ -104,6 +106,14 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <Zone />
+              </SuspenseGlobal>
+            ),
+          },
+          {
+            path: "create_zone",
+            element: (
+              <SuspenseGlobal>
+                <CreateZone />
               </SuspenseGlobal>
             ),
           },

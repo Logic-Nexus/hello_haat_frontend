@@ -14,3 +14,15 @@ export const convertDataForSelect = (data: any, key: string) => {
     };
   });
 };
+
+export const convertLocationDataForSelect = (data: any) => {
+  if (data?.length === 0) {
+    return [];
+  }
+  return data?.map((item: any) => {
+    return {
+      label: `${item.name} (${item.bn_name})`,
+      value: item.id,
+    };
+  });
+};
