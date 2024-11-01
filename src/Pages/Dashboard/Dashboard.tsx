@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useGetUserLastLoginInfoQuery } from "../../Store/feature/globalApi_Slice";
 import moment from "moment";
 import useSocket from "../../Hook/useSocket/useSocket";
 import { Show } from "easy-beauty-components---react";
+import useTimeAgo from "../../Hook/useTimeAgo/useTimeAgo";
 
 const Dashboard = () => {
   const socketContext = useSocket();
@@ -14,18 +15,22 @@ const Dashboard = () => {
   } = useGetUserLastLoginInfoQuery(
     {},
     {
-      refetchOnMountOrArgChange: false,
+      refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
+      refetchOnFocus: true,
     }
   );
 
   // Extract the data from the response
   const loginData = isSuccess && userLastLoginInfo?.data;
 
-  // Format login date (optional)
-  const formattedLoginDate = moment(loginData?.loginAt).format(
-    "MMMM Do YYYY, h:mm:ss a"
-  );
+  // Get the formatted login date using the useTimeAgo hook
+  const timeAgo = useTimeAgo(loginData?.loginAt);
+
+  // Format login date (optional) loginData?.loginAt
+  const formattedLoginDate = useMemo(() => {
+    return loginData ? timeAgo : "";
+  }, [loginData, timeAgo]);
 
   // console.log(liveConnectedUsers, "liveConnectedUsers");
   //   [

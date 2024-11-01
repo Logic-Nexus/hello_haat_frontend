@@ -15,7 +15,6 @@ const Header: React.FC = () => {
   const { authorizeVendorDetails, profileData } = useAppSelector(
     (state) => state.globalSlice
   );
-
   // Function to handle logout
   const handleLogout = () => {
     localStorage.clear();

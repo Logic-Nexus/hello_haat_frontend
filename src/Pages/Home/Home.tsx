@@ -6,6 +6,7 @@ import { CButton } from "../../Utils";
 import SideNav from "../../Components/Nav/SideNav/SideNav";
 import Layout from "../../Layout/Layout";
 import { useAppSelector } from "../../Store/Store";
+import { decryptData } from "../../constant/encrytion";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -14,13 +15,14 @@ const Home = () => {
     (state) => state.globalSlice
   ) as any;
 
+  const loginUserInfo = decryptData("userData")?.user || "";
   // Toggle sidebar visibility for mobile
   const toggleMobileSidebar = () => {
     setIsMobileOpen((prev) => !prev);
   };
 
   return (
-    <main className="grid grid-cols-[auto_1fr] lg:h-[calc(100vh-5rem)] h-full">
+    <main className="grid lg:grid-cols-[auto_1fr] lg:h-[calc(100vh-5rem)] h-full">
       {/* Sidebar for Desktop and Mobile */}
       <aside
         className={`fixed lg:relative z-40 lg:z-auto transition-transform duration-300 ${
@@ -67,6 +69,17 @@ const Home = () => {
 
           {/* Logout Button */}
           <div className="flex items-center">
+            <span
+              className="
+            text-primary mr-4 font-semibold text-sm
+            lg:text-md lg:mr-8
+            dark:text-gray-100
+              bg-gray-200 dark:bg-gray-800
+              px-2 py-1 rounded
+            "
+            >
+              {loginUserInfo?.role}
+            </span>
             <CButton
               variant="contained"
               circle
