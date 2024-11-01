@@ -78,7 +78,7 @@ const Products = () => {
             const res = await deleteProduct({
               productId: id,
             }).unwrap();
-            if (res) {
+            if (res.status === 200) {
               cToastify({
                 type: "success",
                 message: "Product Deleted Successfully",
@@ -106,24 +106,28 @@ const Products = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await productActiveInactiveStatus({
+            const res = await productActiveInactiveStatus({
               productId: id,
               body: { status: status === "ACTIVE" ? "INACTIVE" : "ACTIVE" },
-            });
-            cToastify({
-              type: "success",
-              message: `Product ${
-                status === "ACTIVE" ? "Inactive" : "Active"
-              } Successfully`,
-            });
-          } catch (error) {
+            }).unwrap();
+            if (res?.status === 200) {
+              cToastify({
+                type: "success",
+                message: `Product ${
+                  status === "ACTIVE" ? "Inactive" : "Active"
+                } Successfully`,
+              });
+            }
+          } catch (error: any) {
             console.log(error);
-            cToastify({
-              type: "error",
-              message: `Product ${
-                status === "ACTIVE" ? "Inactive" : "Active"
-              } Failed`,
-            });
+            if (error?.status === 400) {
+              cToastify({
+                type: "error",
+                message: `Product ${
+                  status === "ACTIVE" ? "Inactive" : "Active"
+                } Failed`,
+              });
+            }
           }
         }
       });

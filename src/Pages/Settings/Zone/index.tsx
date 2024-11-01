@@ -1,8 +1,12 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import MainCard from "../../../Utils/CCard/MainCard";
 import { CButton, CPagination, CSkeleton } from "../../../Utils";
 import { IoAddCircle } from "react-icons/io5";
-import { useGetZoneListQuery } from "../../../Store/feature/Zone/zone_api_slice";
+import {
+  useDeleteZoneMutation,
+  useGetZoneListQuery,
+  useUpdateZoneStatusMutation,
+} from "../../../Store/feature/Zone/zone_api_slice";
 import { Show } from "easy-beauty-components---react";
 import NotFoundData from "../../../Components/NotFoundData/NotFoundData";
 import MainTable from "../../../Utils/MainTable/MainTable";
@@ -15,6 +19,8 @@ import { FaTrashCan } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
+import { warningAlert } from "../../../Utils/alert-function";
+import { cToastify } from "../../../Shared";
 
 const Zone = () => {
   const navigate = useNavigate();
@@ -22,6 +28,7 @@ const Zone = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>();
+  const [status, setStatus] = useState<string>("ACTIVE");
 
   const {
     data: zoneList,
@@ -29,7 +36,7 @@ const Zone = () => {
     isFetching,
     isSuccess,
   } = useGetZoneListQuery(
-    { pagination: true, pageNumber: currentPage },
+    { status: status, pagination: true, pageNumber: currentPage },
     {
       //   refetchOnMountOrArgChange: false,
       refetchOnReconnect: true,
@@ -42,9 +49,76 @@ const Zone = () => {
     riders: [],
   });
 
+  // ==================== active inactive zone  ====================
+  const [updateZoneStatus, { isLoading: isActiveLoading }] =
+    useUpdateZoneStatusMutation();
+
+  const handleToggleStatus = useCallback(
+    async (id: any, status: any) => {
+      warningAlert({
+        text: `Are you sure you want to ${
+          status === "ACTIVE" ? "Inactive" : "Active"
+        } this zone?`,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await updateZoneStatus({
+              zoneId: id,
+              body: { status: status === "ACTIVE" ? "INACTIVE" : "ACTIVE" },
+            }).unwrap();
+            if (res?.status === 200) {
+              cToastify({
+                type: "success",
+                message: `Zone ${
+                  status === "ACTIVE" ? "Inactive" : "Active"
+                } Successfully`,
+              });
+            }
+          } catch (error: any) {
+            console.log(error);
+            if (error?.status === 400) {
+              cToastify({
+                type: "error",
+                message: `Product ${
+                  status === "ACTIVE" ? "Inactive" : "Active"
+                } Failed`,
+              });
+            }
+          }
+        }
+      });
+    },
+    [updateZoneStatus]
+  );
+
   // ==================== delete product category ====================
-  //   const [deleteProduct, { isLoading: isLoadingDelete }] =
-  //     useDeleteProductMutation();
+  const [deleteZone, { isLoading: isLoadingDelete }] = useDeleteZoneMutation();
+
+  const handleDelete = useCallback(
+    async (id: any) => {
+      warningAlert({
+        text: "Are you sure you want to delete this zone?",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          setDeleteId(id);
+          try {
+            const res = await deleteZone({
+              zoneId: id,
+            }).unwrap();
+            if (res.status === 200) {
+              cToastify({
+                type: "success",
+                message: "Zone Deleted Successfully",
+              });
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      });
+    },
+    [deleteZone]
+  );
 
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement>,
@@ -136,7 +210,7 @@ const Zone = () => {
                 <ToggleSwitch
                   isOn={item?.isActive === "ACTIVE" ? true : false}
                   onToggle={() => {
-                    // handleToggleStatus(item?.id, item?.isActive);
+                    handleToggleStatus(item?.id, item?.isActive);
                   }}
                 />
               </section>
@@ -171,10 +245,10 @@ const Zone = () => {
                 tooltipContent="Delete Product Category"
                 tooltipPosition="right"
                 className="w-8 h-8"
-                // onClick={() => handleDelete(item?.id)}
-                // loading={
-                //   //   deleteId === item?.id && isLoadingDelete ? true : false
-                // }
+                onClick={() => handleDelete(item?.id)}
+                loading={
+                  deleteId === item?.id && isLoadingDelete ? true : false
+                }
               >
                 <section className="text-md">
                   <FaTrashCan />
@@ -186,7 +260,7 @@ const Zone = () => {
       });
     }
     return [];
-  }, [isSuccess, zoneList?.data?.results, dispatch]);
+  }, [isSuccess, zoneList?.data?.results, deleteId, handleToggleStatus]);
 
   // ==================== show count in data =================
   const showCountInData = isSuccess

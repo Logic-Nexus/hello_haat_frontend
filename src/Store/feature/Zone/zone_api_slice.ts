@@ -41,6 +41,28 @@ export const zone_api_slice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    // zones/active-inactive
+    updateZoneStatus: builder.mutation({
+      query: ({ zoneId, body }: { zoneId: string; body: any }) => ({
+        url: `/zones/active-inactive/${zoneId}`,
+        method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["zones"] : [];
+      },
+    }),
+
+    // /zones/:id delete
+    deleteZone: builder.mutation({
+      query: ({ zoneId }: { zoneId: string }) => ({
+        url: `/zones/${zoneId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["zones"] : [];
+      },
+    }),
   }),
 });
 
@@ -48,6 +70,8 @@ export const {
   useGetZoneListQuery,
   useCreateZoneMutation,
   useGetIsEmployeeAssignedInZoneQuery,
+  useUpdateZoneStatusMutation,
+  useDeleteZoneMutation,
 
   //lazy
   useLazyGetZoneListQuery,
