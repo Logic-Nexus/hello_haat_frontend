@@ -27,7 +27,7 @@ const Dashboard = () => {
     "MMMM Do YYYY, h:mm:ss a"
   );
 
-  console.log(liveConnectedUsers, "liveConnectedUsers");
+  // console.log(liveConnectedUsers, "liveConnectedUsers");
   //   [
   //     {
   //         "email": "admin@admin.com",
