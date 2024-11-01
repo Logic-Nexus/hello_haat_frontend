@@ -14,6 +14,7 @@ import {
   Customers,
   AddNewProducts,
   Vendors,
+  EditEmployee,
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -107,6 +108,14 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <CreateEmployee />
+              </SuspenseGlobal>
+            ),
+          },
+          {
+            path: "editEmployee",
+            element: (
+              <SuspenseGlobal>
+                <EditEmployee />
               </SuspenseGlobal>
             ),
           },

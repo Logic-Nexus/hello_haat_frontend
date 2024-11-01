@@ -6,7 +6,7 @@ export type employeeDataType = {
     fatherName?: string | any;
     profile_picture?: File | null | any;  
     role: string;
-    password: string;
+    password?: string;
     whatsapp?: string | any;
     NID: string;
     education: string;

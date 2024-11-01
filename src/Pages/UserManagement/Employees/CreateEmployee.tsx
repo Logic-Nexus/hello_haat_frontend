@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { CButton, CModal, CSelect } from "../../../Utils";
+import { CButton, CSelect } from "../../../Utils";
 import Cinput from "../../../Utils/CInput/Cinput";
 import CFileInput from "../../../Utils/CFileInput/CFileInput";
-import { employeeDataType } from "../../../Types/employee_types";
+import {
+  employeeDataType,
+} from "../../../Types/employee_types";
 import { useCreateEmployeeMutation } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { useNavigate } from "react-router-dom";
 import MainCard from "../../../Utils/CCard/MainCard";
@@ -15,7 +17,7 @@ const CreateEmployee = () => {
     email: "",
     password: "",
     mobile: "",
-    role: "",
+    role: "OPERATOR",
     fatherName: "",
     whatsapp: "",
     NID: "",
@@ -34,6 +36,23 @@ const CreateEmployee = () => {
 
   const [crateEmployee, { isLoading, isSuccess }] = useCreateEmployeeMutation();
 
+  // when submit button is clicked this error is given
+  const [error, setError] = useState({
+    error_for_full_name: false,
+    error_for_username: false,
+    error_for_email:  false,
+    error_for_password: false,
+    error_for_mobile: false,
+    error_for_father_name: false,
+    error_for_whatsapp: false,
+    error_for_NID: false,
+    error_for_education: false,
+    error_for_address: false,
+    error_for_zip_code: false,
+    error_for_profile_picture: false,
+    error_for_NID_image: false,
+  });
+
   const navigate = useNavigate();
 
   const vendorId = decryptData("userData")?.user?.vendorId;
@@ -41,6 +60,74 @@ const CreateEmployee = () => {
   const handleCreateChange = (e: any) => {
     const { name, value } = e.target;
     setCreateData({ ...createData, [name]: value });
+
+    // Reset the error if editing employee
+    if (name === "fullName") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_full_name: false,
+      }));
+    }
+    if (name === "username") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_username: false,
+      }));
+    }
+    if (name === "email") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_email: false,
+      }));
+    }
+    if (name === "password") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_password: false,
+      }));
+    }
+    if (name === "mobile") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_mobile: false,
+      }));
+    }
+    if (name === "fatherName") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_father_name: false,
+      }));
+    }
+    if (name === "whatsapp") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_whatsapp: false,
+      }));
+    }
+    if (name === "NID") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_NID: false,
+      }));
+    }
+    if (name === "education") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_education: false,
+      }));
+    }
+    if (name === "address") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_address: false,
+      }));
+    }
+    if (name === "zipCode") {
+      setError((prevError: any) => ({
+        ...prevError,
+        error_for_zip_code: false,
+      }));
+    }
   };
 
   // function for changing/putting image
@@ -51,11 +138,56 @@ const CreateEmployee = () => {
 
   const handleCreateSubmit = async (e: any) => {
     e.preventDefault();
+    if (createData?.fullName === "") {
+      setError((prev) => ({ ...prev, error_for_full_name: true }));
+      return;
+    }
+    if (createData?.username === "") {
+      setError((prev) => ({ ...prev, error_for_username: true }));
+      return;
+    }
+    if (createData?.email === "") {
+      setError((prev) => ({ ...prev, error_for_email: true }));
+      return;
+    }
+    if (createData?.password === "") {
+      setError((prev) => ({ ...prev, error_for_password: true }));
+      return;
+    }
+    if (createData?.mobile === "") {
+      setError((prev) => ({ ...prev, error_for_mobile: true }));
+      return;
+    }
+    if (createData?.fatherName === "") {
+      setError((prev) => ({ ...prev, error_for_father_name: true }));
+      return;
+    }
+    if (createData?.whatsapp === "") {
+      setError((prev) => ({ ...prev, error_for_whatsapp: true }));
+      return;
+    }
+    if (createData?.NID === "") {
+      setError((prev) => ({ ...prev, error_for_NID: true }));
+      return;
+    }
+    if (createData?.education === "") {
+      setError((prev) => ({ ...prev, error_for_education: true }));
+      return;
+    }
+    if (createData?.address === "") {
+      setError((prev) => ({ ...prev, error_for_address: true }));
+      return;
+    }
+    if (createData?.zipCode === "") {
+      setError((prev) => ({ ...prev, error_for_zip_code: true }));
+      return;
+    }
+
     const formData = new FormData();
     formData.append("fullName", createData.fullName);
     formData.append("username", createData.username);
     formData.append("email", createData.email);
-    formData.append("password", createData.password);
+    formData.append("password", createData.password || "");
     formData.append("mobile", createData.mobile);
     formData.append("role", createData.role);
     formData.append("fatherName", createData.fatherName);
@@ -77,7 +209,7 @@ const CreateEmployee = () => {
       const result = await crateEmployee(formData).unwrap();
 
       if (result?.status === 201) {
-        navigate("/employees");
+        navigate("/vendor/employees");
       }
     } catch (error) {
       console.log("error", error);
@@ -98,6 +230,11 @@ const CreateEmployee = () => {
               value={createData.fullName}
               label="Full Name"
               name="fullName"
+              tooltip={error?.error_for_full_name}
+              tooltipPosition="right"
+              tooltipContent="Employee full name is required"
+              errorQuery={error?.error_for_full_name}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -107,6 +244,11 @@ const CreateEmployee = () => {
               value={createData.username}
               label="Username"
               name="username"
+              tooltip={error?.error_for_username}
+              tooltipPosition="right"
+              tooltipContent="Employee username is required"
+              errorQuery={error?.error_for_username}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -116,6 +258,11 @@ const CreateEmployee = () => {
               value={createData.email}
               label="Email"
               name="email"
+              tooltip={error?.error_for_email}
+              tooltipPosition="right"
+              tooltipContent="Employee email is required"
+              errorQuery={error?.error_for_email}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -125,6 +272,11 @@ const CreateEmployee = () => {
               value={createData.password}
               label="Password"
               name="password"
+              tooltip={error?.error_for_password}
+              tooltipPosition="right"
+              tooltipContent="Employee password is required"
+              errorQuery={error?.error_for_password}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -134,6 +286,11 @@ const CreateEmployee = () => {
               value={createData.mobile}
               label="Mobile"
               name="mobile"
+              tooltip={error?.error_for_mobile}
+              tooltipPosition="right"
+              tooltipContent="Employee mobile is required"
+              errorQuery={error?.error_for_mobile}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -143,6 +300,7 @@ const CreateEmployee = () => {
               name="role"
               onChange={(e) => setCreateData({ ...createData, role: e.value })}
               value={createData.role}
+              defaultValue={createData.role}
               options={[
                 { value: "OPERATOR", label: "Operator" },
                 { value: "REPRESENTATIVE", label: "Representative" },
@@ -156,6 +314,11 @@ const CreateEmployee = () => {
               value={createData.fatherName}
               label="Father Name"
               name="fatherName"
+              tooltip={error?.error_for_father_name}
+              tooltipPosition="right"
+              tooltipContent="Employee father name is required"
+              errorQuery={error?.error_for_father_name}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -165,6 +328,11 @@ const CreateEmployee = () => {
               value={createData.whatsapp}
               label="WhatsApp No"
               name="whatsapp"
+              tooltip={error?.error_for_whatsapp}
+              tooltipPosition="right"
+              tooltipContent="Employee whatsapp is required"
+              errorQuery={error?.error_for_whatsapp}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -173,6 +341,11 @@ const CreateEmployee = () => {
               id="NID"
               label="NID"
               name="NID"
+              tooltip={error?.error_for_NID}
+              tooltipPosition="right"
+              tooltipContent="Employee NID No. is required"
+              errorQuery={error?.error_for_NID}
+              tooltipVariant="error"
               value={createData.NID}
               onChange={handleCreateChange}
             />
@@ -183,6 +356,11 @@ const CreateEmployee = () => {
               value={createData.education}
               label="Education"
               name="education"
+              tooltip={error?.error_for_education}
+              tooltipPosition="right"
+              tooltipContent="Employee education is required"
+              errorQuery={error?.error_for_education}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -237,6 +415,11 @@ const CreateEmployee = () => {
               value={createData.address}
               label="Address"
               name="address"
+              tooltip={error?.error_for_address}
+              tooltipPosition="right"
+              tooltipContent="Employee address is required"
+              errorQuery={error?.error_for_address}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
@@ -246,26 +429,35 @@ const CreateEmployee = () => {
               value={createData.zipCode}
               label="Zip Code"
               name="zipCode"
+              tooltip={error?.error_for_zip_code}
+              tooltipPosition="right"
+              tooltipContent="Employee zip code is required"
+              errorQuery={error?.error_for_zip_code}
+              tooltipVariant="error"
               onChange={handleCreateChange}
             />
           </div>
           <div className="p-1">
             <CFileInput
+              type="file"
               id="profile_picture"
-              value={createData.profile_picture}
+              files={createData.profile_picture}
+              placeholder="Upload Profile Image"
               label="Profile Image"
               name="profile_picture"
-              fileName={createData.profile_picture?.name || ""}
+              accept="image/png, image/jpeg, image/jpg"
               onChange={(e) => handleImageChange(e, "profile_picture")}
             />
           </div>
           <div className="p-1">
             <CFileInput
+              type="file"
               id="NIDImage"
-              value={createData.NIDImage}
+              files={createData.NIDImage}
+              placeholder="Upload NID Image"
               label="NID Image"
               name="NIDImage"
-              fileName={createData.NIDImage?.name || ""}
+              accept="image/png, image/jpeg, image/jpg"
               onChange={(e) => handleImageChange(e, "NIDImage")}
             />
           </div>

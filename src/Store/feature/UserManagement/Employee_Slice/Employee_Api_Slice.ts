@@ -26,8 +26,23 @@ export const employee_Api_Slice = apiSlice.injectEndpoints({
       }),
       providesTags: ["employees"],
     }),
+
+    //update product category
+    employeeUpdate: builder.mutation({
+      query: ({ employeeId, body }: { employeeId: any; body: any }) => {
+        return {
+          url: `/employee-update/${employeeId}`,
+          method: "PUT",
+          body: body,
+        };
+      },
+
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["employees"] : [];
+      },
+    }),
   }),
 });
 
-export const { useCreateEmployeeMutation, useGetAllEmployeesQuery } =
+export const { useCreateEmployeeMutation, useGetAllEmployeesQuery, useEmployeeUpdateMutation } =
 employee_Api_Slice;
