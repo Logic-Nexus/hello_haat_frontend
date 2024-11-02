@@ -8,11 +8,7 @@ import {
   useLazyGetUpazilaListQuery,
 } from "../../../../Store/feature/Locations/locations_api_slice";
 import { convertLocationDataForSelect } from "../../../../constant";
-import {
-  useGetAllEmployeesQuery,
-  useGetEmployeeByRoleQuery,
-  useLazyGetEmployeeByRoleQuery,
-} from "../../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
+import { useLazyGetEmployeeByRoleQuery } from "../../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { cToastify } from "../../../../Shared";
 import {
   useCreateZoneMutation,
@@ -21,7 +17,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Show } from "easy-beauty-components---react";
 import MainTable from "../../../../Utils/MainTable/MainTable";
-import SubCard from "../../../../Utils/CCard/SubCard";
 
 type zoneDataType = {
   village_name: string;
@@ -88,8 +83,9 @@ const CreateZone = () => {
 
   const handleGetDivisionList = async () => {
     // console.log("handleGetDivisionList");
+    if (divisionsList?.status === 200) return;
     try {
-      await getDivisionList({}, { refetchOnMountOrArgChange: true });
+      await getDivisionList({});
     } catch (error) {
       console.error("Error getting division list:", error);
     }
@@ -192,7 +188,6 @@ const CreateZone = () => {
   //unionsList====================================================== end
 
   //employessList====================================================== start
-  const [queryRole, setQueryRole] = React.useState<string>("");
   const [operatorsList, setOperatorsList] = React.useState<any[]>([]);
   const [representativesList, setRepresentativesList] = React.useState<any[]>(
     []
@@ -201,11 +196,7 @@ const CreateZone = () => {
 
   const [
     getEmployeeByRole,
-    {
-      data: employeesList,
-      isLoading: isLoadingEmployees,
-      isFetching: isFetchingEmployees,
-    },
+    { isLoading: isLoadingEmployees, isFetching: isFetchingEmployees },
   ] = useLazyGetEmployeeByRoleQuery();
 
   const convertEmployeesDataForSelect = useCallback((data: any) => {
@@ -219,38 +210,29 @@ const CreateZone = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (employeesList?.status === 200) {
-      const convertedData = convertEmployeesDataForSelect(employeesList?.data);
-      switch (queryRole) {
-        case "OPERATOR":
-          setOperatorsList(convertedData);
-          break;
-        case "REPRESENTATIVE":
-          setRepresentativesList(convertedData);
-          break;
-        case "RAIDER":
-          setRidersList(convertedData);
-          break;
-        default:
-          break;
-      }
-    }
-  }, [
-    employeesList?.status,
-    queryRole,
-    convertEmployeesDataForSelect,
-    employeesList?.data,
-  ]);
-
   const handleGetEmployeeList = async (
     role: "OPERATOR" | "REPRESENTATIVE" | "RAIDER"
   ) => {
-    setQueryRole(role);
     try {
-      await getEmployeeByRole(role, {
+      const res = await getEmployeeByRole(role, {
         refetchOnMountOrArgChange: true,
       }).unwrap();
+      if (res?.status === 200) {
+        const convertedData = convertEmployeesDataForSelect(res?.data);
+        switch (role) {
+          case "OPERATOR":
+            setOperatorsList(convertedData);
+            break;
+          case "REPRESENTATIVE":
+            setRepresentativesList(convertedData);
+            break;
+          case "RAIDER":
+            setRidersList(convertedData);
+            break;
+          default:
+            break;
+        }
+      }
     } catch (error: any) {
       console.error("Error getting employee list:", error);
       if (error.status === 400) {
