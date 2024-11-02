@@ -25,7 +25,7 @@ const CreateEmployee = () => {
     bankName: "",
     branchName: "",
     accountNumber: "",
-    mobileBanking: "",
+    mobileBanking: "bKash",
     mobileBankingNumber: "",
     address: "",
     zipCode: "",
@@ -392,12 +392,19 @@ const CreateEmployee = () => {
             />
           </div>
           <div className="p-1">
-            <Cinput
+            <CSelect
               id="mobileBanking"
-              value={createData.mobileBanking}
               label="Mobile Banking"
               name="mobileBanking"
-              onChange={handleCreateChange}
+              onChange={(e) => setCreateData({ ...createData, mobileBanking: e.value })}
+              value={createData.mobileBanking}
+              defaultValue={createData.mobileBanking}
+              options={[
+                { value: "bKash", label: "bKash" },
+                { value: "Nagad", label: "Nagad" },
+                { value: "Rocket", label: "Rocket" },
+                { value: "Upay", label: "Upay" },
+              ]}
             />
           </div>
           <div className="p-1">

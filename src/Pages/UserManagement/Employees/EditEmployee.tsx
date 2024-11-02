@@ -302,13 +302,20 @@ const EditEmployee = () => {
               />
             </div>
             <div className="p-1">
-              <Cinput
-                id="mobileBanking"
-                label="Mobile Banking"
-                name="mobileBanking"
-                value={editData.mobileBanking || ""}
-                onChange={handleEditChange}
-              />
+              <CSelect
+              id="mobileBanking"
+              label="Mobile Banking"
+              name="mobileBanking"
+              onChange={(e) => setEditData({ ...editData, mobileBanking: e.value })}
+              value={editData.mobileBanking}
+              defaultValue={editData.mobileBanking}
+              options={[
+                { value: "bKash", label: "bKash" },
+                { value: "Nagad", label: "Nagad" },
+                { value: "Rocket", label: "Rocket" },
+                { value: "Upay", label: "Upay" },
+              ]}
+            />
             </div>
             <div className="p-1">
               <Cinput
