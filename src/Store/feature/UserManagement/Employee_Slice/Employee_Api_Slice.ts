@@ -41,14 +41,16 @@ export const employee_Api_Slice = apiSlice.injectEndpoints({
         return result ? ["employees"] : [];
       },
       // employees-role/short-list?role=OPERATOR
-      getEmployeeByRole: builder.query({
-        query: (role: string) => ({
-          url: "/employees-role/short-list",
-          method: "GET",
-          params: {
-            role: role,
-          },
-        }),
+      
+    }),
+
+    getEmployeeByRole: builder.query({
+      query: (role: string) => ({
+        url: "/employees-role/short-list",
+        method: "GET",
+        params: {
+          role: role,
+        },
       }),
     }),
   }),
