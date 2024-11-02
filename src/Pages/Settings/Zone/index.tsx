@@ -30,7 +30,7 @@ const Zone = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>();
-  const [status, setStatus] = useState<string>("ACTIVE");
+  const [status] = useState<string>("ACTIVE");
 
   const {
     data: zoneList,
@@ -52,8 +52,7 @@ const Zone = () => {
   });
 
   // ==================== active inactive zone  ====================
-  const [updateZoneStatus, { isLoading: isActiveLoading }] =
-    useUpdateZoneStatusMutation();
+  const [updateZoneStatus] = useUpdateZoneStatusMutation();
 
   const handleToggleStatus = useCallback(
     async (id: any, status: any) => {

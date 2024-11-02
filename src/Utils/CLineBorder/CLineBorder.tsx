@@ -1,5 +1,3 @@
-import React from "react";
-
 const CLineBorder = ({ width }: any) => {
   return (
     <hr

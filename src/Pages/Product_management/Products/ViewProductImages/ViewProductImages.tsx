@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "../../../../Store/Store";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdFullscreen } from "react-icons/md";
@@ -28,7 +28,7 @@ const ViewProductImages = () => {
   const {
     data: productImages,
     isLoading,
-    error,
+    // error,
   } = useGetProductImagesByProductIdQuery(selectSingleProduct?.id, {
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,

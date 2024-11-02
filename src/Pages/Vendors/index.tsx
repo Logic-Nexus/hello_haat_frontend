@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useGetVendorsQuery } from "../../Store/feature/Vendors/vendors_api_slice";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -32,10 +32,7 @@ const Vendors = () => {
     }
   );
 
-  const [
-    login,
-    { error: logginError, isLoading: loginVendorAdminLoading, isSuccess },
-  ] = useLoginMutation();
+  const [login, { isLoading: loginVendorAdminLoading }] = useLoginMutation();
   const handleVendorAdminLogin = async (vendor: any) => {
     try {
       const body = {

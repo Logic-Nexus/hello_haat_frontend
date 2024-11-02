@@ -24,7 +24,7 @@ export const zone_api_slice = apiSlice.injectEndpoints({
         method: "POST",
         body: zoneData,
       }),
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["zones"] : [];
       },
     }),
@@ -48,7 +48,7 @@ export const zone_api_slice = apiSlice.injectEndpoints({
         method: "PUT",
         body: body,
       }),
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["zones"] : [];
       },
     }),
@@ -60,7 +60,7 @@ export const zone_api_slice = apiSlice.injectEndpoints({
         method: "PUT",
         body: body,
       }),
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["zones"] : [];
       },
     }),
@@ -71,7 +71,7 @@ export const zone_api_slice = apiSlice.injectEndpoints({
         url: `/zones/${zoneId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["zones"] : [];
       },
     }),

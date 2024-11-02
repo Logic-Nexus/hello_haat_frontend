@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CButton, CPagination } from "../../../Utils";
 import { useNavigate } from "react-router-dom";
 import { useGetAllEmployeesQuery } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
@@ -18,7 +18,10 @@ const Employees = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading, isError, isSuccess } = useGetAllEmployeesQuery({status: "ACTIVE", pagination: true, pageNumber: currentPage}, {refetchOnReconnect: true});
+  const { data, isLoading, isSuccess } = useGetAllEmployeesQuery(
+    { status: "ACTIVE", pagination: true, pageNumber: currentPage },
+    { refetchOnReconnect: true }
+  );
   console.log("data", data?.data?.results);
 
   const tableData = useMemo(() => {
@@ -28,7 +31,12 @@ const Employees = () => {
           employee_id: item.employeeID,
           profile_picture: item?.profile_picture?.url ? (
             <section className="flex items-center justify-center">
-              <img src={item?.profile_picture?.url} alt="profile-picture" loading="lazy" style={{width: "60px", height: "60px", objectFit: "cover"}} />
+              <img
+                src={item?.profile_picture?.url}
+                alt="profile-picture"
+                loading="lazy"
+                style={{ width: "60px", height: "60px", objectFit: "cover" }}
+              />
             </section>
           ) : (
             <>No Image</>
@@ -67,21 +75,16 @@ const Employees = () => {
               </CButton>
             </section>
           ),
-        }
-      })
+        };
+      });
     }
     return [];
-  }, [
-    data?.data?.results,
-    isSuccess
-  ]);
+  }, [data?.data?.results, isSuccess]);
 
   return (
     <div className="container mx-auto">
-
       <MainCard
         title="All Employees"
-
         secondary={
           <>
             <CButton
@@ -100,42 +103,42 @@ const Employees = () => {
       >
         {/* Table Section */}
         <Show
-        when={!isLoading && tableData?.length > 0}
-        FallBack={
-          <>
-            {isLoading ? (
-              <Loader />
-            ) : (
-              <p className="text-center">No Data Found</p>
-            )}
-          </>
-        }
-      >
-        <section className="max-h-[calc(100vh-200px)] overflow-y-scroll">
-          <MainTable
-            data={tableData || []}
-            dense
-            filter={true}
-            tableHeaderDesign={{
-              backgroundColor: themeColor?.primary,
-              color: themeColor?.light_text_color,
-            }}
-          />
-        </section>
+          when={!isLoading && tableData?.length > 0}
+          FallBack={
+            <>
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <p className="text-center">No Data Found</p>
+              )}
+            </>
+          }
+        >
+          <section className="max-h-[calc(100vh-200px)] overflow-y-scroll">
+            <MainTable
+              data={tableData || []}
+              dense
+              filter={true}
+              tableHeaderDesign={{
+                backgroundColor: themeColor?.primary,
+                color: themeColor?.light_text_color,
+              }}
+            />
+          </section>
 
-        {/* Pagination Section */}
-        <Show when={data?.data?.totalPages > 1}>
-          <CPagination
-            currentPage={data?.data?.currentPage}
-            totalPages={data?.data?.totalPages}
-            data={data?.data}
-            handlePageChange={function (newPage: number): void {
-              // console.log(newPage);
-              setCurrentPage(newPage);
-            }}
-          />
+          {/* Pagination Section */}
+          <Show when={data?.data?.totalPages > 1}>
+            <CPagination
+              currentPage={data?.data?.currentPage}
+              totalPages={data?.data?.totalPages}
+              data={data?.data}
+              handlePageChange={function (newPage: number): void {
+                // console.log(newPage);
+                setCurrentPage(newPage);
+              }}
+            />
+          </Show>
         </Show>
-      </Show>
       </MainCard>
     </div>
   );

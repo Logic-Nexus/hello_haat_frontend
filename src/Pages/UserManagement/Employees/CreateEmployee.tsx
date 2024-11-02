@@ -2,9 +2,7 @@ import { useState } from "react";
 import { CButton, CSelect } from "../../../Utils";
 import Cinput from "../../../Utils/CInput/Cinput";
 import CFileInput from "../../../Utils/CFileInput/CFileInput";
-import {
-  employeeDataType,
-} from "../../../Types/employee_types";
+import { employeeDataType } from "../../../Types/employee_types";
 import { useCreateEmployeeMutation } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { useNavigate } from "react-router-dom";
 import MainCard from "../../../Utils/CCard/MainCard";
@@ -34,13 +32,13 @@ const CreateEmployee = () => {
   };
   const [createData, setCreateData] = useState<employeeDataType>(initialState);
 
-  const [crateEmployee, { isLoading, isSuccess }] = useCreateEmployeeMutation();
+  const [crateEmployee, { isLoading }] = useCreateEmployeeMutation();
 
   // when submit button is clicked this error is given
   const [error, setError] = useState({
     error_for_full_name: false,
     error_for_username: false,
-    error_for_email:  false,
+    error_for_email: false,
     error_for_password: false,
     error_for_mobile: false,
     error_for_father_name: false,
@@ -396,7 +394,9 @@ const CreateEmployee = () => {
               id="mobileBanking"
               label="Mobile Banking"
               name="mobileBanking"
-              onChange={(e) => setCreateData({ ...createData, mobileBanking: e.value })}
+              onChange={(e) =>
+                setCreateData({ ...createData, mobileBanking: e.value })
+              }
               value={createData.mobileBanking}
               defaultValue={createData.mobileBanking}
               options={[

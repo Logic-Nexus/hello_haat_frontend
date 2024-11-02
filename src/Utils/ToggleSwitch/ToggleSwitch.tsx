@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 interface ToggleSwitchProps {
   isOn: boolean;
   onToggle: () => void;

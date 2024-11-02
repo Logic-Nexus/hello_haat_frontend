@@ -6,7 +6,7 @@ import { IoAddCircle } from "react-icons/io5";
 import { For } from "easy-beauty-components---react";
 import CategoryForm from "../CategoryForm/CategoryForm";
 import { useCreateProductCategoryMutation } from "../../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
-import { errorAlert, successAlert } from "../../../../Utils/alert-function";
+import { errorAlert } from "../../../../Utils/alert-function";
 import { useNavigate } from "react-router-dom";
 import { cToastify } from "../../../../Shared";
 

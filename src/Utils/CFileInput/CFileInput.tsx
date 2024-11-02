@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BsCloudUpload } from "react-icons/bs";
 
 interface CFileInputProps {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import MainCard from "../../../Utils/CCard/MainCard";
 import {
   CButton,
@@ -43,7 +43,7 @@ const Product_category = () => {
     data: productCategoryData,
     isLoading,
     isFetching,
-    isError,
+    // isError,
     isSuccess,
   } = useGetProductCategoryQuery(
     {
@@ -90,10 +90,8 @@ const Product_category = () => {
   //handleToggleStatus
 
   // ==================== active inactive product category ====================
-  const [
-    productCategoryActiveInactive,
-    { isLoading: isActiveLoading, isSuccess: isActiveSuccess },
-  ] = useProductCategoryActiveInactiveMutation();
+  const [productCategoryActiveInactive, { isSuccess: isActiveSuccess }] =
+    useProductCategoryActiveInactiveMutation();
 
   useEffect(() => {
     if (isActiveSuccess) {

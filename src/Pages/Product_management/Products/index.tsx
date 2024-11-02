@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../Store/Store";
 import {
@@ -48,7 +48,7 @@ const Products = () => {
     data: productsData,
     isLoading,
     isFetching,
-    isError,
+    // isError,
     isSuccess,
   } = useGetProductsQuery(
     {
@@ -94,7 +94,7 @@ const Products = () => {
   );
 
   // ==================== active inactive product category ====================
-  const [productActiveInactiveStatus, { isLoading: isActiveLoading }] =
+  const [productActiveInactiveStatus] =
     useProductActiveInactiveStatusMutation();
 
   const handleToggleStatus = useCallback(

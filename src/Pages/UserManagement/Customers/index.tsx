@@ -20,7 +20,7 @@ const Customers = () => {
   const {
     data: customerData,
     isLoading,
-    isError,
+    // isError,
     isFetching,
     isSuccess,
   } = useGetAllCustomersQuery(

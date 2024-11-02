@@ -6,15 +6,15 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useWindowSize from "../../Hook/useWindowSize";
 import { RiLogoutCircleRFill } from "react-icons/ri";
 import { CButton } from "../../Utils";
-import { useAppSelector } from "../../Store/Store";
+// import { useAppSelector } from "../../Store/Store";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const width = useWindowSize();
 
-  const { authorizeVendorDetails, profileData } = useAppSelector(
-    (state) => state.globalSlice
-  );
+  // const { authorizeVendorDetails, profileData } = useAppSelector(
+  //   (state) => state.globalSlice
+  // );
   // Function to handle logout
   const handleLogout = () => {
     localStorage.clear();

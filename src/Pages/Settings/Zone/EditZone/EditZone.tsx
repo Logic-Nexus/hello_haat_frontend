@@ -293,8 +293,8 @@ const EditZone: FC<{
     getIsEmployeeAssignedInZone,
     {
       //   data: isEmployeeAssignedInZone,
-      isLoading: isLoadingIsEmployeeAssignedInZone,
-      isFetching: isFetchingIsEmployeeAssignedInZone,
+      // isLoading: isLoadingIsEmployeeAssignedInZone,
+      // isFetching: isFetchingIsEmployeeAssignedInZone,
       isError: isErrorIsEmployeeAssignedInZone,
     },
   ] = useLazyGetIsEmployeeAssignedInZoneQuery();

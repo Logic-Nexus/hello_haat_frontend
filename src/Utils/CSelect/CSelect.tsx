@@ -152,7 +152,7 @@ const CSelect = ({
           }
           {...props}
           styles={{
-            option: (defaultStyles, state) => ({
+            option: (defaultStyles) => ({
               ...defaultStyles,
               zIndex: 9999,
               color: "#000",

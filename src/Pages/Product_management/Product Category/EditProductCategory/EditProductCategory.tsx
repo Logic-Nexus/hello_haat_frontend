@@ -6,7 +6,7 @@ import CFileInput from "../../../../Utils/CFileInput/CFileInput";
 import { categoryDataType } from "../productCategory_type";
 import { MdCancel } from "react-icons/md";
 import { useProductCategoryUpdateMutation } from "../../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
-import { errorAlert, successAlert } from "../../../../Utils/alert-function";
+import { errorAlert } from "../../../../Utils/alert-function";
 import { Show } from "easy-beauty-components---react";
 import { cToastify } from "../../../../Shared";
 

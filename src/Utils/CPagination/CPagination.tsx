@@ -1,4 +1,3 @@
-import React from "react";
 import CButton from "../CButton/CButton";
 import {
   FiChevronLeft,
@@ -7,7 +6,7 @@ import {
   FiSkipForward,
 } from "react-icons/fi";
 
-const CPagination: <T>(props: {
+const CPagination: (props: {
   data?: any;
   totalPages: number;
   currentPage: number;
@@ -66,7 +65,7 @@ const CPagination: <T>(props: {
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           variant="solid"
-           className="w-6 h-6"
+          className="w-6 h-6"
         >
           <span className="text-sm">
             <FiChevronRight />
@@ -80,7 +79,7 @@ const CPagination: <T>(props: {
           }}
           disabled={data?.next === null}
           variant="solid"
-           className="w-7 h-7"
+          className="w-7 h-7"
         >
           <span className="text-md">
             <FiSkipForward />
