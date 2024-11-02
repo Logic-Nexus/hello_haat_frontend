@@ -69,6 +69,7 @@ const SideNav = ({
                 isCollapsed={isCollapsed}
                 path={link.path}
                 children={link.children} // Pass children if they exist
+                toggleMobileSidebar={toggleMobileSidebar}
               />
             </React.Fragment>
           )}

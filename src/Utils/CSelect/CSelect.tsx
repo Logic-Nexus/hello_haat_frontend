@@ -89,10 +89,6 @@ const CSelect = ({
     };
   }, []);
 
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
   const Control = ({ children, ...props }: any) => (
     <components.Control {...props} className="pl-[5px]">
       {children}
@@ -134,7 +130,7 @@ const CSelect = ({
           } border-0 border-primary rounded-md outline-none focus:ring-2 focus:bg-primary focus:border-transparent dark:bg-black/10`}
           onChange={(selectedOptions) => onChange?.(selectedOptions)}
           onFocus={handleFocus}
-          onBlur={handleBlur}
+          // onBlur={handleBlur}
           classNamePrefix={classNamePrefix || "select"}
           closeMenuOnSelect={true}
           components={isMulti ? animatedComponents : { Control }}
@@ -145,6 +141,7 @@ const CSelect = ({
           isClearable={isClearable}
           isSearchable={true}
           isLoading={loading}
+          menuShouldScrollIntoView={true}
           value={
             options?.find((item: any) => item?.value === value) ||
             defaultValue ||
@@ -164,7 +161,6 @@ const CSelect = ({
             }),
             singleValue: (defaultStyles) => ({
               ...defaultStyles,
-              // zIndex: 999,
               outlineColor: themeColor.primary,
             }),
             control: (provided, state) => ({
