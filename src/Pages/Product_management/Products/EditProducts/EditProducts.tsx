@@ -13,8 +13,10 @@ import { cToastify } from "../../../../Shared";
 
 const EditProducts = ({
   setOpenEditModal,
+  openEditModal,
 }: {
   setOpenEditModal: React.Dispatch<React.SetStateAction<boolean>>;
+  openEditModal: boolean;
 }) => {
   const { selectSingleProduct } = useAppSelector(
     (state) => state.productSlice
@@ -83,9 +85,10 @@ const EditProducts = ({
 
   //useEffect for get product category name list data
   useEffect(() => {
+    if (!openEditModal) return;
     handleGetProductCategoryNameList();
     return () => {};
-  }, [handleGetProductCategoryNameList]);
+  }, [handleGetProductCategoryNameList, openEditModal]);
 
   //handleSubmitEdit
   const [updateProduct, { isLoading }] = useUpdateProductMutation();

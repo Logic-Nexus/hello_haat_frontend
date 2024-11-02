@@ -20,7 +20,7 @@ import { warningAlert } from "../../../../Utils/alert-function";
 import { cToastify } from "../../../../Shared";
 import { Show } from "easy-beauty-components---react";
 
-const ViewProductImages = () => {
+const ViewProductImages = ({ viewImageModal }: { viewImageModal: boolean }) => {
   const { selectSingleProduct } = useAppSelector(
     (state) => state.productSlice
   ) as any;
@@ -33,7 +33,7 @@ const ViewProductImages = () => {
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
     refetchOnFocus: true,
-    skip: !selectSingleProduct?.id,
+    skip: !selectSingleProduct?.id || !viewImageModal,
   });
 
   const [deleteProductImage, { isLoading: deleteLoading }] =
