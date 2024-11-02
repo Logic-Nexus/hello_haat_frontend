@@ -27,7 +27,23 @@ export const employee_Api_Slice = apiSlice.injectEndpoints({
       providesTags: ["employees"],
     }),
 
-    // employees-role/short-list?role=OPERATOR
+    //update product category
+    employeeUpdate: builder.mutation({
+      query: ({ employeeId, body }: { employeeId: any; body: any }) => {
+        return {
+          url: `/employee-update/${employeeId}`,
+          method: "PUT",
+          body: body,
+        };
+      },
+
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["employees"] : [];
+      },
+      // employees-role/short-list?role=OPERATOR
+      
+    }),
+
     getEmployeeByRole: builder.query({
       query: (role: string) => ({
         url: "/employees-role/short-list",
@@ -44,7 +60,7 @@ export const {
   useCreateEmployeeMutation,
   useGetAllEmployeesQuery,
   useGetEmployeeByRoleQuery,
-
+  useEmployeeUpdateMutation,
   //lazy
   useLazyGetAllEmployeesQuery,
   useLazyGetEmployeeByRoleQuery,

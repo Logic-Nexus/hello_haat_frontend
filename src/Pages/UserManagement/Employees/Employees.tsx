@@ -10,9 +10,12 @@ import { Show } from "easy-beauty-components---react";
 import Loader from "../../../Shared/Loader/Loader";
 import { themeColor } from "../../../constant";
 import MainTable from "../../../Utils/MainTable/MainTable";
+import { useAppDispatch } from "../../../Store/Store";
+import { setSelectSingleEmployee } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Slice";
 
 const Employees = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, isError, isSuccess } = useGetAllEmployeesQuery({status: "ACTIVE", pagination: true, pageNumber: currentPage}, {refetchOnReconnect: true});
@@ -44,6 +47,10 @@ const Employees = () => {
                 id="tooltip-edit"
                 tooltipContent="Edit Product Category"
                 tooltipPosition="top-end"
+                onClick={() => {
+                  dispatch(setSelectSingleEmployee(item));
+                  navigate("/vendor/employees/editEmployee");
+                }}
               >
                 <MdEdit />
               </CButton>

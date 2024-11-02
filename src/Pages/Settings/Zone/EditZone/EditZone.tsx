@@ -6,7 +6,7 @@ import {
   useLazyGetIsEmployeeAssignedInZoneQuery,
   useUpdateZoneMutation,
 } from "../../../../Store/feature/Zone/zone_api_slice";
-import { useLazyGetEmployeeByRoleQuery } from "../../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
+
 import { convertLocationDataForSelect } from "../../../../constant";
 import {
   useLazyGetDistrictListQuery,
@@ -14,6 +14,7 @@ import {
   useLazyGetUnionListQuery,
   useLazyGetUpazilaListQuery,
 } from "../../../../Store/feature/Locations/locations_api_slice";
+import { useLazyGetEmployeeByRoleQuery } from "../../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 
 const DEFAULT = {
   village_name: "",
