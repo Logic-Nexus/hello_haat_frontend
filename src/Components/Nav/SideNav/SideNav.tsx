@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../../../Assets/Images/Hello Hatt white.png";
+import Logo from "/public/images/Hello Hatt white.png";
 import NavItem from "./NavItem/NavItem";
 import { CButton } from "../../../Utils";
 import { For } from "easy-beauty-components---react";
