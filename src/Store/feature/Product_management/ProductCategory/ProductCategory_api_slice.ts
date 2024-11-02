@@ -22,7 +22,7 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
     }),
@@ -37,7 +37,7 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
         };
       },
 
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
     }),
@@ -50,7 +50,7 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
     }),
@@ -64,7 +64,7 @@ export const productCategory_api_Slice = apiSlice.injectEndpoints({
           body: body,
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["productCategory", "productCategoryNameListData"] : [];
       },
     }),

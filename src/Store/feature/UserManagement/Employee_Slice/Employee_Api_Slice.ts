@@ -9,7 +9,7 @@ export const employee_Api_Slice = apiSlice.injectEndpoints({
         method: "POST",
         body: employeeData,
       }),
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["employees"] : [];
       },
     }),
@@ -37,11 +37,10 @@ export const employee_Api_Slice = apiSlice.injectEndpoints({
         };
       },
 
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["employees"] : [];
       },
       // employees-role/short-list?role=OPERATOR
-      
     }),
 
     getEmployeeByRole: builder.query({

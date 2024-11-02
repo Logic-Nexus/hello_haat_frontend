@@ -41,7 +41,6 @@ const CTextArea = ({
   width,
   height,
   rows,
-  ...rest
 }: CTextAreaProps) => {
   // const { theme } = useTheme();
   return (
@@ -71,7 +70,7 @@ const CTextArea = ({
         onChange={onChange}
         disabled={disabled}
         rows={rows}
-      ></textarea>
+      />
     </section>
   );
 };

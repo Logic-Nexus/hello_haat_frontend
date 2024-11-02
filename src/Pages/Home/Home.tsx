@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { IoLogOut, IoMenu } from "react-icons/io5";
-import Logo from "../../Assets/Images/Transparent.png";
+import Logo from "/public/images/Transparent.png";
 import { CButton } from "../../Utils";
 import SideNav from "../../Components/Nav/SideNav/SideNav";
 import Layout from "../../Layout/Layout";

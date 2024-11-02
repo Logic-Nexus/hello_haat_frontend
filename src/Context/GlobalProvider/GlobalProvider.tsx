@@ -12,7 +12,7 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   const userData = decryptData("userData");
   const {
     data: vendorDetails,
-    isLoading,
+    // isLoading,
     isSuccess,
   } = useGetSingleVendorQuery(
     {

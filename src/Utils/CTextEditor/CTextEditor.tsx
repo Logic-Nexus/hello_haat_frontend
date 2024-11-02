@@ -1,4 +1,3 @@
-import React from "react";
 import ReactQuill from "react-quill";
 
 interface props {
@@ -14,7 +13,6 @@ const CTextEditor = ({
   placeholder,
   value,
   defaultValue,
-  className,
 }: props) => {
   return (
     <>

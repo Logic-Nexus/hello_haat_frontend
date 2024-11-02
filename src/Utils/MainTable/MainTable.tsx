@@ -14,7 +14,7 @@ interface StyledTableHeaderProps {
 
 const StyledTableHeader: React.FC<StyledTableHeaderProps> = ({
   children,
-  headerAlign,
+  // headerAlign,
   sticky,
   style,
 }) => (
@@ -129,7 +129,7 @@ const MainTable = forwardRef<HTMLTableElement, MainTableProps>(
                     {textFormatter(key)}
                   </th>
                 ))
-              : titles?.map((title, id) => (
+              : titles?.map((title: string, id: number) => (
                   <th
                     key={id}
                     className="px-3 py-2 text-center text-xs font-semibold bg-primary text-white"
@@ -144,7 +144,7 @@ const MainTable = forwardRef<HTMLTableElement, MainTableProps>(
           </StyledTableHeader>
           <tbody>
             {data?.length > 0 ? (
-              data?.map((item, i) => (
+              data?.map((item: any, i: number) => (
                 <tr
                   key={i}
                   className={`${

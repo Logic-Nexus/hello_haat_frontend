@@ -21,7 +21,7 @@ export const product_api_Slice = apiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["products"] : [];
       },
     }),
@@ -34,7 +34,7 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["products"] : [];
       },
     }),
@@ -46,7 +46,7 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["products"] : [];
       },
     }),
@@ -59,7 +59,7 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["products"] : [];
       },
     }),
@@ -82,7 +82,7 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["productImages"] : [];
       },
     }),
@@ -98,7 +98,7 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           },
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["productImages"] : [];
       },
     }),
@@ -112,7 +112,7 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           body: body,
         };
       },
-      invalidatesTags: (result: any, error: any, body: any) => {
+      invalidatesTags: (result: any) => {
         return result ? ["productImages"] : [];
       },
     }),

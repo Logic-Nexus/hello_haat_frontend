@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import MainCard from "../../../../Utils/CCard/MainCard";
 import { CButton, CInput, CSelect } from "../../../../Utils";
 import {
@@ -252,8 +252,8 @@ const CreateZone = () => {
     getIsEmployeeAssignedInZone,
     {
       //   data: isEmployeeAssignedInZone,
-      isLoading: isLoadingIsEmployeeAssignedInZone,
-      isFetching: isFetchingIsEmployeeAssignedInZone,
+      // isLoading: isLoadingIsEmployeeAssignedInZone,
+      // isFetching: isFetchingIsEmployeeAssignedInZone,
       isError: isErrorIsEmployeeAssignedInZone,
     },
   ] = useLazyGetIsEmployeeAssignedInZoneQuery();
