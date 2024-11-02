@@ -27,8 +27,14 @@ const CreateEmployee = React.lazy(
 const EditEmployee = React.lazy(
   () => import("../Pages/UserManagement/Employees/EditEmployee")
 );
+
 // Customers
 const Customers = React.lazy(() => import("../Pages/UserManagement/Customers"));
+
+// Suppliers
+const Suppliers = React.lazy(
+  () => import("../Pages/UserManagement/Suppliers")
+);
 
 const AddNewProducts = React.lazy(
   () =>
@@ -56,4 +62,5 @@ export {
   Vendors,
   Zone,
   CreateZone,
+  Suppliers
 };

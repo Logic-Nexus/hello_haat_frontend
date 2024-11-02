@@ -101,28 +101,67 @@ const EditEmployee = () => {
 
     const handleUpdateSubmit = async (e: any) => {
       e.preventDefault();
+      const body = {
+        fullName: editData?.fullName || "",
+        username: editData?.username || "",
+        email: editData?.email || "",
+        mobile: editData?.mobile || "",
+        role: editData?.role || "",
+        fatherName: editData?.fatherName || "",
+        whatsapp: editData?.whatsapp || "",
+        NID: editData?.NID || "",
+        education: editData?.education || "",
+        bankName: editData?.bankName || "",
+        branchName: editData?.branchName || "",
+        accountNumber: editData?.accountNumber || "",
+        mobileBanking: editData?.mobileBanking || "",
+        mobileBankingNumber: editData?.mobileBankingNumber || "",
+        address: editData?.address || "",
+        zipCode: editData?.zipCode || "",
+        } as any;
 
       const formData = new FormData();
-      formData.append("fullName", editData.fullName);
-      formData.append("username", editData.username);
-      formData.append("email", editData.email);
-      formData.append("password", selectSingleEmployee?.user?.password);
-      formData.append("mobile", editData.mobile);
-      formData.append("role", editData.role);
-      formData.append("fatherName", editData.fatherName);
-      formData.append("whatsapp", editData.whatsapp);
-      formData.append("NID", editData.NID);
-      formData.append("education", editData.education);
-      formData.append("bankName", editData.bankName);
-      formData.append("branchName", editData.branchName);
-      formData.append("accountNumber", editData.accountNumber);
-      formData.append("mobileBanking", editData.mobileBanking);
-      formData.append("mobileBankingNumber", editData.mobileBankingNumber);
-      formData.append("address", editData.address);
-      formData.append("zipCode", editData.zipCode);
-      formData.append("profile_picture", editData.profile_picture);
-      formData.append("NIDImage", editData.NIDImage);
-      formData.append("vendorId", vendorId);
+      // formData.append("fullName", editData.fullName);
+      // formData.append("username", editData.username);
+      // formData.append("email", editData.email);
+      // formData.append("password", selectSingleEmployee?.user?.password);
+      // formData.append("mobile", editData.mobile);
+      // formData.append("role", editData.role);
+      // formData.append("fatherName", editData.fatherName);
+      // formData.append("whatsapp", editData.whatsapp);
+      // formData.append("NID", editData.NID);
+      // formData.append("education", editData.education);
+      // formData.append("bankName", editData.bankName);
+      // formData.append("branchName", editData.branchName);
+      // formData.append("accountNumber", editData.accountNumber);
+      // formData.append("mobileBanking", editData.mobileBanking);
+      // formData.append("mobileBankingNumber", editData.mobileBankingNumber);
+      // formData.append("address", editData.address);
+      // formData.append("zipCode", editData.zipCode);
+      // formData.append("profile_picture", editData.profile_picture);
+      // formData.append("NIDImage", editData.NIDImage);
+      // formData.append("vendorId", vendorId);
+      if (editData.profile_picture instanceof File) {
+        formData.append("image", editData.profile_picture);
+      }
+
+      
+      if (editData.NIDImage instanceof File) {
+        formData.append("image", editData.NIDImage);
+      }
+
+      for (const key in body) {
+        if (body[key]) {
+          formData.append(key, body[key]);
+        }
+      }
+
+      // for (const key in editData) {
+      //   const typedKey = key as keyof employeeDataType;
+      //   if (editData[typedKey]) {
+      //     formData.append(key, editData[typedKey]);
+      //   }
+      // }
 
       try {
         const employeeId = selectSingleEmployee?.id;
@@ -187,10 +226,11 @@ const EditEmployee = () => {
             </div>
             <div className="p-1">
               <CSelect
-                label="Role"
+                label="Role (Non-editable)"
                 name="role"
                 value={editData?.role}
                 onChange={(e) => setEditData({ ...editData, role: e.value })}
+                disabled
                 options={[
                   { value: "OPERATOR", label: "Operator" },
                   { value: "REPRESENTATIVE", label: "Representative" },
