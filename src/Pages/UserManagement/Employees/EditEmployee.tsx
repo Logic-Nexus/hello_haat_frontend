@@ -6,7 +6,7 @@ import { employeeDataType } from "../../../Types/employee_types";
 import { useNavigate } from "react-router-dom";
 import MainCard from "../../../Utils/CCard/MainCard";
 import { useAppSelector } from "../../../Store/Store";
-import { decryptData } from "../../../constant/encrytion";
+// import { decryptData } from "../../../constant/encrytion";
 import { useEmployeeUpdateMutation } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { cToastify } from "../../../Shared";
 import { errorAlert } from "../../../Utils/alert-function";
@@ -41,7 +41,7 @@ const EditEmployee = () => {
 
   const navigate = useNavigate();
 
-  const vendorId = decryptData("userData")?.user?.vendorId;
+  // const vendorId = decryptData("userData")?.user?.vendorId;
 
   useEffect(() => {
     setEditData({
@@ -79,7 +79,7 @@ const EditEmployee = () => {
     // handle update employee
     const [
       employeeUpdate,
-      { isLoading, isSuccess, isError, error: updateError },
+      { isSuccess, isError, error: updateError },
     ] = useEmployeeUpdateMutation();
 
     useEffect(() => {
@@ -121,26 +121,6 @@ const EditEmployee = () => {
         } as any;
 
       const formData = new FormData();
-      // formData.append("fullName", editData.fullName);
-      // formData.append("username", editData.username);
-      // formData.append("email", editData.email);
-      // formData.append("password", selectSingleEmployee?.user?.password);
-      // formData.append("mobile", editData.mobile);
-      // formData.append("role", editData.role);
-      // formData.append("fatherName", editData.fatherName);
-      // formData.append("whatsapp", editData.whatsapp);
-      // formData.append("NID", editData.NID);
-      // formData.append("education", editData.education);
-      // formData.append("bankName", editData.bankName);
-      // formData.append("branchName", editData.branchName);
-      // formData.append("accountNumber", editData.accountNumber);
-      // formData.append("mobileBanking", editData.mobileBanking);
-      // formData.append("mobileBankingNumber", editData.mobileBankingNumber);
-      // formData.append("address", editData.address);
-      // formData.append("zipCode", editData.zipCode);
-      // formData.append("profile_picture", editData.profile_picture);
-      // formData.append("NIDImage", editData.NIDImage);
-      // formData.append("vendorId", vendorId);
       if (editData.profile_picture instanceof File) {
         formData.append("image", editData.profile_picture);
       }
@@ -155,13 +135,6 @@ const EditEmployee = () => {
           formData.append(key, body[key]);
         }
       }
-
-      // for (const key in editData) {
-      //   const typedKey = key as keyof employeeDataType;
-      //   if (editData[typedKey]) {
-      //     formData.append(key, editData[typedKey]);
-      //   }
-      // }
 
       try {
         const employeeId = selectSingleEmployee?.id;
