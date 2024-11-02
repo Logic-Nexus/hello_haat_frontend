@@ -51,8 +51,8 @@ tbody tr:nth-child(even) {
 @media (max-width: 768px) {
   table {
     font-size: 0.75rem; /* Smaller font size on mobile */
-    width: calc(100vw - 5rem) !important;
-    display: block;
+    /* width: calc(100vw - 5rem) !important; */
+    /* display: block; */
   }
   th,
   td {
@@ -69,7 +69,7 @@ tbody tr:nth-child(even) {
 @media (max-width: 480px) {
   table {
     font-size: 0.75rem; /* Smaller font size on mobile */
-    width: calc(100vw - 5rem) !important;
-    display: block;
+    /* width: calc(100vw - 5rem) !important;
+    display: block; */
   }
 }

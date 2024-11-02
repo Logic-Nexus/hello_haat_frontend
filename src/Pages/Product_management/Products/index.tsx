@@ -360,7 +360,7 @@ const Products = () => {
       <CModal
         open={openEditModal}
         onClose={() => setOpenEditModal(false)}
-        title="Edit Product "
+        title="Edit Product"
       >
         <EditProducts setOpenEditModal={setOpenEditModal} openEditModal={openEditModal} />
       </CModal>

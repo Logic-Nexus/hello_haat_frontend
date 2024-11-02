@@ -30,7 +30,7 @@ const ViewProductImages = ({ viewImageModal }: { viewImageModal: boolean }) => {
     isLoading,
     // error,
   } = useGetProductImagesByProductIdQuery(selectSingleProduct?.id, {
-    refetchOnMountOrArgChange: true,
+    refetchOnMountOrArgChange: false,
     refetchOnReconnect: true,
     refetchOnFocus: true,
     skip: !selectSingleProduct?.id || !viewImageModal,
@@ -201,7 +201,7 @@ const ViewProductImages = ({ viewImageModal }: { viewImageModal: boolean }) => {
       }
     >
       {/* Image Gallery */}
-      <section className="mt-4 max-h-[calc(100vh-280px)] overflow-auto">
+      <section className="mt-4 max-h-[calc(100vh-280px)] overflow-auto ">
         <MainTable data={tableData || []} filter dense />
       </section>
 
