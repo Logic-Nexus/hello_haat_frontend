@@ -15,6 +15,8 @@ import {
   AddNewProducts,
   Vendors,
   EditEmployee,
+  Zone,
+  CreateZone,
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -50,6 +52,7 @@ const router = [
           </SuspenseGlobal>
         ),
       },
+      //Products
       {
         path: "products",
         children: [
@@ -71,6 +74,8 @@ const router = [
           },
         ],
       },
+
+      //Product Category
       {
         path: "product_category",
         children: [
@@ -92,6 +97,30 @@ const router = [
           },
         ],
       },
+
+      //zone
+      {
+        path: "zone",
+        children: [
+          {
+            path: "",
+            element: (
+              <SuspenseGlobal>
+                <Zone />
+              </SuspenseGlobal>
+            ),
+          },
+          {
+            path: "create_zone",
+            element: (
+              <SuspenseGlobal>
+                <CreateZone />
+              </SuspenseGlobal>
+            ),
+          },
+        ],
+      },
+      //employee
       {
         path: "employees",
         children: [
@@ -121,6 +150,7 @@ const router = [
           },
         ],
       },
+
       {
         path: "customers",
         children: [

@@ -11,6 +11,7 @@ import { APIURL } from "../../Base";
 import { errorAlert } from "../../Utils/alert-function";
 import { cToastify } from "../../Shared";
 import { decryptData } from "../../constant/encrytion";
+import Swal from "sweetalert2";
 // import {loginUserData} from '../feature/Auth_slice/Auth_slice';
 
 const baseQuery = fetchBaseQuery({
@@ -61,9 +62,10 @@ const baseQueryWithRetry = async (
   // console.log('result', result?.meta?.response?.status);
   else if (result?.meta?.response?.status === 401) {
     // api.dispatch(logOut());
-    cToastify({
-      type: "error",
-      message: "Session Expired",
+    Swal.fire({
+      icon: "error",
+      title: "Session Expired",
+      text: "Please login again",
     });
 
     localStorage.setItem("userData", JSON.stringify({}));
@@ -84,6 +86,12 @@ export const apiSlice = createApi({
   >,
 
   endpoints: (_build) => ({}),
-  tagTypes: ["productCategory", "customers", "products", "productImages"],
+  tagTypes: [
+    "productCategory",
+    "customers",
+    "products",
+    "productImages",
+    "productCategoryNameListData",
+  ],
   refetchOnReconnect: true,
 }) as any;

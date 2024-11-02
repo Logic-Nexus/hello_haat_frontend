@@ -16,7 +16,7 @@ interface Props {
   fontSize?: string;
   fontStyle?: string;
   gap?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   rest?: any;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;

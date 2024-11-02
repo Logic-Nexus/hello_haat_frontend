@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useGetUserLastLoginInfoQuery } from "../../Store/feature/globalApi_Slice";
 import moment from "moment";
 import useSocket from "../../Hook/useSocket/useSocket";
 import { Show } from "easy-beauty-components---react";
+import useTimeAgo from "../../Hook/useTimeAgo/useTimeAgo";
 
 const Dashboard = () => {
   const socketContext = useSocket();
@@ -14,20 +15,24 @@ const Dashboard = () => {
   } = useGetUserLastLoginInfoQuery(
     {},
     {
-      refetchOnMountOrArgChange: false,
+      refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
+      refetchOnFocus: true,
     }
   );
 
   // Extract the data from the response
   const loginData = isSuccess && userLastLoginInfo?.data;
 
-  // Format login date (optional)
-  const formattedLoginDate = moment(loginData?.loginAt).format(
-    "MMMM Do YYYY, h:mm:ss a"
-  );
+  // Get the formatted login date using the useTimeAgo hook
+  const timeAgo = useTimeAgo(loginData?.loginAt);
 
-  console.log(liveConnectedUsers, "liveConnectedUsers");
+  // Format login date (optional) loginData?.loginAt
+  const formattedLoginDate = useMemo(() => {
+    return loginData ? timeAgo : "";
+  }, [loginData, timeAgo]);
+
+  // console.log(liveConnectedUsers, "liveConnectedUsers");
   //   [
   //     {
   //         "email": "admin@admin.com",
@@ -64,7 +69,7 @@ const Dashboard = () => {
 
       {/* Active Users List */}
       <Show when={liveConnectedUsers?.length > 0}>
-        <section className="bg-white border border-gray-200 rounded-lg shadow-md p-6">
+        <section className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mt-5">
           <h2 className="text-lg font-bold mb-4">Live Connected Users</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {liveConnectedUsers.map((user: any) => (

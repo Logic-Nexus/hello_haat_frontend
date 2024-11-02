@@ -91,11 +91,16 @@ const MainTable = forwardRef<HTMLTableElement, MainTableProps>(
     const isInactiveRow = (index: number) => inactiveIndexes.includes(index);
 
     return (
-      <div className="w-[full] overflow-x-auto">
+      <div
+        className="w-full overflow-x-auto"
+        // style={{
+        //   width: "calc(100vw - 22rem)",
+        // }}
+      >
         <table
           {...rest}
           ref={ref}
-          className="min-w-full border-collapse text-sm"
+          className="min-w-full border-collapse text-sm "
         >
           <StyledTableHeader
             headerAlign={headerAlign}
@@ -115,7 +120,7 @@ const MainTable = forwardRef<HTMLTableElement, MainTableProps>(
               ? Object.keys(data[0]).map((key, i) => (
                   <th
                     key={i}
-                    className="px-3 py-2 text-center font-semibold bg-gray-800 text-white"
+                    className="px-3 py-2 text-center text-xs font-semibold bg-primary text-white"
                     style={{
                       textAlign: headerAlign[i] || "center",
                       ...tableHeaderDesign,
@@ -124,10 +129,10 @@ const MainTable = forwardRef<HTMLTableElement, MainTableProps>(
                     {textFormatter(key)}
                   </th>
                 ))
-              : titles.map((title, id) => (
+              : titles?.map((title, id) => (
                   <th
                     key={id}
-                    className="px-3 py-2 text-center font-semibold bg-gray-800 text-white"
+                    className="px-3 py-2 text-center text-xs font-semibold bg-primary text-white"
                     style={{
                       textAlign: headerAlign[id] || "center",
                       ...tableHeaderDesign,

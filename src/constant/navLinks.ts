@@ -161,7 +161,7 @@ const navLinks: NavItem[] = [
       },
       {
         name: "Zone Settings",
-        path: "zone_settings",
+        path: "zone",
         icon: AiFillProduct,
       },
       {

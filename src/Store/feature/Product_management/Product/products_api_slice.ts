@@ -16,12 +16,14 @@ export const product_api_Slice = apiSlice.injectEndpoints({
     }),
     //create
     createProduct: builder.mutation({
-      query: (body: any) => ({
+      query: ({ body }: any) => ({
         url: "/products",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["products"],
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["products"] : [];
+      },
     }),
     //update
     updateProduct: builder.mutation({
@@ -32,7 +34,9 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: ["products"],
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["products"] : [];
+      },
     }),
     //delete
     deleteProduct: builder.mutation({
@@ -42,7 +46,9 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["products"],
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["products"] : [];
+      },
     }),
 
     productActiveInactiveStatus: builder.mutation({
@@ -53,7 +59,9 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: ["products"],
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["products"] : [];
+      },
     }),
 
     //product images  ================================
@@ -74,7 +82,9 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["productImages"],
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["productImages"] : [];
+      },
     }),
 
     // products/image-status
@@ -88,7 +98,9 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           },
         };
       },
-      invalidatesTags: ["productImages"],
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["productImages"] : [];
+      },
     }),
 
     //upload image products/create-image
@@ -100,7 +112,9 @@ export const product_api_Slice = apiSlice.injectEndpoints({
           body: body,
         };
       },
-      invalidatesTags: ["productImages"],
+      invalidatesTags: (result: any, error: any, body: any) => {
+        return result ? ["productImages"] : [];
+      },
     }),
   }),
 });

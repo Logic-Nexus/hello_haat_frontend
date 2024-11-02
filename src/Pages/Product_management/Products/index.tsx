@@ -12,6 +12,7 @@ import { FaTrashCan } from "react-icons/fa6";
 import ToggleSwitch from "../../../Utils/ToggleSwitch/ToggleSwitch";
 import {
   CButton,
+  CInput,
   CModal,
   CPagination,
   CSelect,
@@ -27,6 +28,8 @@ import { themeColor } from "../../../constant";
 import { FaImages } from "react-icons/fa6";
 import { setSelectSingleProduct } from "../../../Store/feature/Product_management/Product/products_slice";
 import ViewProductImages from "./ViewProductImages/ViewProductImages";
+import EditProducts from "./EditProducts/EditProducts";
+import { FaSearch } from "react-icons/fa";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -35,8 +38,10 @@ const Products = () => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [viewImageModal, setViewImageModal] = useState<boolean>(false);
-
+  const [search, setSearch] = useState<string>(""); // search state
   const [status, setStatus] = useState<string>("ACTIVE");
+
+  const [product_code, setProductCode] = useState<string>("");
 
   // ==================== get product category ====================
   const {
@@ -48,6 +53,7 @@ const Products = () => {
   } = useGetProductsQuery(
     {
       status: status,
+      ...(product_code && { product_code }),
       pagination: true,
       pageNumber: currentPage,
     },
@@ -58,7 +64,7 @@ const Products = () => {
   );
 
   // ==================== delete product category ====================
-  const [productCategoryDelete, { isLoading: isLoadingDelete }] =
+  const [deleteProduct, { isLoading: isLoadingDelete }] =
     useDeleteProductMutation();
 
   const handleDelete = useCallback(
@@ -69,10 +75,10 @@ const Products = () => {
         if (result.isConfirmed) {
           setDeleteId(id);
           try {
-            const res = await productCategoryDelete({
-              categoryId: id,
+            const res = await deleteProduct({
+              productId: id,
             }).unwrap();
-            if (res) {
+            if (res.status === 200) {
               cToastify({
                 type: "success",
                 message: "Product Deleted Successfully",
@@ -84,23 +90,12 @@ const Products = () => {
         }
       });
     },
-    [productCategoryDelete]
+    [deleteProduct]
   );
 
   // ==================== active inactive product category ====================
-  const [
-    productCategoryActiveInactive,
-    { isLoading: isActiveLoading, isSuccess: isActiveSuccess },
-  ] = useProductActiveInactiveStatusMutation();
-
-  useEffect(() => {
-    if (isActiveSuccess) {
-      cToastify({
-        type: "success",
-        message: "Product Status Updated Successfully",
-      });
-    }
-  }, [isActiveSuccess]);
+  const [productActiveInactiveStatus, { isLoading: isActiveLoading }] =
+    useProductActiveInactiveStatusMutation();
 
   const handleToggleStatus = useCallback(
     async (id: any, status: any) => {
@@ -111,17 +106,33 @@ const Products = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await productCategoryActiveInactive({
-              categoryId: id,
+            const res = await productActiveInactiveStatus({
+              productId: id,
               body: { status: status === "ACTIVE" ? "INACTIVE" : "ACTIVE" },
-            });
-          } catch (error) {
+            }).unwrap();
+            if (res?.status === 200) {
+              cToastify({
+                type: "success",
+                message: `Product ${
+                  status === "ACTIVE" ? "Inactive" : "Active"
+                } Successfully`,
+              });
+            }
+          } catch (error: any) {
             console.log(error);
+            if (error?.status === 400) {
+              cToastify({
+                type: "error",
+                message: `Product ${
+                  status === "ACTIVE" ? "Inactive" : "Active"
+                } Failed`,
+              });
+            }
           }
         }
       });
     },
-    [productCategoryActiveInactive]
+    [productActiveInactiveStatus]
   );
 
   //==================== table data ======================
@@ -171,7 +182,7 @@ const Products = () => {
                 tooltipPosition="top-end"
                 className="w-8 h-8"
                 onClick={() => {
-                  // dispatch(setSelectSingleProductCategory(item));
+                  dispatch(setSelectSingleProduct(item));
                   setOpenEditModal(true);
                 }}
               >
@@ -221,7 +232,34 @@ const Products = () => {
   // ==================== filter section ====================
   const filterSection = () => {
     return (
-      <>
+      <section className="flex items-center space-x-2">
+        <CInput
+          width="md:w-[200px] w-[100px]"
+          placeholder="Search Product"
+          disabled={isLoading || isFetching}
+          onChange={(e: any) => {
+            if (e.target.value === "") {
+              setProductCode("");
+            }
+            setSearch(e.target.value);
+          }}
+          value={search}
+          id="search"
+          endIcon={
+            <FaSearch
+              color={themeColor?.primary}
+              className="cursor-pointer"
+              onClick={() => {
+                //before set search value remove space from start and end
+                const regex = /^\s+|\s+$/g;
+                const searchValue = search.replace(regex, "");
+                setProductCode(searchValue);
+                setCurrentPage(1);
+              }}
+            />
+          }
+        />
+
         <CSelect
           disabled={isLoading || isFetching}
           defaultValue={
@@ -233,13 +271,13 @@ const Products = () => {
             { value: "ACTIVE", label: "Active" },
             { value: "INACTIVE", label: "Inactive" },
           ]}
-          width="md:w-[400px] w-[200px]"
+          width="md:w-[200px] w-[100px]"
           classNamePrefix="Select Status"
           onChange={(e: any) => {
             setStatus(e?.value);
           }}
         />
-      </>
+      </section>
     );
   };
 
@@ -247,6 +285,7 @@ const Products = () => {
   const handleNavigateToProductCategoryForm = () => {
     navigate("/vendor/products/create_product");
   };
+
   return (
     <MainCard
       title={`All Products ${showCountInData}`}
@@ -318,7 +357,7 @@ const Products = () => {
         onClose={() => setOpenEditModal(false)}
         title="Edit Product "
       >
-        {/* <EditProductCategory onClose={() => setOpenEditModal(false)} /> */}
+        <EditProducts setOpenEditModal={setOpenEditModal} />
       </CModal>
 
       {/* //view image modal */}
