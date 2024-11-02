@@ -5,6 +5,7 @@ import globalSlice from "./feature/globalSlice";
 import productCategorySlice from "./feature/Product_management/ProductCategory/productCategory_slice";
 import productSlice from "./feature/Product_management/Product/products_slice";
 import employeeSlice from "./feature/UserManagement/Employee_Slice/Employee_Slice";
+import zoneSlice from "./feature/Zone/zoneSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
     globalSlice,
     productCategorySlice,
     productSlice,
-    employeeSlice
+    employeeSlice,
+    zoneSlice,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>

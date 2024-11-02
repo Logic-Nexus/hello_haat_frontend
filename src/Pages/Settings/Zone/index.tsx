@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import MainCard from "../../../Utils/CCard/MainCard";
-import { CButton, CPagination, CSkeleton } from "../../../Utils";
+import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
 import { IoAddCircle } from "react-icons/io5";
 import {
   useDeleteZoneMutation,
@@ -18,9 +18,11 @@ import { MdEdit } from "react-icons/md";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import { FaWhatsapp } from "react-icons/fa";
 import { warningAlert } from "../../../Utils/alert-function";
 import { cToastify } from "../../../Shared";
+import { setSelectedSingleZone } from "../../../Store/feature/Zone/zoneSlice";
+import RepsAndRiders from "./RepsAndRiders/RepsAndRiders";
+import EditZone from "./EditZone/EditZone";
 
 const Zone = () => {
   const navigate = useNavigate();
@@ -228,7 +230,7 @@ const Zone = () => {
                 tooltipPosition="top-end"
                 className="w-8 h-8"
                 onClick={() => {
-                  //   dispatch(setSelectSingleProduct(item));
+                  dispatch(setSelectedSingleZone(item));
                   setOpenEditModal(true);
                 }}
               >
@@ -260,7 +262,15 @@ const Zone = () => {
       });
     }
     return [];
-  }, [isSuccess, zoneList?.data?.results, deleteId, handleToggleStatus]);
+  }, [
+    isSuccess,
+    zoneList?.data?.results,
+    deleteId,
+    isLoadingDelete,
+    handleToggleStatus,
+    dispatch,
+    handleDelete,
+  ]);
 
   // ==================== show count in data =================
   const showCountInData = isSuccess
@@ -334,6 +344,22 @@ const Zone = () => {
         </Show>
       </Show>
 
+      {/* //edit modal section */}
+      <CModal
+        open={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        title="Edit Zone"
+        width="max-w-2xl"
+        height="container"
+      >
+        <EditZone
+          setOpenEditModal={setOpenEditModal}
+          openEditModal={openEditModal}
+        />
+      </CModal>
+
+      {/* Popover */}
+
       {isPopoverOpen && (
         <div
           className="absolute bg-white border border-gray-300 rounded-lg shadow-lg p-4 max-w-xs w-full z-50"
@@ -379,35 +405,3 @@ const Zone = () => {
 };
 
 export default Zone;
-
-// make a  dynnamic component to show the list of representatives and riders
-
-const RepsAndRiders = ({
-  selectedDatas,
-  formType,
-}: {
-  selectedDatas: any;
-  formType: string;
-}) => {
-  return (
-    <>
-      <h3 className="text-sm font-semibold mb-2">{formType}</h3>
-      <hr className="border-t border-gray-200 mb-2" />
-      <ul
-        className="space-y-2 max-h-60 overflow-y-auto
-      "
-      >
-        {selectedDatas?.map((data: any) => (
-          <li key={data?.id} className="space-x-2 shadow p-1 rounded">
-            <span className="font-semibold text-sm">{data?.fullName}</span>
-            <small className="text-gray-500">({data?.employeeID})</small>
-            <small className="text-gray-500 flex items-center space-x-1 ">
-              <FaWhatsapp className="text-green-500" />
-              <span>{data?.whatsapp}</span>
-            </small>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-};
