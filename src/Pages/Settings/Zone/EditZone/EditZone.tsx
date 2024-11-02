@@ -317,10 +317,10 @@ const EditZone: FC<{
           queryFor,
           ...(representativeId && { representativeId }),
           ...(operatorId && { operatorId }),
-        },
-        {
-          refetchOnMountOrArgChange: true,
         }
+        // {
+        //   refetchOnMountOrArgChange: true,
+        // }
       ).unwrap();
       console.log("isEmployeeAssignedInZone", res);
     } catch (error: any) {
