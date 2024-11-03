@@ -1,3 +1,4 @@
+
 import { Show } from "easy-beauty-components---react";
 import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
 import MainCard from "../../../Utils/CCard/MainCard";
@@ -230,3 +231,4 @@ const Suppliers = () => {
 };
 
 export default Suppliers;
+
