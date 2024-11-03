@@ -61,6 +61,7 @@ const CSelect = ({
   tooltipContent = "",
   tooltipVariant = "dark",
   isClearable = true,
+
   ...props
 }: CSelectProps) => {
   const animatedComponents = makeAnimated();
@@ -132,6 +133,7 @@ const CSelect = ({
           onFocus={handleFocus}
           // onBlur={handleBlur}
           classNamePrefix={classNamePrefix || "select"}
+          placeholder={classNamePrefix}
           closeMenuOnSelect={true}
           components={isMulti ? animatedComponents : { Control }}
           isMulti={isMulti}

@@ -29,6 +29,7 @@ import { cToastify } from "../../../Shared";
 import { setSelectedSingleZone } from "../../../Store/feature/Zone/zoneSlice";
 import RepsAndRiders from "./RepsAndRiders/RepsAndRiders";
 import EditZone from "./EditZone/EditZone";
+import { useLazyGetEmployeeByRoleQuery } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 
 const Zone = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const Zone = () => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>();
   const [status, setStatus] = useState<string>("ACTIVE");
+  const [operatorId, setOperatorId] = useState<string>("");
 
   const {
     data: zoneList,
@@ -44,7 +46,12 @@ const Zone = () => {
     isFetching,
     isSuccess,
   } = useGetZoneListQuery(
-    { status: status, pagination: true, pageNumber: currentPage },
+    {
+      status: status,
+      pagination: true,
+      pageNumber: currentPage,
+      ...(operatorId && { operatorId }),
+    },
     {
       //   refetchOnMountOrArgChange: false,
       refetchOnReconnect: true,
@@ -282,28 +289,70 @@ const Zone = () => {
     ? `(${zoneList?.data?.results?.length}/${zoneList?.data?.count})`
     : "";
 
+  //employessList====================================================== start
+  const [operatorsList, setOperatorsList] = React.useState<any[]>([]);
+
+  const [
+    getEmployeeByRole,
+    { isLoading: isLoadingEmployees, isFetching: isFetchingEmployees },
+  ] = useLazyGetEmployeeByRoleQuery();
+
+  const convertEmployeesDataForSelect = useCallback((data: any) => {
+    return data?.map((item: any) => {
+      const name = `${item.fullName} ${item.user?.username}`;
+      return {
+        ...item,
+        label: `${name} (${item.employeeID})`,
+        value: item.id,
+      };
+    });
+  }, []);
+
+  const handleGetEmployeeList = async (role: "OPERATOR") => {
+    try {
+      const res = await getEmployeeByRole(role, {
+        refetchOnMountOrArgChange: true,
+      }).unwrap();
+      if (res?.status === 200) {
+        const convertedData = convertEmployeesDataForSelect(res?.data);
+        switch (role) {
+          case "OPERATOR":
+            setOperatorsList(convertedData);
+            break;
+          default:
+            break;
+        }
+      }
+    } catch (error: any) {
+      console.error("Error getting employee list:", error);
+      if (error.status === 400) {
+        cToastify({
+          type: "error",
+          message: error?.data?.message,
+        });
+      }
+    }
+  };
+
+  //employessList====================================================== end
+
   // ==================== filter section ====================
   const filterSection = () => {
     return (
       <section className="flex items-center space-x-2">
         <CSelect
-          disabled={isLoading || isFetching}
-          defaultValue={
-            status === "ACTIVE"
-              ? { value: "ACTIVE", label: "Active" }
-              : { value: "INACTIVE", label: "Inactive" }
-          }
-          options={[
-            { value: "ACTIVE", label: "Active" },
-            { value: "INACTIVE", label: "Inactive" },
-          ]}
+          id="operatorId"
+          name="operatorId"
           width="md:w-[200px] w-[100px]"
-          classNamePrefix="Select Status"
+          classNamePrefix="Select Operator"
+          value={operatorId}
+          loading={isLoadingEmployees || isFetchingEmployees}
+          onClick={() => handleGetEmployeeList("OPERATOR")}
           onChange={(e: any) => {
-            setStatus(e?.value);
+            setOperatorId(e?.value);
           }}
+          options={operatorsList || []}
         />
-
         <CSelect
           disabled={isLoading || isFetching}
           defaultValue={
