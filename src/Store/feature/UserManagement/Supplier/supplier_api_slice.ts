@@ -13,7 +13,17 @@ export const supplier_api_slice = apiSlice.injectEndpoints({
         },
       }),
     }),
+
+    //create
+    createSupplier: builder.mutation({
+      query: (body: any) => ({
+        url: "create-supplier",
+        method: "POST",
+        body: body,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllSuppliersQuery } = supplier_api_slice;
+export const { useGetAllSuppliersQuery, useCreateSupplierMutation } =
+  supplier_api_slice;

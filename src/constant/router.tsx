@@ -18,6 +18,7 @@ import {
   Zone,
   CreateZone,
   Suppliers,
+  CreateSupplier
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -174,6 +175,14 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <Suppliers />
+              </SuspenseGlobal>
+            ),
+          },
+          {
+            path: "createSupplier",
+            element: (
+              <SuspenseGlobal>
+                <CreateSupplier />
               </SuspenseGlobal>
             ),
           },

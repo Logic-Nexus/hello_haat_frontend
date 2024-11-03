@@ -6,8 +6,7 @@ import NotFoundData from "../../../Components/NotFoundData/NotFoundData";
 import MainTable from "../../../Utils/MainTable/MainTable";
 import { themeColor } from "../../../constant";
 import { MdFullscreen } from "react-icons/md";
-
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { useAppDispatch } from "../../../Store/Store";
 import { useMemo, useState } from "react";
 import { useGetAllSuppliersQuery } from "../../../Store/feature/UserManagement/Supplier/supplier_api_slice";
@@ -16,7 +15,7 @@ import { MdEdit } from "react-icons/md";
 import FullViewImage from "../../../Components/FullViewImage/FullViewImage";
 
 const Suppliers = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -141,6 +140,11 @@ const Suppliers = () => {
     ? `(${suppliersList?.data?.results?.length}/${suppliersList?.data?.count})`
     : "";
 
+  // ==================== handle navigate to create supplier form =================
+  const handleNavigateToCreateSupplierForm = () => {
+    navigate("/vendor/suppliers/createSupplier");
+  };
+
   return (
     <MainCard
       title={`Suppliers List ${showCountInData}`}
@@ -152,9 +156,9 @@ const Suppliers = () => {
             color="text-primary"
             tooltip
             id="tooltip"
-            tooltipContent="Create Product Category"
+            tooltipContent="Create Supplier"
             tooltipPosition="top-end"
-            // onClick={handleNavigateToCreateZoneForm}
+            onClick={handleNavigateToCreateSupplierForm}
           >
             <IoAddCircle size={30} />
           </CButton>
