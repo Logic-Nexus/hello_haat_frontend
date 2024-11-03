@@ -1,4 +1,4 @@
-import { FaLink } from "react-icons/fa6";
+// import { FaLink } from "react-icons/fa6";
 // import { CgProfile } from "react-icons/cg";
 import { IconType } from "react-icons";
 // import { TbFilePower } from "react-icons/tb";
@@ -13,6 +13,7 @@ import promotion from "/public/svg/promotion.svg";
 import service from "/public/svg/service.svg";
 import reports from "/public/svg/reports.svg";
 import settings from "/public/svg/settings.svg";
+import employee from "/public/svg/employee.svg";
 
 type NavItem = {
   name: string;
@@ -43,17 +44,20 @@ const navLinks: NavItem[] = [
       {
         name: "Employees",
         path: "employees",
-        icon: FaLink,
+        // icon: FaLink,
+        image: employee,
       },
       {
         name: "Customers",
         path: "customers",
-        icon: FaLink,
+        // icon: FaLink,
+        image: employee,
       },
       {
         name: "Suppliers",
         path: "suppliers",
-        icon: FaLink,
+        // icon: FaLink,
+        image: employee,
       },
     ],
   },
