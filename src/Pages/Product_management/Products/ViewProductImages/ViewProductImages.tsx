@@ -18,7 +18,6 @@ import ToggleSwitch from "../../../../Utils/ToggleSwitch/ToggleSwitch";
 import { FaTrashCan } from "react-icons/fa6";
 import { warningAlert } from "../../../../Utils/alert-function";
 import { cToastify } from "../../../../Shared";
-import { Show } from "easy-beauty-components---react";
 import FullViewImage from "../../../../Components/FullViewImage/FullViewImage";
 
 const ViewProductImages = ({ viewImageModal }: { viewImageModal: boolean }) => {
