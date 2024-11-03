@@ -5,12 +5,15 @@ import { IoAddCircle } from "react-icons/io5";
 import NotFoundData from "../../../Components/NotFoundData/NotFoundData";
 import MainTable from "../../../Utils/MainTable/MainTable";
 import { themeColor } from "../../../constant";
+import { MdFullscreen } from "react-icons/md";
+
 // import { useNavigate } from "react-router-dom";
 // import { useAppDispatch } from "../../../Store/Store";
 import { useMemo, useState } from "react";
 import { useGetAllSuppliersQuery } from "../../../Store/feature/UserManagement/Supplier/supplier_api_slice";
 import { FaTrashCan } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
+import FullViewImage from "../../../Components/FullViewImage/FullViewImage";
 
 const Suppliers = () => {
   // const navigate = useNavigate();
@@ -19,6 +22,7 @@ const Suppliers = () => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   // const [deleteId, setDeleteId] = useState<any>();
   const [status] = useState<string>("ACTIVE");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const {
     data: suppliersList,
@@ -52,25 +56,39 @@ const Suppliers = () => {
           dealerEmail: item.dealerEmail,
           dealerAddress: item.dealerAddress,
           companyLogo: item?.companyLogo?.url ? (
-            <section className="flex items-center justify-center">
+            <section className="flex items-center justify-center relative">
               <img
                 src={item?.companyLogo?.url}
-                alt="company-picture"
-                loading="lazy"
-                style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                alt="Product Image"
+                className="lg:w-20 lg:h-20 w-10 h-10 object-contain rounded shadow-md cursor-pointer"
+                onClick={() => setSelectedImage(item.companyLogo?.url)}
               />
+              {/* //full screen icon  */}
+              <div className="absolute top-0 right-0 p-2 md:block hidden">
+                <MdFullscreen
+                  className="text-2xl cursor-pointer"
+                  onClick={() => setSelectedImage(item.companyLogo?.url)}
+                />
+              </div>
             </section>
           ) : (
             <>No Image</>
           ),
           srPhoto: item?.srPhoto?.url ? (
-            <section className="flex items-center justify-center">
+            <section className="flex items-center justify-center relative">
               <img
                 src={item?.srPhoto?.url}
-                alt="sr-picture"
-                loading="lazy"
-                style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                alt="Product Image"
+                className="lg:w-20 lg:h-20 w-10 h-10 object-contain rounded shadow-md cursor-pointer"
+                onClick={() => setSelectedImage(item.srPhoto?.url)}
               />
+              {/* //full screen icon  */}
+              <div className="absolute top-0 right-0 p-2 md:block hidden ">
+                <MdFullscreen
+                  className="text-2xl cursor-pointer"
+                  onClick={() => setSelectedImage(item.srPhoto?.url)}
+                />
+              </div>
             </section>
           ) : (
             <>No Image</>
@@ -182,6 +200,13 @@ const Suppliers = () => {
           />
         </Show>
       </Show>
+
+      {/* Fullscreen Image Modal */}
+
+      <FullViewImage
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
+      />
 
       {/* //edit modal section */}
       <CModal
