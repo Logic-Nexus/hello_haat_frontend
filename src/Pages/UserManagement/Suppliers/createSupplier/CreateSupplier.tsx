@@ -92,7 +92,9 @@ const CreateSupplier = () => {
     }
 
     try {
-      const res = await createSupplier(formData).unwrap();
+      const res = await createSupplier({
+        body: formData,
+      }).unwrap();
 
       if (res.status === 201) {
         cToastify({

@@ -17,7 +17,7 @@ export const supplier_api_slice = apiSlice.injectEndpoints({
 
     //create
     createSupplier: builder.mutation({
-      query: (body: any) => ({
+      query: ({ body }: { body: any }) => ({
         url: "create-supplier",
         method: "POST",
         body: body,
