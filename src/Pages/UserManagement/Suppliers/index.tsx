@@ -134,7 +134,7 @@ const Suppliers = () => {
     return [];
   }, [suppliersList?.data?.results, isSuccess]);
 
-  console.log("suppliersList", tableData);
+  // console.log("suppliersList", tableData);
 
   // ==================== show count in data =================
   const showCountInData = isSuccess
