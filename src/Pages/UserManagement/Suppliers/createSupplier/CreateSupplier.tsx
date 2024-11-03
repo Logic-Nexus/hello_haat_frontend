@@ -3,6 +3,8 @@ import MainCard from "../../../../Utils/CCard/MainCard";
 import { CButton, CInput } from "../../../../Utils";
 import CFileInput from "../../../../Utils/CFileInput/CFileInput";
 import { useCreateSupplierMutation } from "../../../../Store/feature/UserManagement/Supplier/supplier_api_slice";
+import { cToastify } from "../../../../Shared";
+import { useNavigate } from "react-router-dom";
 
 type supplierDataType = {
   supplierName: string;
@@ -31,6 +33,7 @@ const DEFAULT_SUPPLIER_DATA: supplierDataType = {
 };
 
 const CreateSupplier = () => {
+  const navigate = useNavigate();
   const [createData, setCreateData] = useState<supplierDataType>(
     DEFAULT_SUPPLIER_DATA
   );
@@ -89,10 +92,25 @@ const CreateSupplier = () => {
     }
 
     try {
-      await createSupplier(formData).unwrap();
+      const res = await createSupplier(formData).unwrap();
+
+      if (res.status === 201) {
+        cToastify({
+          type: "success",
+          message: "Supplier Created Successfully",
+        });
+        navigate(-1);
+      }
+
       setCreateData(DEFAULT_SUPPLIER_DATA);
-    } catch (err) {
+    } catch (err: any) {
       console.log("Error", err);
+      if (err.data?.status === 400) {
+        cToastify({
+          type: "error",
+          message: err.data.message,
+        });
+      }
     }
   };
 
