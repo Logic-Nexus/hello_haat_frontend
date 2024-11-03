@@ -83,7 +83,7 @@ const Employees = () => {
       });
     }
     return [];
-  }, [data?.data?.results, isSuccess]);
+  }, [data?.data?.results, dispatch, isSuccess, navigate]);
 
   return (
     <div className="container mx-auto">
