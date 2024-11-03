@@ -20,9 +20,13 @@ const Employees = () => {
 
   const { data, isLoading, isSuccess } = useGetAllEmployeesQuery(
     { status: "ACTIVE", pagination: true, pageNumber: currentPage },
-    { refetchOnReconnect: true }
+    {
+      refetchOnMountOrArgChange: true,
+      refetchOnReconnect: true,
+      refetchOnFocus: true,
+    }
   );
-  console.log("data", data?.data?.results);
+  // console.log("data", data?.data?.results);
 
   const tableData = useMemo(() => {
     if (isSuccess) {

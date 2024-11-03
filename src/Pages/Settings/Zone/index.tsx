@@ -400,10 +400,10 @@ const Zone = () => {
     >
       {/* table section */}
       <Show
-        when={!isLoading && tableData?.length > 0}
+        when={!isFetching && tableData?.length > 0}
         FallBack={
           <>
-            {isFetching || isLoading ? (
+            {isFetching ? (
               // <Loader />
               <CSkeleton />
             ) : (
