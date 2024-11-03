@@ -65,6 +65,7 @@ const SideNav = ({
             <React.Fragment key={link?.name + index}>
               <NavItem
                 Icon={link.icon as IconType}
+                image={link.image as React.ReactNode}
                 label={link.name}
                 isCollapsed={isCollapsed}
                 path={link.path}
