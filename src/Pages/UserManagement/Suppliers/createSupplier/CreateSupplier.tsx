@@ -97,7 +97,7 @@ const CreateSupplier = () => {
   };
 
   return (
-    <MainCard title="Create Employee">
+    <MainCard title="Create Supplier">
       <form
         onSubmit={handleCreateSubmit}
         // autoComplete={"off"}
