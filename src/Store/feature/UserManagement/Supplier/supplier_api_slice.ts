@@ -12,6 +12,7 @@ export const supplier_api_slice = apiSlice.injectEndpoints({
           }),
         },
       }),
+      providesTags: ["Supplier"],
     }),
 
     //create
@@ -21,9 +22,26 @@ export const supplier_api_slice = apiSlice.injectEndpoints({
         method: "POST",
         body: body,
       }),
+      invalidatesTags: (result: any) => {
+        return result ? [{ type: "Supplier" }] : [];
+      },
+    }),
+
+    //delete
+    deleteSupplier: builder.mutation({
+      query: (id: any) => ({
+        url: `delete-supplier/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result: any) => {
+        return result ? [{ type: "Supplier" }] : [];
+      },
     }),
   }),
 });
 
-export const { useGetAllSuppliersQuery, useCreateSupplierMutation } =
-  supplier_api_slice;
+export const {
+  useGetAllSuppliersQuery,
+  useCreateSupplierMutation,
+  useDeleteSupplierMutation,
+} = supplier_api_slice;
