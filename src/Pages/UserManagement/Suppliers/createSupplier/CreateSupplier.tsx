@@ -5,6 +5,7 @@ import CFileInput from "../../../../Utils/CFileInput/CFileInput";
 import { useCreateSupplierMutation } from "../../../../Store/feature/UserManagement/Supplier/supplier_api_slice";
 import { cToastify } from "../../../../Shared";
 import { useNavigate } from "react-router-dom";
+import { decryptData } from "../../../../constant/encrytion";
 
 type supplierDataType = {
   supplierName: string;
@@ -89,6 +90,11 @@ const CreateSupplier = () => {
 
     if (createData.srPhoto instanceof File) {
       formData.append("srPhoto", createData.srPhoto);
+    }
+
+    const vendorId = decryptData("userData")?.user?.vendorId;
+    if (vendorId) {
+      formData.append("vendorId", vendorId);
     }
 
     try {
