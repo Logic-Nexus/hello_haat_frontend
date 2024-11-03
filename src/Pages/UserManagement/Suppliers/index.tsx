@@ -5,24 +5,24 @@ import { IoAddCircle } from "react-icons/io5";
 import NotFoundData from "../../../Components/NotFoundData/NotFoundData";
 import MainTable from "../../../Utils/MainTable/MainTable";
 import { themeColor } from "../../../constant";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../Store/Store";
+// import { useNavigate } from "react-router-dom";
+// import { useAppDispatch } from "../../../Store/Store";
 import { useMemo, useState } from "react";
 import { useGetAllSuppliersQuery } from "../../../Store/feature/UserManagement/Supplier/supplier_api_slice";
 import { FaTrashCan } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 
 const Suppliers = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
-  const [deleteId, setDeleteId] = useState<any>();
-  const [status, setStatus] = useState<string>("ACTIVE");
+  // const [deleteId, setDeleteId] = useState<any>();
+  const [status] = useState<string>("ACTIVE");
 
   const {
     data: suppliersList,
-    isLoading,
+    // isLoading,
     isFetching,
     isSuccess,
   } = useGetAllSuppliersQuery(
