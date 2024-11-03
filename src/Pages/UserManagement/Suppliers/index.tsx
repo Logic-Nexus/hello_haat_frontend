@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { CButton, CPagination } from "../../../Utils";
-import { useNavigate } from "react-router-dom";
-import { useGetAllEmployeesQuery } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
+// import { useNavigate } from "react-router-dom";
+// import { useGetAllEmployeesQuery } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { IoAddCircle } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
@@ -10,12 +10,12 @@ import { Show } from "easy-beauty-components---react";
 import Loader from "../../../Shared/Loader/Loader";
 import { themeColor } from "../../../constant";
 import MainTable from "../../../Utils/MainTable/MainTable";
-import { useAppDispatch } from "../../../Store/Store";
+// import { useAppDispatch } from "../../../Store/Store";
 import { useGetAllSuppliersQuery } from "../../../Store/feature/UserManagement/Supplier_Slice/Supplier_Api_Slice";
 
 const Suppliers = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, isSuccess } = useGetAllSuppliersQuery(
