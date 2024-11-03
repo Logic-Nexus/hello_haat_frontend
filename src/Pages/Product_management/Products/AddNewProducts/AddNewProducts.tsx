@@ -156,8 +156,8 @@ const AddNewProducts = () => {
     <main className="lg:h-auto h-[calc(100vh-9.9rem)]">
       <MainCard title={`Create Product`}>
         <form onSubmit={handleSubmit}>
-          <aside className="grid md:grid-cols-2 gap-4">
-            <section>
+          <aside className="grid md:grid-cols-2 grid-cols-1 gap-4">
+            <section className="md:col-span-1 col-span-2">
               <CInput
                 type="text"
                 id="product_name"
@@ -183,7 +183,7 @@ const AddNewProducts = () => {
                 }}
               />
             </section>
-            <section>
+            <section className="md:col-span-1 col-span-2">
               <CSelect
                 id="product_category_id"
                 name="product_category_id"
@@ -212,7 +212,7 @@ const AddNewProducts = () => {
                 options={productCategoryNameList}
               />
             </section>
-            <section>
+            <section className="md:col-span-1 col-span-2">
               <CSelect
                 id="product_quantity"
                 name="product_quantity"
@@ -238,7 +238,7 @@ const AddNewProducts = () => {
               />
             </section>
 
-            <section>
+            <section className="md:col-span-1 col-span-2">
               <CSelect
                 id="delivery_charge"
                 name="delivery_charge"

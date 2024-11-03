@@ -149,6 +149,11 @@ const Products = () => {
               {item?.product_quantity_type}
             </span>
           ),
+          delivery_charge_type: (
+            <span className="flex justify-center">
+              {item?.delivery_charge_type}
+            </span>
+          ),
           status: (
             <>
               <section className="flex items-center justify-center">
@@ -355,9 +360,9 @@ const Products = () => {
       <CModal
         open={openEditModal}
         onClose={() => setOpenEditModal(false)}
-        title="Edit Product "
+        title="Edit Product"
       >
-        <EditProducts setOpenEditModal={setOpenEditModal} />
+        <EditProducts setOpenEditModal={setOpenEditModal} openEditModal={openEditModal} />
       </CModal>
 
       {/* //view image modal */}
@@ -368,7 +373,7 @@ const Products = () => {
         height="container"
         width="container"
       >
-        <ViewProductImages />
+        <ViewProductImages viewImageModal={viewImageModal} />
       </CModal>
     </MainCard>
   );

@@ -15,10 +15,8 @@ import {
   useProductCategoryActiveInactiveMutation,
   useProductCategoryDeleteMutation,
 } from "../../../Store/feature/Product_management/ProductCategory/ProductCategory_api_slice";
-// import MainTable from "react_dynamic_nested_table";
 import { themeColor } from "../../../constant";
 import { Show } from "easy-beauty-components---react";
-// import Loader from "../../Shared/Loader/Loader";
 import { FaTrashCan } from "react-icons/fa6";
 import { useAppDispatch } from "../../../Store/Store";
 import { setSelectSingleProductCategory } from "../../../Store/feature/Product_management/ProductCategory/productCategory_slice";

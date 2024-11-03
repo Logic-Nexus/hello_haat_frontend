@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import Logo from "../../../Assets/Images/Hello Hatt white.png";
+import Logo from "/public/images/Hello Hatt white.png";
 import NavItem from "./NavItem/NavItem";
 import { CButton } from "../../../Utils";
 import { For } from "easy-beauty-components---react";
@@ -36,7 +36,7 @@ const SideNav = ({
             }  px-4 border-b border-gray-200 gap-3 shadow-lg h-[5rem]`}
       >
         {!isCollapsed && (
-          <img src={""} alt="logo" className="w-2/5 h-auto object-contain" />
+          <img src={Logo} alt="logo" className="w-2/5 h-auto object-contain" />
         )}
         <CButton
           variant="contained"
@@ -69,6 +69,7 @@ const SideNav = ({
                 isCollapsed={isCollapsed}
                 path={link.path}
                 children={link.children} // Pass children if they exist
+                toggleMobileSidebar={toggleMobileSidebar}
               />
             </React.Fragment>
           )}

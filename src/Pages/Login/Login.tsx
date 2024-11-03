@@ -1,5 +1,5 @@
-import LoginImage from "/public/Images/login-image.png";
-import Logo from "/public/Images/Transparent.png";
+import LoginImage from "/public/images/login-image.png";
+import Logo from "/public/images/Transparent.png";
 import { CButton, CInput } from "../../Utils";
 import { useEffect, useState } from "react";
 import CCheckRadio from "../../Utils/CCheckRadio/CCheckRadio";

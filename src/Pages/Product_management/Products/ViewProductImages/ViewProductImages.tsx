@@ -20,7 +20,7 @@ import { warningAlert } from "../../../../Utils/alert-function";
 import { cToastify } from "../../../../Shared";
 import { Show } from "easy-beauty-components---react";
 
-const ViewProductImages = () => {
+const ViewProductImages = ({ viewImageModal }: { viewImageModal: boolean }) => {
   const { selectSingleProduct } = useAppSelector(
     (state) => state.productSlice
   ) as any;
@@ -30,10 +30,10 @@ const ViewProductImages = () => {
     isLoading,
     // error,
   } = useGetProductImagesByProductIdQuery(selectSingleProduct?.id, {
-    refetchOnMountOrArgChange: true,
+    refetchOnMountOrArgChange: false,
     refetchOnReconnect: true,
     refetchOnFocus: true,
-    skip: !selectSingleProduct?.id,
+    skip: !selectSingleProduct?.id || !viewImageModal,
   });
 
   const [deleteProductImage, { isLoading: deleteLoading }] =
@@ -201,7 +201,7 @@ const ViewProductImages = () => {
       }
     >
       {/* Image Gallery */}
-      <section className="mt-4 max-h-[calc(100vh-280px)] overflow-auto">
+      <section className="mt-4 max-h-[calc(100vh-280px)] overflow-auto ">
         <MainTable data={tableData || []} filter dense />
       </section>
 

@@ -7,11 +7,13 @@ const NavItem = ({
   label,
   isCollapsed,
   path,
+  toggleMobileSidebar,
   children,
 }: {
   Icon: IconType;
   label: string;
   isCollapsed: boolean;
+  toggleMobileSidebar: () => void;
   path?: string | "";
   children?: any[];
 }) => {
@@ -56,7 +58,11 @@ const NavItem = ({
         } ${isActive(path) ? "bg-gray-700" : ""}`} // Highlight if active
       >
         <button
-          onClick={() => path && navigate(path)} // Navigate on click
+          onClick={() => {
+            if (!path) return;
+            navigate(path);
+            toggleMobileSidebar();
+          }} // Navigate on click
           className={`flex items-center p-2 rounded-md cursor-pointer w-full transition-colors duration-200 ${
             isCollapsed ? "justify-center" : ""
           } ${isActive(path) ? "bg-gray-700" : ""}`}
@@ -88,7 +94,10 @@ const NavItem = ({
             {children.map((child) => (
               <button
                 key={child.name}
-                onClick={() => navigate(child.path)} // Navigate on click
+                onClick={() => {
+                  navigate(child.path);
+                  toggleMobileSidebar();
+                }} // Navigate on click
                 className={`flex items-center p-2 rounded-md text-white transition-colors duration-200 ${
                   isActive(child?.path) ? "bg-gray-600" : ""
                 }`}
