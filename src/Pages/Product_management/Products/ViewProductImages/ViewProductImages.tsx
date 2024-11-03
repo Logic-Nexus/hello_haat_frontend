@@ -18,7 +18,7 @@ import ToggleSwitch from "../../../../Utils/ToggleSwitch/ToggleSwitch";
 import { FaTrashCan } from "react-icons/fa6";
 import { warningAlert } from "../../../../Utils/alert-function";
 import { cToastify } from "../../../../Shared";
-import { Show } from "easy-beauty-components---react";
+import FullViewImage from "../../../../Components/FullViewImage/FullViewImage";
 
 const ViewProductImages = ({ viewImageModal }: { viewImageModal: boolean }) => {
   const { selectSingleProduct } = useAppSelector(
@@ -207,23 +207,10 @@ const ViewProductImages = ({ viewImageModal }: { viewImageModal: boolean }) => {
 
       {/* Fullscreen Image Modal */}
 
-      <Show when={selectedImage ? true : false}>
-        <section className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
-          <div className="relative">
-            <img
-              src={selectedImage || undefined}
-              alt="Selected Product"
-              className="max-w-full max-h-screen rounded-lg shadow-lg"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 text-white bg-red-800 rounded-full w-8 h-8 focus:outline-none "
-            >
-              ✕
-            </button>
-          </div>
-        </section>
-      </Show>
+      <FullViewImage
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
+      />
 
       {/* Upload Modal */}
 
