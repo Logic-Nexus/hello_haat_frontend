@@ -1,6 +1,12 @@
 import React, { useCallback, useMemo, useState } from "react";
 import MainCard from "../../../Utils/CCard/MainCard";
-import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
+import {
+  CButton,
+  CModal,
+  CPagination,
+  CSelect,
+  CSkeleton,
+} from "../../../Utils";
 import { IoAddCircle } from "react-icons/io5";
 import {
   useDeleteZoneMutation,
@@ -30,7 +36,7 @@ const Zone = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<any>();
-  const [status] = useState<string>("ACTIVE");
+  const [status, setStatus] = useState<string>("ACTIVE");
 
   const {
     data: zoneList,
@@ -276,6 +282,49 @@ const Zone = () => {
     ? `(${zoneList?.data?.results?.length}/${zoneList?.data?.count})`
     : "";
 
+  // ==================== filter section ====================
+  const filterSection = () => {
+    return (
+      <section className="flex items-center space-x-2">
+        <CSelect
+          disabled={isLoading || isFetching}
+          defaultValue={
+            status === "ACTIVE"
+              ? { value: "ACTIVE", label: "Active" }
+              : { value: "INACTIVE", label: "Inactive" }
+          }
+          options={[
+            { value: "ACTIVE", label: "Active" },
+            { value: "INACTIVE", label: "Inactive" },
+          ]}
+          width="md:w-[200px] w-[100px]"
+          classNamePrefix="Select Status"
+          onChange={(e: any) => {
+            setStatus(e?.value);
+          }}
+        />
+
+        <CSelect
+          disabled={isLoading || isFetching}
+          defaultValue={
+            status === "ACTIVE"
+              ? { value: "ACTIVE", label: "Active" }
+              : { value: "INACTIVE", label: "Inactive" }
+          }
+          options={[
+            { value: "ACTIVE", label: "Active" },
+            { value: "INACTIVE", label: "Inactive" },
+          ]}
+          width="md:w-[200px] w-[100px]"
+          classNamePrefix="Select Status"
+          onChange={(e: any) => {
+            setStatus(e?.value);
+          }}
+        />
+      </section>
+    );
+  };
+
   // ==================== navigate to create zone form =================
   const handleNavigateToCreateZoneForm = () => {
     navigate("/vendor/zone/create_zone");
@@ -283,6 +332,7 @@ const Zone = () => {
   return (
     <MainCard
       title={`Zone List ${showCountInData}`}
+      filter={<section className="md:block hidden">{filterSection()}</section>}
       secondary={
         <>
           <CButton
