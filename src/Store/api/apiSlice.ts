@@ -90,6 +90,8 @@ export const apiSlice = createApi({
     "productImages",
     "productCategoryNameListData",
     "Supplier",
+    "product-purchase",
+    "product-stock-report",
   ],
   refetchOnReconnect: true,
 }) as any;

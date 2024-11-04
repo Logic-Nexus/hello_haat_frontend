@@ -36,7 +36,7 @@ const Products = () => {
   const dispatch = useAppDispatch();
   const [deleteId, setDeleteId] = useState<any>();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [viewImageModal, setViewImageModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string>(""); // search state
   const [status, setStatus] = useState<string>("ACTIVE");
@@ -154,6 +154,8 @@ const Products = () => {
               {item?.delivery_charge_type}
             </span>
           ),
+          in_stock: item?.product_stock || "0",
+          MRP_price: item?.product_mrp || "0",
           status: (
             <>
               <section className="flex items-center justify-center">
