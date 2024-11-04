@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const NavItem = ({
   Icon,
+  image,
   label,
   isCollapsed,
   path,
@@ -11,6 +12,7 @@ const NavItem = ({
   children,
 }: {
   Icon: IconType;
+  image: React.ReactNode;
   label: string;
   isCollapsed: boolean;
   toggleMobileSidebar: () => void;
@@ -68,7 +70,10 @@ const NavItem = ({
           } ${isActive(path) ? "bg-gray-700" : ""}`}
         >
           <div className="text-center">
-            <Icon className={`w-5 h-5`} />
+            {typeof image === "string" && (
+              <img src={image} alt="icon" className="w-5 h-5" />
+            )}
+            {Icon && <Icon className={`w-5 h-5`} />}
           </div>
           {/* Show the label only if the sidebar is not collapsed */}
           {!isCollapsed && <span className="ml-4 text-sm">{label}</span>}
@@ -104,7 +109,12 @@ const NavItem = ({
               >
                 {/* Show child icon */}
                 <div className="text-center">
+                  {/* {child.icon && <child.icon className={`w-5 h-5`} />} */}
+
                   {child.icon && <child.icon className={`w-5 h-5`} />}
+                  {typeof child.image === "string" && (
+                    <img src={child.image} alt="icon" className="w-5 h-5" />
+                  )}
                 </div>
                 {/* Show the label only if the sidebar is not collapsed */}
                 {!isCollapsed && (

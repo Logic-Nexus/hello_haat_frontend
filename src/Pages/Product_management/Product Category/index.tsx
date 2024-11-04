@@ -262,10 +262,10 @@ const Product_category = () => {
     >
       {/* table section */}
       <Show
-        when={!isLoading && tableData?.length > 0}
+        when={!isFetching && tableData?.length > 0}
         FallBack={
           <>
-            {isFetching || isLoading ? (
+            {isFetching ? (
               // <Loader />
               <CSkeleton />
             ) : (
@@ -274,7 +274,7 @@ const Product_category = () => {
           </>
         }
       >
-        <section className="max-h-[calc(100vh-280px)] overflow-y-scroll">
+        <section className="max-h-[calc(100vh-290px)] overflow-y-scroll">
           <MainTable
             data={tableData || []}
             filter={tableData || []}

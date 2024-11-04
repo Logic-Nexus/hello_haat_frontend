@@ -20,9 +20,13 @@ const Employees = () => {
 
   const { data, isLoading, isSuccess } = useGetAllEmployeesQuery(
     { status: "ACTIVE", pagination: true, pageNumber: currentPage },
-    { refetchOnReconnect: true }
+    {
+      refetchOnMountOrArgChange: true,
+      refetchOnReconnect: true,
+      refetchOnFocus: true,
+    }
   );
-  console.log("data", data?.data?.results);
+  // console.log("data", data?.data?.results);
 
   const tableData = useMemo(() => {
     if (isSuccess) {
@@ -79,10 +83,10 @@ const Employees = () => {
       });
     }
     return [];
-  }, [data?.data?.results, isSuccess]);
+  }, [data?.data?.results, dispatch, isSuccess, navigate]);
 
   return (
-    <div className="container mx-auto">
+    <>
       <MainCard
         title="All Employees"
         secondary={
@@ -114,7 +118,7 @@ const Employees = () => {
             </>
           }
         >
-          <section className="max-h-[calc(100vh-200px)] overflow-y-scroll">
+          <section className="max-h-[calc(100vh-290px)] overflow-y-scroll">
             <MainTable
               data={tableData || []}
               dense
@@ -140,7 +144,7 @@ const Employees = () => {
           </Show>
         </Show>
       </MainCard>
-    </div>
+    </>
   );
 };
 

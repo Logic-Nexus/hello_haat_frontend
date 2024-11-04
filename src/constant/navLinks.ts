@@ -1,53 +1,71 @@
-import { FaLink } from "react-icons/fa6";
-import { CgProfile } from "react-icons/cg";
+// import { FaLink } from "react-icons/fa6";
+// import { CgProfile } from "react-icons/cg";
 import { IconType } from "react-icons";
-import { TbFilePower } from "react-icons/tb";
+// import { TbFilePower } from "react-icons/tb";
 import { AiFillProduct } from "react-icons/ai";
+
+import dashboard from "/public/svg/dashboard.svg";
+import order from "/public/svg/order.svg";
+import userManagement from "/public/svg/userManagement.svg";
+import productsManagement from "/public/svg/productsManagement.svg";
+import profitLoss from "/public/svg/profitLoss.svg";
+import promotion from "/public/svg/promotion.svg";
+import service from "/public/svg/service.svg";
+import reports from "/public/svg/reports.svg";
+import settings from "/public/svg/settings.svg";
+import employee from "/public/svg/employee.svg";
 
 type NavItem = {
   name: string;
   path?: string;
   icon?: IconType;
+  image?: React.ReactNode;
   children?: NavItem[];
 };
 
 const navLinks: NavItem[] = [
   {
     name: "Dashboard",
-    icon: CgProfile,
+    image: dashboard,
     path: "/vendor",
   },
   {
     name: "All Orders",
-    icon: CgProfile,
+    // icon: CgProfile,
+    image: order,
     path: "all_orders",
   },
 
   {
     name: "User Management",
-    icon: FaLink,
+    // icon: FaLink,
+    image: userManagement,
     children: [
       {
         name: "Employees",
         path: "employees",
-        icon: FaLink,
+        // icon: FaLink,
+        image: employee,
       },
       {
         name: "Customers",
         path: "customers",
-        icon: FaLink,
+        // icon: FaLink,
+        image: employee,
       },
       {
         name: "Suppliers",
         path: "suppliers",
-        icon: FaLink,
+        // icon: FaLink,
+        image: employee,
       },
     ],
   },
 
   {
     name: "Product Management",
-    icon: TbFilePower,
+    // icon: TbFilePower,
+    image: productsManagement,
     children: [
       {
         name: "Product",
@@ -73,7 +91,8 @@ const navLinks: NavItem[] = [
   },
   {
     name: "Income & Expenses",
-    icon: TbFilePower,
+    // icon: TbFilePower,
+    image: profitLoss,
     children: [
       {
         name: "Income",
@@ -99,23 +118,27 @@ const navLinks: NavItem[] = [
   },
   {
     name: "Promotion Management",
-    icon: TbFilePower,
+    // icon: TbFilePower,
+    image: promotion,
     children: [
       {
         name: "Coupon",
         path: "coupon",
-        icon: AiFillProduct,
+        // icon: AiFillProduct,
+        image: promotion,
       },
       {
         name: "Banner",
         path: "banner",
-        icon: AiFillProduct,
+        // icon: AiFillProduct,
+        image: promotion,
       },
     ],
   },
   {
     name: "Service",
-    icon: TbFilePower,
+    // icon: TbFilePower,
+    image: service,
     children: [
       {
         name: "Mobile Recharge",
@@ -136,38 +159,45 @@ const navLinks: NavItem[] = [
   },
   {
     name: "Reports",
-    icon: TbFilePower,
+    // icon: TbFilePower,
+    image: reports,
     children: [
       {
         name: "Business Report",
         path: "business_report",
-        icon: AiFillProduct,
+        // icon: AiFillProduct,
+        image: reports,
       },
       {
         name: "Stock Report",
         path: "stock_report",
-        icon: AiFillProduct,
+        // icon: AiFillProduct,
+        image: reports,
       },
     ],
   },
   {
     name: "Settings",
-    icon: TbFilePower,
+    // icon: TbFilePower,
+    image: settings,
     children: [
       {
         name: "Admin Settings",
         path: "admin_settings",
-        icon: AiFillProduct,
+        // icon: AiFillProduct,
+        image: settings,
       },
       {
         name: "Zone Settings",
         path: "zone",
-        icon: AiFillProduct,
+        // icon: AiFillProduct,
+        image: settings,
       },
       {
         name: "Delivery Charge Settings",
         path: "delivery_charge_settings",
-        icon: AiFillProduct,
+        // icon: AiFillProduct,
+        image: settings,
       },
     ],
   },

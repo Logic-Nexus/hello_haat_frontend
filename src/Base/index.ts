@@ -5,8 +5,8 @@
 
 const config = {
   development: {
-  //   APIURL: "http://localhost:4000/api/v1",
-  //   SOCKETURL: "http://localhost:4000",
+    // APIURL: "http://localhost:4000/api/v1",
+    // SOCKETURL: "http://localhost:4000",
     APIURL: "https://quick-shop-backend-phiq.onrender.com/api/v1",
     SOCKETURL: "https://quick-shop-backend-phiq.onrender.com",
   },
