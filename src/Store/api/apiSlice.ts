@@ -66,10 +66,10 @@ const baseQueryWithRetry = async (
       icon: "error",
       title: "Session Expired",
       text: "Please login again",
+    }).then(() => {
+      localStorage.setItem("userData", JSON.stringify({}));
+      window.location.reload();
     });
-
-    localStorage.setItem("userData", JSON.stringify({}));
-    window.location.reload();
 
     return result;
   } else {
