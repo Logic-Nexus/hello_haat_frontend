@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
 import { MdEdit } from "react-icons/md";
 import { FaTrashCan } from "react-icons/fa6";
