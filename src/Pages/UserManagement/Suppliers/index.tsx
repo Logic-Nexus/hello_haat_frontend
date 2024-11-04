@@ -27,10 +27,13 @@ import FullViewImage from "../../../Components/FullViewImage/FullViewImage";
 import { warningAlert } from "../../../Utils/alert-function";
 import { cToastify } from "../../../Shared";
 import ToggleSwitch from "../../../Utils/ToggleSwitch/ToggleSwitch";
+import EditSupplier from "./EditSupplier/EditSupplier";
+import { setSelectedSingleSupplier } from "../../../Store/feature/UserManagement/Supplier/supplierSlice";
+import { useAppDispatch } from "../../../Store/Store";
 
 const Suppliers = () => {
   const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -204,8 +207,8 @@ const Suppliers = () => {
                 tooltipPosition="top-end"
                 className="w-8 h-8"
                 onClick={() => {
-                  // dispatch(setSelectSingleEmployee(item));
-                  // navigate("/vendor/employees/editEmployee");
+                  dispatch(setSelectedSingleSupplier(item));
+                  setOpenEditModal(true);
                 }}
               >
                 <section className="text-md">
@@ -242,6 +245,7 @@ const Suppliers = () => {
     deleteId,
     isLoadingDelete,
     handleToggleStatus,
+    dispatch,
     handleDelete,
   ]);
 
@@ -380,14 +384,14 @@ const Suppliers = () => {
       <CModal
         open={openEditModal}
         onClose={() => setOpenEditModal(false)}
-        title="Edit Zone"
+        title="Edit Supplier"
         width="max-w-2xl"
         height="container"
       >
-        {/* <EditZone
+        <EditSupplier
           setOpenEditModal={setOpenEditModal}
           openEditModal={openEditModal}
-        /> */}
+        />
       </CModal>
     </MainCard>
   );

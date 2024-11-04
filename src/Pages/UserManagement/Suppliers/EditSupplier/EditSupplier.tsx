@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import MainCard from "../../../../Utils/CCard/MainCard";
+import React, { useEffect, useState } from "react";
+import { useEditSupplierMutation } from "../../../../Store/feature/UserManagement/Supplier/supplier_api_slice";
+import { cToastify } from "../../../../Shared";
 import { CButton, CInput } from "../../../../Utils";
 import CFileInput from "../../../../Utils/CFileInput/CFileInput";
-import { useCreateSupplierMutation } from "../../../../Store/feature/UserManagement/Supplier/supplier_api_slice";
-import { cToastify } from "../../../../Shared";
-import { useNavigate } from "react-router-dom";
-import { decryptData } from "../../../../constant/encrytion";
+import { useAppDispatch, useAppSelector } from "../../../../Store/Store";
+import { setSelectedSingleSupplier } from "../../../../Store/feature/UserManagement/Supplier/supplierSlice";
 
 type supplierDataType = {
   supplierName: string;
@@ -16,8 +15,8 @@ type supplierDataType = {
   dealerContactNo: string;
   dealerEmail: string;
   dealerAddress: string;
-  companyLogo: File | null;
-  srPhoto: File | null;
+  companyLogo?: File | null;
+  srPhoto?: File | null;
 };
 
 const DEFAULT_SUPPLIER_DATA: supplierDataType = {
@@ -32,9 +31,15 @@ const DEFAULT_SUPPLIER_DATA: supplierDataType = {
   companyLogo: null,
   srPhoto: null,
 };
-
-const CreateSupplier = () => {
-  const navigate = useNavigate();
+const EditSupplier = ({
+  setOpenEditModal,
+}: {
+  setOpenEditModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const dispatch = useAppDispatch();
+  const { selectedSingleSupplier } = useAppSelector(
+    (state) => state.supplierSlice
+  ) as any;
   const [createData, setCreateData] = useState<supplierDataType>(
     DEFAULT_SUPPLIER_DATA
   );
@@ -50,8 +55,38 @@ const CreateSupplier = () => {
     error_for_dealer_address: false,
   });
 
-  const [createSupplier, { isLoading }] = useCreateSupplierMutation();
-  const handleCreateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const [editSupplier, { isLoading }] = useEditSupplierMutation();
+
+  useEffect(() => {
+    if (selectedSingleSupplier?.id) {
+      setCreateData({
+        supplierName: selectedSingleSupplier?.supplierName,
+        srName: selectedSingleSupplier?.srName,
+        srContactNo: selectedSingleSupplier?.srContactNo,
+        srWhatsappNo: selectedSingleSupplier?.srWhatsappNo,
+        dealerName: selectedSingleSupplier?.dealerName,
+        dealerContactNo: selectedSingleSupplier?.dealerContactNo,
+        dealerEmail: selectedSingleSupplier?.dealerEmail,
+        dealerAddress: selectedSingleSupplier?.dealerAddress,
+        companyLogo: selectedSingleSupplier?.companyLogo?.url,
+        srPhoto: selectedSingleSupplier?.srPhoto?.url,
+      });
+    }
+  }, [
+    selectedSingleSupplier?.dealerAddress,
+    selectedSingleSupplier?.dealerContactNo,
+    selectedSingleSupplier?.dealerEmail,
+    selectedSingleSupplier?.dealerName,
+    selectedSingleSupplier?.id,
+    selectedSingleSupplier?.srContactNo,
+    selectedSingleSupplier?.srName,
+    selectedSingleSupplier?.srWhatsappNo,
+    selectedSingleSupplier?.supplierName,
+    selectedSingleSupplier?.companyLogo?.url,
+    selectedSingleSupplier?.srPhoto?.url,
+  ]);
+
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       !createData.supplierName ||
@@ -76,11 +111,42 @@ const CreateSupplier = () => {
       return;
     }
 
+    //first check  createData and the selectedSingleSupplier data is same or not
+    //if same then no need to update
+    //if not same then update the data
+
+    if (
+      createData.supplierName === selectedSingleSupplier.supplierName &&
+      createData.srName === selectedSingleSupplier.srName &&
+      createData.srContactNo === selectedSingleSupplier.srContactNo &&
+      createData.srWhatsappNo === selectedSingleSupplier.srWhatsappNo &&
+      createData.dealerName === selectedSingleSupplier.dealerName &&
+      createData.dealerContactNo === selectedSingleSupplier.dealerContactNo &&
+      createData.dealerEmail === selectedSingleSupplier.dealerEmail &&
+      createData.dealerAddress === selectedSingleSupplier.dealerAddress &&
+      createData.companyLogo === selectedSingleSupplier.companyLogo?.url &&
+      createData.srPhoto === selectedSingleSupplier.srPhoto?.url
+    ) {
+      cToastify({
+        type: "error",
+        message: "No changes found to update",
+      });
+      return;
+    }
+
     const formData = new FormData();
 
     for (const key in createData) {
-      if (createData[key as keyof supplierDataType]) {
+      //only change the data which is different
+      if (
+        createData[key as keyof supplierDataType] !==
+        selectedSingleSupplier[key as keyof supplierDataType]
+      ) {
         formData.append(key, createData[key as keyof supplierDataType] as any);
+        //remove logo and photo from the data
+        if (key === "companyLogo" || key === "srPhoto") {
+          formData.delete(key);
+        }
       }
     }
 
@@ -92,24 +158,20 @@ const CreateSupplier = () => {
       formData.append("srPhoto", createData.srPhoto);
     }
 
-    const vendorId = decryptData("userData")?.user?.vendorId;
-    if (vendorId) {
-      formData.append("vendorId", vendorId);
-    }
-
     try {
-      const res = await createSupplier({
+      const res = await editSupplier({
+        supplierId: selectedSingleSupplier?.id,
         body: formData,
       }).unwrap();
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         cToastify({
           type: "success",
-          message: "Supplier Created Successfully",
+          message: "Supplier Updated Successfully",
         });
-        navigate(-1);
+        setOpenEditModal(false);
       }
-
+      dispatch(setSelectedSingleSupplier(null));
       setCreateData(DEFAULT_SUPPLIER_DATA);
     } catch (err: any) {
       console.log("Error", err);
@@ -123,9 +185,9 @@ const CreateSupplier = () => {
   };
 
   return (
-    <MainCard title="Create Supplier">
+    <>
       <form
-        onSubmit={handleCreateSubmit}
+        onSubmit={handleEditSubmit}
         // autoComplete={"off"}
         // autoCorrect="off"
       >
@@ -265,10 +327,23 @@ const CreateSupplier = () => {
           </section>
 
           <section>
+            {createData.companyLogo && (
+              <PreviewImage
+                image={createData.companyLogo}
+                name="Company Logo"
+                handleSetData={() =>
+                  setCreateData({
+                    ...createData,
+                    companyLogo: selectedSingleSupplier?.companyLogo?.url,
+                  })
+                }
+              />
+            )}
+
             <CFileInput
               type="file"
               id="companyLogo"
-              files={createData.companyLogo}
+              files={createData?.companyLogo}
               placeholder="Upload Company Logo"
               label="Company Logo"
               name="companyLogo"
@@ -282,6 +357,18 @@ const CreateSupplier = () => {
             />
           </section>
           <section>
+            {createData.srPhoto && (
+              <PreviewImage
+                image={createData.srPhoto}
+                name="SR Photo"
+                handleSetData={() =>
+                  setCreateData({
+                    ...createData,
+                    srPhoto: selectedSingleSupplier?.srPhoto?.url,
+                  })
+                }
+              />
+            )}
             <CFileInput
               type="file"
               id="srPhoto"
@@ -302,12 +389,45 @@ const CreateSupplier = () => {
 
         <div className="my-4 p-1 flex justify-end">
           <CButton loading={isLoading} variant="outline" type="submit">
-            Create
+            Update
           </CButton>
         </div>
       </form>
-    </MainCard>
+    </>
   );
 };
 
-export default CreateSupplier;
+export default EditSupplier;
+
+const PreviewImage = ({
+  image,
+  name,
+  handleSetData,
+}: {
+  image: File | string;
+  name: string;
+  handleSetData: () => void;
+}) => {
+  return (
+    <div className="w-36 h-36 mx-auto border rounded-lg shadow relative">
+      {typeof image === "string" && (
+        <img src={image} alt={name} className="w-full h-full object-contain" />
+      )}
+      {image instanceof File && (
+        <>
+          <img
+            src={URL.createObjectURL(image)}
+            alt={name}
+            className="w-full h-full object-contain"
+          />
+          <button
+            onClick={handleSetData}
+            className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full w-8 h-8 focus:outline-none"
+          >
+            X
+          </button>
+        </>
+      )}
+    </div>
+  );
+};

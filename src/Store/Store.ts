@@ -6,6 +6,7 @@ import productCategorySlice from "./feature/Product_management/ProductCategory/p
 import productSlice from "./feature/Product_management/Product/products_slice";
 import employeeSlice from "./feature/UserManagement/Employee_Slice/Employee_Slice";
 import zoneSlice from "./feature/Zone/zoneSlice";
+import supplierSlice from "./feature/UserManagement/Supplier/supplierSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     productSlice,
     employeeSlice,
     zoneSlice,
+    supplierSlice,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>

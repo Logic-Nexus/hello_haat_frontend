@@ -49,6 +49,18 @@ export const supplier_api_slice = apiSlice.injectEndpoints({
         return result ? [{ type: "Supplier" }] : [];
       },
     }),
+
+    //edit supplier
+    editSupplier: builder.mutation({
+      query: ({ supplierId, body }: { supplierId: any; body: any }) => ({
+        url: `update-supplier/${supplierId}`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: (result: any) => {
+        return result ? [{ type: "Supplier" }] : [];
+      },
+    }),
   }),
 });
 
@@ -57,4 +69,5 @@ export const {
   useCreateSupplierMutation,
   useDeleteSupplierMutation,
   useSupplierActiveInactiveStatusMutation,
+  useEditSupplierMutation,
 } = supplier_api_slice;
