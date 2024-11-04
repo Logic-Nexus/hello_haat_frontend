@@ -412,7 +412,7 @@ const Zone = () => {
           </>
         }
       >
-        <section className="max-h-[calc(100vh-280px)] overflow-y-scroll">
+        <section className="max-h-[calc(100vh-290px)] overflow-y-scroll">
           <MainTable
             data={tableData || []}
             filter={tableData || []}

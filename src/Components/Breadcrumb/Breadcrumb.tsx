@@ -13,7 +13,10 @@ const Breadcrumb: React.FC = () => {
   }
 
   return (
-    <nav className="flex my-2 mx-4" aria-label="Breadcrumb">
+    <nav
+      className="flex mt-2 mx-1 bg-white px-4 py-2 rounded shadow"
+      aria-label="Breadcrumb"
+    >
       <ol className="inline-flex items-center space-x-1 md:space-x-1">
         {pathnames?.map((value, index) => {
           // Construct the route to this part of the breadcrumb
