@@ -388,10 +388,7 @@ const Suppliers = () => {
         width="max-w-2xl"
         height="container"
       >
-        <EditSupplier
-          setOpenEditModal={setOpenEditModal}
-          openEditModal={openEditModal}
-        />
+        <EditSupplier setOpenEditModal={setOpenEditModal} />
       </CModal>
     </MainCard>
   );
