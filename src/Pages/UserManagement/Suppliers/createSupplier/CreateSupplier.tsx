@@ -155,7 +155,7 @@ const CreateSupplier = () => {
               tooltip={error?.error_for_sr_name}
               tooltipPosition="right"
               tooltipContent="SR name is required"
-              errorQuery={error?.error_for_username}
+              errorQuery={error?.error_for_sr_name}
               tooltipVariant="error"
               onChange={(e) => {
                 setCreateData({ ...createData, srName: e.target.value });
