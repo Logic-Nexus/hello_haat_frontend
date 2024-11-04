@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import {
   BaseQueryFn,
   createApi,
@@ -66,10 +63,10 @@ const baseQueryWithRetry = async (
       icon: "error",
       title: "Session Expired",
       text: "Please login again",
+    }).then(() => {
+      localStorage.setItem("userData", JSON.stringify({}));
+      window.location.reload();
     });
-
-    localStorage.setItem("userData", JSON.stringify({}));
-    window.location.reload();
 
     return result;
   } else {

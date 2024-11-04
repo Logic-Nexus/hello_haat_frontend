@@ -1,9 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import textFormatter from "text-formatter-js";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 // Breadcrumb Component
 const Breadcrumb: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
   //   console.log(pathnames);
@@ -14,7 +16,7 @@ const Breadcrumb: React.FC = () => {
 
   return (
     <nav
-      className="flex mt-2 mx-1 bg-white px-4 py-2 rounded shadow"
+      className="flex mt-2 mx-1 bg-white px-4 py-2 rounded shadow justify-between"
       aria-label="Breadcrumb"
     >
       <ol className="inline-flex items-center space-x-1 md:space-x-1">
@@ -30,14 +32,14 @@ const Breadcrumb: React.FC = () => {
                 <>
                   <Link
                     to={to}
-                    className="text-gray-700 hover:text-gray-900 hover:underline text-sm"
+                    className="text-gray-700 hover:text-gray-900 hover:underline sm:text-sm text-xs"
                   >
                     {textFormatter(value)}
                   </Link>
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-1 text-gray-400">/</span>
                 </>
               ) : (
-                <section className="text-sm">
+                <section className="sm:text-sm text-xs">
                   <span className="text-gray-500"> {textFormatter(value)}</span>
                 </section>
               )}
@@ -45,6 +47,16 @@ const Breadcrumb: React.FC = () => {
           );
         })}
       </ol>
+      {/* //button for back to previous page if in nested route */}
+      <IoArrowBackCircleSharp
+        style={{
+          display: pathnames.length <= 2 ? "none" : "block",
+        }}
+        className="text-primary text-2xl cursor-pointer w-8 h-8"
+        onClick={() => {
+          navigate(-1);
+        }}
+      />
     </nav>
   );
 };

@@ -29,9 +29,33 @@ export const supplier_api_slice = apiSlice.injectEndpoints({
 
     //delete
     deleteSupplier: builder.mutation({
-      query: (id: any) => ({
-        url: `delete-supplier/${id}`,
+      query: ({ supplierId }: { supplierId: any }) => ({
+        url: `suppliers/${supplierId}`,
         method: "DELETE",
+      }),
+      invalidatesTags: (result: any) => {
+        return result ? [{ type: "Supplier" }] : [];
+      },
+    }),
+
+    //active-inactive status
+    supplierActiveInactiveStatus: builder.mutation({
+      query: ({ supplierId, body }: { supplierId: any; body: any }) => ({
+        url: `suppliers/active-inactive/${supplierId}`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: (result: any) => {
+        return result ? [{ type: "Supplier" }] : [];
+      },
+    }),
+
+    //edit supplier
+    editSupplier: builder.mutation({
+      query: ({ supplierId, body }: { supplierId: any; body: any }) => ({
+        url: `update-supplier/${supplierId}`,
+        method: "PUT",
+        body,
       }),
       invalidatesTags: (result: any) => {
         return result ? [{ type: "Supplier" }] : [];
@@ -44,4 +68,6 @@ export const {
   useGetAllSuppliersQuery,
   useCreateSupplierMutation,
   useDeleteSupplierMutation,
+  useSupplierActiveInactiveStatusMutation,
+  useEditSupplierMutation,
 } = supplier_api_slice;
