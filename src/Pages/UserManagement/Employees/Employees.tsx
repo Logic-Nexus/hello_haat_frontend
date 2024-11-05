@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { CButton, CPagination } from "../../../Utils";
+import { CButton, CInput, CPagination } from "../../../Utils";
 import { useNavigate } from "react-router-dom";
 import { useGetAllEmployeesQuery } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { IoAddCircle } from "react-icons/io5";
@@ -12,14 +12,17 @@ import { themeColor } from "../../../constant";
 import MainTable from "../../../Utils/MainTable/MainTable";
 import { useAppDispatch } from "../../../Store/Store";
 import { setSelectSingleEmployee } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Slice";
+import { FaSearch } from "react-icons/fa";
 
 const Employees = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState<string>("");
+  const [employeeID, setEmployeeID] = useState<string | null>(null);
 
-  const { data, isLoading, isSuccess } = useGetAllEmployeesQuery(
-    { status: "ACTIVE", pagination: true, pageNumber: currentPage },
+  const { data, isLoading, isSuccess, isFetching } = useGetAllEmployeesQuery(
+    { status: "ACTIVE", ...(employeeID && { employeeUniqueID: employeeID }), pagination: true, pageNumber: currentPage },
     {
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
@@ -59,12 +62,15 @@ const Employees = () => {
                 id="tooltip-edit"
                 tooltipContent="Edit Product Category"
                 tooltipPosition="top-end"
+                className="w-8 h-8"
                 onClick={() => {
                   dispatch(setSelectSingleEmployee(item));
                   navigate("/vendor/employees/editEmployee");
                 }}
               >
-                <MdEdit />
+                <section className="text-md">
+                  <MdEdit />
+                </section>
               </CButton>
               <CButton
                 variant="contained"
@@ -72,10 +78,13 @@ const Employees = () => {
                 color="bg-red-500 text-white dark:bg-red-600 dark:text-white hover:bg-red-700 dark:hover:bg-red-800"
                 tooltip
                 id="tooltip-delete"
+                className="w-8 h-8"
                 tooltipContent="Delete Product Category"
                 tooltipPosition="right"
               >
-                <FaTrashCan />
+                <section className="text-md">
+                  <FaTrashCan />
+                </section>
               </CButton>
             </section>
           ),
@@ -85,10 +94,45 @@ const Employees = () => {
     return [];
   }, [data?.data?.results, dispatch, isSuccess, navigate]);
 
+  // ==================== filter section ====================
+  const filterSection = () => {
+    return (
+      <section className="flex items-center space-x-2">
+        <CInput
+          width="md:w-[200px] w-[100px]"
+          placeholder="Search Employee"
+          disabled={isLoading || isFetching}
+          onChange={(e: any) => {
+            if (e.target.value === "") {
+              setEmployeeID("");
+            }
+            setSearch(e.target.value);
+          }}
+          value={search}
+          id="search"
+          endIcon={
+            <FaSearch
+              color={themeColor?.primary}
+              className="cursor-pointer"
+              onClick={() => {
+                //before set search value remove space from start and end
+                const regex = /^\s+|\s+$/g;
+                const searchValue = search.replace(regex, "");
+                setEmployeeID(searchValue);
+                setCurrentPage(1);
+              }}
+            />
+          }
+        />
+      </section>
+    );
+  };
+
   return (
     <>
       <MainCard
         title="All Employees"
+        filter={<section className="md:block hidden">{filterSection()}</section>}
         secondary={
           <>
             <CButton
