@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllEmployeesQuery } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { IoAddCircle } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdFullscreen } from "react-icons/md";
 import MainCard from "../../../Utils/CCard/MainCard";
 import { Show } from "easy-beauty-components---react";
 import Loader from "../../../Shared/Loader/Loader";
@@ -13,6 +13,7 @@ import MainTable from "../../../Utils/MainTable/MainTable";
 import { useAppDispatch } from "../../../Store/Store";
 import { setSelectSingleEmployee } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Slice";
 import { FaSearch } from "react-icons/fa";
+import FullViewImage from "../../../Components/FullViewImage/FullViewImage";
 
 const Employees = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Employees = () => {
   const [search, setSearch] = useState<string>("");
   const [employeeID, setEmployeeID] = useState<string | null>(null);
   const [role, setRole] = useState("");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const { data, isLoading, isSuccess, isFetching } = useGetAllEmployeesQuery(
     { status: "ACTIVE", ...(employeeID && { employeeUniqueID: employeeID }), pagination: true, pageNumber: currentPage, role },
@@ -38,14 +40,29 @@ const Employees = () => {
         return {
           employee_id: item.employeeID,
           profile_picture: item?.profile_picture?.url ? (
-            <section className="flex items-center justify-center">
+            <section className="flex items-center justify-center relative">
               <img
                 src={item?.profile_picture?.url}
                 alt="profile-picture"
-                loading="lazy"
-                style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                className="lg:w-20 lg:h-20 w-10 h-10 object-contain rounded shadow-md cursor-pointer"
+                onClick={() => setSelectedImage(item?.profile_picture?.url)}
               />
+              {/* //full screen icon  */}
+              <div className="absolute top-0 right-0 p-2 md:block hidden">
+                <MdFullscreen
+                  className="text-2xl cursor-pointer"
+                  onClick={() => setSelectedImage(item?.profile_picture?.url)}
+                />
+              </div>
             </section>
+            // <section className="flex items-center justify-center">
+            //   <img
+            //     src={item?.profile_picture?.url}
+            //     alt="profile-picture"
+            //     loading="lazy"
+            //     style={{ width: "60px", height: "60px", objectFit: "cover" }}
+            //   />
+            // </section>
           ) : (
             <>No Image</>
           ),
@@ -203,6 +220,13 @@ const Employees = () => {
             />
           </Show>
         </Show>
+
+        {/* Fullscreen Image Modal */}
+
+      <FullViewImage
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
+      />
       </MainCard>
     </>
   );
