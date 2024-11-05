@@ -47,6 +47,11 @@ const CreateZone = React.lazy(
   () => import("../Pages/Settings/Zone/CreateZone/CreateZone")
 );
 const Vendors = React.lazy(() => import("../Pages/Vendors"));
+const PurchaseProduct = React.lazy(
+  () => import("../Pages/Product_management/PurchaseProduct")
+);
+
+const StockReport = React.lazy(() => import("../Pages/Reports/StockReport"));
 export {
   Home,
   Error,
@@ -65,4 +70,6 @@ export {
   CreateZone,
   Suppliers,
   CreateSupplier,
+  PurchaseProduct,
+  StockReport,
 };

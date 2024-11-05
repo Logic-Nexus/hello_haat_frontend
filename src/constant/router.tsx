@@ -18,7 +18,9 @@ import {
   Zone,
   CreateZone,
   Suppliers,
-  CreateSupplier
+  CreateSupplier,
+  PurchaseProduct,
+  StockReport
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -94,6 +96,21 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <AddProductCategory />
+              </SuspenseGlobal>
+            ),
+          },
+        ],
+      },
+
+      //Purchase Product
+      {
+        path: "purchase",
+        children: [
+          {
+            path: "",
+            element: (
+              <SuspenseGlobal>
+                <PurchaseProduct />
               </SuspenseGlobal>
             ),
           },
@@ -183,6 +200,20 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <CreateSupplier />
+              </SuspenseGlobal>
+            ),
+          },
+        ],
+      },
+      //Reports
+      {
+        path: "stock_report",
+        children: [
+          {
+            path: "",
+            element: (
+              <SuspenseGlobal>
+                <StockReport />
               </SuspenseGlobal>
             ),
           },

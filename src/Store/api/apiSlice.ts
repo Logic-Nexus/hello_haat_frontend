@@ -57,16 +57,29 @@ const baseQueryWithRetry = async (
   // const dispatch = api.dispatch;
   // console.log(api);
   // console.log('result', result?.meta?.response?.status);
-  else if (result?.meta?.response?.status === 401) {
+
+  let count = 0;
+
+  if (result?.meta?.response?.status === 401) {
     // api.dispatch(logOut());
-    Swal.fire({
-      icon: "error",
-      title: "Session Expired",
-      text: "Please login again",
-    }).then(() => {
+
+    if (count > 1) {
       localStorage.setItem("userData", JSON.stringify({}));
       window.location.reload();
-    });
+      count = 0;
+      return;
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Session Expired",
+        text: "Please login again",
+      }).then(() => {
+        localStorage.setItem("userData", JSON.stringify({}));
+        window.location.reload();
+        count++;
+        return;
+      });
+    }
 
     return result;
   } else {
@@ -90,6 +103,8 @@ export const apiSlice = createApi({
     "productImages",
     "productCategoryNameListData",
     "Supplier",
+    "product-purchase",
+    "product-stock-report",
   ],
   refetchOnReconnect: true,
 }) as any;

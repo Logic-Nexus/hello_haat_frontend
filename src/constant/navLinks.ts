@@ -174,6 +174,12 @@ const navLinks: NavItem[] = [
         // icon: AiFillProduct,
         image: reports,
       },
+      {
+        name: "Profit/Loss Report",
+        path: "profit_loss_report",
+        // icon: AiFillProduct,
+        image: reports,
+      },
     ],
   },
   {
