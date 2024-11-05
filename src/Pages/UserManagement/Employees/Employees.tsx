@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { CButton, CInput, CPagination } from "../../../Utils";
+import { CButton, CInput, CPagination, CSelect } from "../../../Utils";
 import { useNavigate } from "react-router-dom";
 import { useGetAllEmployeesQuery } from "../../../Store/feature/UserManagement/Employee_Slice/Employee_Api_Slice";
 import { IoAddCircle } from "react-icons/io5";
@@ -20,9 +20,10 @@ const Employees = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState<string>("");
   const [employeeID, setEmployeeID] = useState<string | null>(null);
+  const [role, setRole] = useState("");
 
   const { data, isLoading, isSuccess, isFetching } = useGetAllEmployeesQuery(
-    { status: "ACTIVE", ...(employeeID && { employeeUniqueID: employeeID }), pagination: true, pageNumber: currentPage },
+    { status: "ACTIVE", ...(employeeID && { employeeUniqueID: employeeID }), pagination: true, pageNumber: currentPage, role },
     {
       refetchOnMountOrArgChange: true,
       refetchOnReconnect: true,
@@ -123,6 +124,21 @@ const Employees = () => {
               }}
             />
           }
+        />
+
+        <CSelect
+          disabled={isLoading || isFetching}
+          value={role}
+          options={[
+            { value: "OPERATOR", label: "Operator" },
+            { value: "REPRESENTATIVE", label: "Representative" },
+            { value: "RAIDER", label: "Rider" },
+          ]}
+          width="md:w-[200px] w-[100px]"
+          classNamePrefix="Select Role"
+          onChange={(e: any) => {
+            setRole(e?.value);
+          }}
         />
       </section>
     );
