@@ -47,6 +47,14 @@ const StockReport = () => {
               </small>
             </span>
           ),
+          zone: (
+            <span className="flex justify-start flex-col">
+              {item.zone?.zone_name}
+              <small className="font-bold">
+                Operator: {item.zone?.operator?.employeeID}
+              </small>
+            </span>
+          ),
 
           stock: (
             <span className="flex justify-center">{item?.product_stock}</span>
@@ -65,6 +73,11 @@ const StockReport = () => {
           sold: (
             <span className="flex justify-center">
               {item?.product_sold_quantity}
+            </span>
+          ),
+          total_sold: (
+            <span className="flex justify-center">
+              {item?.product?.product_inventory?.quantitySold}
             </span>
           ),
 
