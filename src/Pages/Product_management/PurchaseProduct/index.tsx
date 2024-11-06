@@ -10,8 +10,10 @@ import MainTable from "../../../Utils/MainTable/MainTable";
 import { themeColor } from "../../../constant";
 import { useGetProductPurchaseQuery } from "../../../Store/feature/Product_management/PurchaseProduct/PurchaseProduct_api_slice";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const PurchaseProduct = () => {
+  const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -36,7 +38,7 @@ const PurchaseProduct = () => {
       return productPurchaseData?.data?.results?.map((item: any) => {
         return {
           purchase_id: item.purchaseUniqueId,
-          purchase_date: moment(item.createdAt).format("DD-MM-YYYY hh:mm A"),
+          purchase_date: moment(item.purchase_date).format("DD-MM-YYYY hh:mm A"),
           product: (
             <span className="flex justify-start flex-col">
               {item.product?.product_name}
@@ -95,7 +97,7 @@ const PurchaseProduct = () => {
                 circle
                 tooltip
                 id="tooltip-edit"
-                tooltipContent="Edit Product Category"
+                tooltipContent="Edit Product Purchase"
                 tooltipPosition="top-end"
                 className="w-8 h-8"
                 onClick={() => {
@@ -138,6 +140,10 @@ const PurchaseProduct = () => {
     ? `(${productPurchaseData?.data?.results?.length}/${productPurchaseData?.data?.count})`
     : "";
 
+  const handleNavigateToProductPurchaseForm = () => {
+    navigate("/vendor/purchase/purchase_product");
+  };
+
   return (
     <MainCard
       title={`All Purchase Products ${showCountInData}`}
@@ -149,9 +155,9 @@ const PurchaseProduct = () => {
             color="text-primary"
             tooltip
             id="tooltip"
-            tooltipContent="Create Product Category"
+            tooltipContent="Create Product Purchase"
             tooltipPosition="top-end"
-            // onClick={handleNavigateToProductCategoryForm}
+            onClick={handleNavigateToProductPurchaseForm}
           >
             <IoAddCircle size={30} />
           </CButton>

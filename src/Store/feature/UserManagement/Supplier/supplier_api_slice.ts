@@ -61,6 +61,18 @@ export const supplier_api_slice = apiSlice.injectEndpoints({
         return result ? [{ type: "Supplier" }] : [];
       },
     }),
+
+    // suppliers-name-list
+    getSuppliersNameList: builder.query({
+      query: ({ status }: any) => ({
+        url: "suppliers-name-list",
+        method: "GET",
+        params: {
+          status: status,
+        },
+      }),
+      providesTags: ["Supplier"],
+    }),
   }),
 });
 
@@ -70,4 +82,9 @@ export const {
   useDeleteSupplierMutation,
   useSupplierActiveInactiveStatusMutation,
   useEditSupplierMutation,
+  useGetSuppliersNameListQuery,
+
+  //lazy
+  useLazyGetAllSuppliersQuery,
+  useLazyGetSuppliersNameListQuery,
 } = supplier_api_slice;

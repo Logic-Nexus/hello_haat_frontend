@@ -20,7 +20,8 @@ import {
   Suppliers,
   CreateSupplier,
   PurchaseProduct,
-  StockReport
+  StockReport,
+  CreateProductPurchase,
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -111,6 +112,14 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <PurchaseProduct />
+              </SuspenseGlobal>
+            ),
+          },
+          {
+            path: "purchase_product",
+            element: (
+              <SuspenseGlobal>
+                <CreateProductPurchase />
               </SuspenseGlobal>
             ),
           },
