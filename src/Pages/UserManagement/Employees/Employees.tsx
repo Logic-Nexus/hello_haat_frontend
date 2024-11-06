@@ -32,7 +32,6 @@ const Employees = () => {
       refetchOnFocus: true,
     }
   );
-  // console.log("data", data?.data?.results);
 
   const tableData = useMemo(() => {
     if (isSuccess) {
@@ -55,14 +54,6 @@ const Employees = () => {
                 />
               </div>
             </section>
-            // <section className="flex items-center justify-center">
-            //   <img
-            //     src={item?.profile_picture?.url}
-            //     alt="profile-picture"
-            //     loading="lazy"
-            //     style={{ width: "60px", height: "60px", objectFit: "cover" }}
-            //   />
-            // </section>
           ) : (
             <>No Image</>
           ),

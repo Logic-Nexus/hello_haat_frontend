@@ -41,8 +41,10 @@ const AddNewProducts = React.lazy(
   () =>
     import("../Pages/Product_management/Products/AddNewProducts/AddNewProducts")
 );
-
+// settings
 const Zone = React.lazy(() => import("../Pages/Settings/Zone"));
+const DeliveryCharge = React.lazy(() => import("../Pages/Settings/DeliveryCharge"));
+
 const CreateZone = React.lazy(
   () => import("../Pages/Settings/Zone/CreateZone/CreateZone")
 );
@@ -52,6 +54,8 @@ const PurchaseProduct = React.lazy(
 );
 
 const StockReport = React.lazy(() => import("../Pages/Reports/StockReport"));
+// promotion management
+const Coupon = React.lazy(() => import("../Pages/PromotionManagement/Coupon"));
 export {
   Home,
   Error,
@@ -72,4 +76,6 @@ export {
   CreateSupplier,
   PurchaseProduct,
   StockReport,
+  Coupon,
+  DeliveryCharge
 };
