@@ -109,7 +109,7 @@ const PurchaseProduct = () => {
                   <MdEdit />
                 </section>
               </CButton>
-              <CButton
+              {/* <CButton
                 variant="contained"
                 circle
                 color="bg-red-500 text-white dark:bg-red-600 dark:text-white hover:bg-red-700 dark:hover:bg-red-800"
@@ -126,7 +126,7 @@ const PurchaseProduct = () => {
                 <section className="text-md">
                   <FaTrashCan />
                 </section>
-              </CButton>
+              </CButton> */}
             </section>
           ),
         };

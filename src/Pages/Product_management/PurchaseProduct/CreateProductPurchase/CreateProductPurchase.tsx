@@ -53,6 +53,17 @@ const CreateProductPurchase = () => {
   const navigate = useNavigate();
   const [data, setData] = React.useState<data>(DEFAULT_DATA);
 
+  const [error, setError] = React.useState({
+    error_for_supplierId: false,
+    error_for_productId: false,
+    error_for_product_quantity: false,
+    error_for_product_purchase_price: false,
+    error_for_product_selling_price: false,
+    error_for_product_retail_price: false,
+    error_for_special_offer: false,
+    error_for_zoneId: false,
+  });
+
   // get suppliers name list
   const [
     getSuppliersNameList,
@@ -136,6 +147,29 @@ const CreateProductPurchase = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (
+      !data.supplierId ||
+      !data.productId ||
+      !data.product_quantity ||
+      !data.product_purchase_price ||
+      !data.product_selling_price ||
+      !data.product_retail_price ||
+      !data.special_offer ||
+      !data.zoneId
+    ) {
+      setError({
+        error_for_supplierId: !data.supplierId,
+        error_for_productId: !data.productId,
+        error_for_product_quantity: !data.product_quantity,
+        error_for_product_purchase_price: !data.product_purchase_price,
+        error_for_product_selling_price: !data.product_selling_price,
+        error_for_product_retail_price: !data.product_retail_price,
+        error_for_special_offer: !data.special_offer,
+        error_for_zoneId: !data.zoneId,
+      });
+      return;
+    }
+
     try {
       const res = await createProductPurchase(data)?.unwrap();
       if (res.status === 201) {
@@ -188,8 +222,8 @@ const CreateProductPurchase = () => {
                 name="supplierId"
                 label="Suppliers"
                 value={data.supplierId}
-                // errorQuery={error.error_for_product_category_id}
-                // tooltip={error.error_for_product_category_id}
+                errorQuery={error.error_for_supplierId}
+                tooltip={error.error_for_supplierId}
                 tooltipPosition="top-start"
                 tooltipContent="Supplier is required"
                 tooltipVariant="error"
@@ -204,10 +238,10 @@ const CreateProductPurchase = () => {
                     supplierId: e ? e.value : "",
                   });
 
-                  //   setError({
-                  //     ...error,
-                  //     error_for_product_category_id: false,
-                  //   });
+                  setError({
+                    ...error,
+                    error_for_supplierId: false,
+                  });
                 }}
                 options={suppliersNameList}
               />
@@ -218,8 +252,8 @@ const CreateProductPurchase = () => {
                 name="productId"
                 label="Product Name"
                 value={data.productId}
-                // errorQuery={error.error_for_product_category_id}
-                // tooltip={error.error_for_product_category_id}
+                errorQuery={error.error_for_productId}
+                tooltip={error.error_for_productId}
                 tooltipPosition="top-start"
                 tooltipContent="Products is required"
                 tooltipVariant="error"
@@ -231,10 +265,10 @@ const CreateProductPurchase = () => {
                     productId: e ? e.value : "",
                   });
 
-                  //   setError({
-                  //     ...error,
-                  //     error_for_product_category_id: false,
-                  //   });
+                  setError({
+                    ...error,
+                    error_for_productId: false,
+                  });
                 }}
                 options={productsNameList}
               />
@@ -245,11 +279,21 @@ const CreateProductPurchase = () => {
                 id="product_quantity"
                 name="product_quantity"
                 label="Product Quantity"
+                errorQuery={error.error_for_product_quantity}
+                tooltip={error.error_for_product_quantity}
+                tooltipPosition="top-start"
+                tooltipContent="Product Quantity is required"
+                tooltipVariant="error"
                 value={data.product_quantity}
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     product_quantity: e.target.value,
+                  });
+
+                  setError({
+                    ...error,
+                    error_for_product_quantity: false,
                   });
                 }}
               />
@@ -260,11 +304,21 @@ const CreateProductPurchase = () => {
                 id="product_purchase_price"
                 name="product_purchase_price"
                 label="Product Purchase Price"
+                errorQuery={error.error_for_product_purchase_price}
+                tooltip={error.error_for_product_purchase_price}
+                tooltipPosition="top-start"
+                tooltipContent="Product Purchase Price is required"
+                tooltipVariant="error"
                 value={data.product_purchase_price}
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     product_purchase_price: e.target.value,
+                  });
+
+                  setError({
+                    ...error,
+                    error_for_product_purchase_price: false,
                   });
                 }}
               />
@@ -276,10 +330,20 @@ const CreateProductPurchase = () => {
                 name="product_selling_price"
                 label="Product Selling Price"
                 value={data.product_selling_price}
+                errorQuery={error.error_for_product_selling_price}
+                tooltip={error.error_for_product_selling_price}
+                tooltipPosition="top-start"
+                tooltipContent="Product Selling Price is required"
+                tooltipVariant="error"
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     product_selling_price: e.target.value,
+                  });
+
+                  setError({
+                    ...error,
+                    error_for_product_selling_price: false,
                   });
                 }}
               />
@@ -290,11 +354,21 @@ const CreateProductPurchase = () => {
                 id="product_retail_price"
                 name="product_retail_price"
                 label="Product Retail Price"
+                errorQuery={error.error_for_product_retail_price}
+                tooltip={error.error_for_product_retail_price}
+                tooltipPosition="top-start"
+                tooltipContent="Product Retail Price is required"
+                tooltipVariant="error"
                 value={data.product_retail_price}
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     product_retail_price: e.target.value,
+                  });
+
+                  setError({
+                    ...error,
+                    error_for_product_retail_price: false,
                   });
                 }}
               />
@@ -321,10 +395,20 @@ const CreateProductPurchase = () => {
                 name="special_offer"
                 label="Special Offer"
                 value={data.special_offer}
+                errorQuery={error.error_for_special_offer}
+                tooltip={error.error_for_special_offer}
+                tooltipPosition="top-start"
+                tooltipContent="Special Offer is required"
+                tooltipVariant="error"
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     special_offer: e.target.value,
+                  });
+
+                  setError({
+                    ...error,
+                    error_for_special_offer: false,
                   });
                 }}
               />
@@ -336,8 +420,8 @@ const CreateProductPurchase = () => {
                 name="zoneId"
                 label="Zone Name"
                 value={data.zoneId}
-                // errorQuery={error.error_for_product_category_id}
-                // tooltip={error.error_for_product_category_id}
+                errorQuery={error.error_for_zoneId}
+                tooltip={error.error_for_zoneId}
                 tooltipPosition="top-start"
                 tooltipContent="Zone is required"
                 tooltipVariant="error"
@@ -349,10 +433,10 @@ const CreateProductPurchase = () => {
                     zoneId: e ? e.value : "",
                   });
 
-                  //   setError({
-                  //     ...error,
-                  //     error_for_product_category_id: false,
-                  //   });
+                  setError({
+                    ...error,
+                    error_for_zoneId: false,
+                  });
                 }}
                 options={zoneNameList}
               />

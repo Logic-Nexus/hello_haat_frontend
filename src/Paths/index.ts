@@ -58,6 +58,7 @@ const CreateProductPurchase = React.lazy(
       "../Pages/Product_management/PurchaseProduct/CreateProductPurchase/CreateProductPurchase"
     )
 );
+const AllOrders = React.lazy(() => import("../Pages/AllOrders"));
 export {
   Home,
   Error,
@@ -79,4 +80,5 @@ export {
   PurchaseProduct,
   StockReport,
   CreateProductPurchase,
+  AllOrders,
 };
