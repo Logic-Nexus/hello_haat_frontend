@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
 import { MdEdit } from "react-icons/md";
-import { FaTrashCan } from "react-icons/fa6";
 import { IoAddCircle } from "react-icons/io5";
 import MainCard from "../../../Utils/CCard/MainCard";
 import { Show } from "easy-beauty-components---react";
@@ -38,7 +37,9 @@ const PurchaseProduct = () => {
       return productPurchaseData?.data?.results?.map((item: any) => {
         return {
           purchase_id: item.purchaseUniqueId,
-          purchase_date: moment(item.purchase_date).format("DD-MM-YYYY hh:mm A"),
+          purchase_date: moment(item.purchase_date).format(
+            "DD-MM-YYYY hh:mm A"
+          ),
           product: (
             <span className="flex justify-start flex-col">
               {item.product?.product_name}
