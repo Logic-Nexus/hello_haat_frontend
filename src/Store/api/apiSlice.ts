@@ -105,6 +105,7 @@ export const apiSlice = createApi({
     "Supplier",
     "product-purchase",
     "product-stock-report",
+    "orderList",
   ],
   refetchOnReconnect: true,
 }) as any;

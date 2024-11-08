@@ -75,6 +75,20 @@ export const zone_api_slice = apiSlice.injectEndpoints({
         return result ? ["zones"] : [];
       },
     }),
+
+    //zones-name-list
+    getZoneNameList: builder.query({
+      query: (params: any) => ({
+        url: "/zones-name-list",
+        method: "GET",
+        params: {
+          ...(Object.keys(params)?.length > 0 && {
+            ...params,
+          }),
+        },
+      }),
+      providesTags: ["zones"],
+    }),
   }),
 });
 
@@ -88,4 +102,5 @@ export const {
   //lazy
   useLazyGetZoneListQuery,
   useLazyGetIsEmployeeAssignedInZoneQuery,
+  useLazyGetZoneNameListQuery,
 } = zone_api_slice;

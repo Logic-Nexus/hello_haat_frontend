@@ -22,7 +22,9 @@ import {
   PurchaseProduct,
   StockReport,
   Coupon,
-  DeliveryCharge
+  DeliveryCharge,
+  CreateProductPurchase,
+  AllOrders
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -55,6 +57,14 @@ const router = [
         element: (
           <SuspenseGlobal>
             <Dashboard />
+          </SuspenseGlobal>
+        ),
+      },
+      {
+        path: "all_orders",
+        element: (
+          <SuspenseGlobal>
+            <AllOrders />
           </SuspenseGlobal>
         ),
       },
@@ -113,6 +123,14 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <PurchaseProduct />
+              </SuspenseGlobal>
+            ),
+          },
+          {
+            path: "purchase_product",
+            element: (
+              <SuspenseGlobal>
+                <CreateProductPurchase />
               </SuspenseGlobal>
             ),
           },

@@ -116,6 +116,19 @@ export const product_api_Slice = apiSlice.injectEndpoints({
         return result ? ["productImages"] : [];
       },
     }),
+
+    //products-name-list
+    getProductsNameList: builder.query({
+      query: ({ status }: any) => ({
+        url: "products-name-list",
+        method: "GET",
+        params: {
+          ...(status && {
+            status,
+          }),
+        },
+      }),
+    }),
   }),
 });
 
@@ -131,4 +144,8 @@ export const {
   useDeleteProductImageMutation,
   useToggleImageActiveMutation,
   useUploadProductImageMutation,
+
+  //products-name-list
+  useGetProductsNameListQuery,
+  useLazyGetProductsNameListQuery,
 } = product_api_Slice;

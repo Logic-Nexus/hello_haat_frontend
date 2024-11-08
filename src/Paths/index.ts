@@ -56,6 +56,13 @@ const PurchaseProduct = React.lazy(
 const StockReport = React.lazy(() => import("../Pages/Reports/StockReport"));
 // promotion management
 const Coupon = React.lazy(() => import("../Pages/PromotionManagement/Coupon"));
+const CreateProductPurchase = React.lazy(
+  () =>
+    import(
+      "../Pages/Product_management/PurchaseProduct/CreateProductPurchase/CreateProductPurchase"
+    )
+);
+const AllOrders = React.lazy(() => import("../Pages/AllOrders"));
 export {
   Home,
   Error,
@@ -77,5 +84,7 @@ export {
   PurchaseProduct,
   StockReport,
   Coupon,
-  DeliveryCharge
+  DeliveryCharge,
+  CreateProductPurchase,
+  AllOrders,
 };

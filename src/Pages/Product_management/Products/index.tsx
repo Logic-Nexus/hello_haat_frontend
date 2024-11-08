@@ -154,8 +154,14 @@ const Products = () => {
               {item?.delivery_charge_type}
             </span>
           ),
-          in_stock: item?.product_stock || "0",
-          MRP_price: item?.product_mrp || "0",
+          in_stock: item?.product_inventory?.stockAvailable || "0",
+          Customer_price: item?.product_inventory?.productCustomerPrice || "0",
+          retail_price: item?.product_inventory?.productRetailPrice || "0",
+          total_order: (
+            <span className="flex justify-center">
+              {item?.total_order_placed || "0"}
+            </span>
+          ),
           status: (
             <>
               <section className="flex items-center justify-center">
