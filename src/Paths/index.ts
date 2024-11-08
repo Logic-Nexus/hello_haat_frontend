@@ -63,6 +63,9 @@ const CreateProductPurchase = React.lazy(
     )
 );
 const AllOrders = React.lazy(() => import("../Pages/AllOrders"));
+// Income and Expenses
+const Income = React.lazy(() => import("../Pages/IncomeAndExpenses/Income"));
+
 export {
   Home,
   Error,
@@ -87,4 +90,5 @@ export {
   DeliveryCharge,
   CreateProductPurchase,
   AllOrders,
+  Income,
 };
