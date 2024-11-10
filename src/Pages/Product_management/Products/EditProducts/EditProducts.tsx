@@ -128,7 +128,7 @@ const EditProducts = ({
       if (error.status === 400) {
         cToastify({
           type: "error",
-          message: error.data.message || "Error uploading image",
+          message: error.data.message || "Error uploading product",
         });
       }
       console.error("Error updating product:", error);
