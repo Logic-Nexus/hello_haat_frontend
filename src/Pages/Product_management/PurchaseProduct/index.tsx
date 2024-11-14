@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
+import { CButton, CPagination, CSkeleton } from "../../../Utils";
 // import { MdEdit } from "react-icons/md";
 import { FaTrashCan } from "react-icons/fa6";
 import { IoAddCircle } from "react-icons/io5";

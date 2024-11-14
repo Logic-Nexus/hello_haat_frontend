@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import MainCard from "../../../Utils/CCard/MainCard";
-import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
+import { CModal, CPagination, CSkeleton } from "../../../Utils";
 import { Show } from "easy-beauty-components---react";
 import NotFoundData from "../../../Components/NotFoundData/NotFoundData";
 import MainTable from "../../../Utils/MainTable/MainTable";
 import { themeColor } from "../../../constant";
-import { MdEdit } from "react-icons/md";
-import { FaTrashCan } from "react-icons/fa6";
+// import { MdEdit } from "react-icons/md";
+// import { FaTrashCan } from "react-icons/fa6";
 // import { IoAddCircle } from "react-icons/io5";
 import moment from "moment";
 import { useGetProductPurchaseStockReportQuery } from "../../../Store/feature/Reports/stockReport/stockReport_api_slice";
@@ -81,45 +81,45 @@ const StockReport = () => {
             </span>
           ),
 
-          action: (
-            <section className="flex items-center justify-center space-x-2">
-              <CButton
-                variant="contained"
-                circle
-                tooltip
-                id="tooltip-edit"
-                tooltipContent="Edit Product Category"
-                tooltipPosition="top-end"
-                className="w-8 h-8"
-                onClick={() => {
-                  //   dispatch(setSelectSingleProduct(item));
-                  //   setOpenEditModal(true);
-                }}
-              >
-                <section className="text-md">
-                  <MdEdit />
-                </section>
-              </CButton>
-              <CButton
-                variant="contained"
-                circle
-                color="bg-red-500 text-white dark:bg-red-600 dark:text-white hover:bg-red-700 dark:hover:bg-red-800"
-                tooltip
-                id="tooltip-delete"
-                tooltipContent="Delete Product Category"
-                tooltipPosition="right"
-                className="w-8 h-8"
-                // onClick={() => handleDelete(item?.id)}
-                // loading={
-                //   deleteId === item?.id && isLoadingDelete ? true : false
-                // }
-              >
-                <section className="text-md">
-                  <FaTrashCan />
-                </section>
-              </CButton>
-            </section>
-          ),
+          // action: (
+          //   <section className="flex items-center justify-center space-x-2">
+          //     <CButton
+          //       variant="contained"
+          //       circle
+          //       tooltip
+          //       id="tooltip-edit"
+          //       tooltipContent="Edit Product Category"
+          //       tooltipPosition="top-end"
+          //       className="w-8 h-8"
+          //       onClick={() => {
+          //         //   dispatch(setSelectSingleProduct(item));
+          //         //   setOpenEditModal(true);
+          //       }}
+          //     >
+          //       <section className="text-md">
+          //         <MdEdit />
+          //       </section>
+          //     </CButton>
+          //     <CButton
+          //       variant="contained"
+          //       circle
+          //       color="bg-red-500 text-white dark:bg-red-600 dark:text-white hover:bg-red-700 dark:hover:bg-red-800"
+          //       tooltip
+          //       id="tooltip-delete"
+          //       tooltipContent="Delete Product Category"
+          //       tooltipPosition="right"
+          //       className="w-8 h-8"
+          //       // onClick={() => handleDelete(item?.id)}
+          //       // loading={
+          //       //   deleteId === item?.id && isLoadingDelete ? true : false
+          //       // }
+          //     >
+          //       <section className="text-md">
+          //         <FaTrashCan />
+          //       </section>
+          //     </CButton>
+          //   </section>
+          // ),
         };
       });
     }

@@ -2,8 +2,7 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { CButton, CInput, CSelect } from "../../../../Utils";
 import moment from "moment";
 import { useAppSelector } from "../../../../Store/Store";
-import { cToastify } from "../../../../Shared";
-import { useUpdateProductPurchaseMutation } from "../../../../Store/feature/Product_management/PurchaseProduct/PurchaseProduct_api_slice";
+
 import { convertDataForSelect } from "../../../../constant";
 import { useLazyGetZoneNameListQuery } from "../../../../Store/feature/Zone/zone_api_slice";
 import { useLazyGetProductsNameListQuery } from "../../../../Store/feature/Product_management/Product/products_api_slice";
@@ -34,7 +33,7 @@ const DEFAULT_DATA: DATA_TYPE = {
   zoneId: "",
 };
 const EditProductPurchase = ({
-  setOpenEditModal,
+  // setOpenEditModal,
   openEditModal,
 }: {
   setOpenEditModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -166,86 +165,86 @@ const EditProductPurchase = ({
     handleGetSupplierNameList,
   ]);
 
-  //   ================================ update ================================
+  // //   ================================ update ================================
 
-  const [updateProductPurchase, { isLoading }] =
-    useUpdateProductPurchaseMutation();
+  // const [updateProductPurchase, { isLoading }] =
+  //   useUpdateProductPurchaseMutation();
 
-  const handleSubmitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // console.log("data", data);
-    const productPurchaseId = selectSingleProductPurchase?.id;
+  // const handleSubmitEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   // console.log("data", data);
+  //   const productPurchaseId = selectSingleProductPurchase?.id;
 
-    if (!productPurchaseId) {
-      cToastify({
-        type: "error",
-        message: "Product id not found",
-      });
-      return;
-    }
+  //   if (!productPurchaseId) {
+  //     cToastify({
+  //       type: "error",
+  //       message: "Product id not found",
+  //     });
+  //     return;
+  //   }
 
-    //if not same then update the data
+  //   //if not same then update the data
 
-    if (
-      data.purchase_date === selectSingleProductPurchase.purchase_date &&
-      data.supplierId === selectSingleProductPurchase.supplierId &&
-      data.productId === selectSingleProductPurchase.productId &&
-      data.product_quantity === selectSingleProductPurchase.product_quantity &&
-      data.product_purchase_price ===
-        selectSingleProductPurchase.product_purchase_price &&
-      data.product_selling_price ===
-        selectSingleProductPurchase.product_selling_price &&
-      data.product_retail_price ===
-        selectSingleProductPurchase.product_retail_price &&
-      data.product_old_mrp === selectSingleProductPurchase.product_old_mrp &&
-      data.special_offer === selectSingleProductPurchase.special_offer &&
-      data.zoneId === selectSingleProductPurchase.zoneId
-    ) {
-      cToastify({
-        type: "error",
-        message: "No changes found to update",
-      });
-      return;
-    }
+  //   if (
+  //     data.purchase_date === selectSingleProductPurchase.purchase_date &&
+  //     data.supplierId === selectSingleProductPurchase.supplierId &&
+  //     data.productId === selectSingleProductPurchase.productId &&
+  //     data.product_quantity === selectSingleProductPurchase.product_quantity &&
+  //     data.product_purchase_price ===
+  //       selectSingleProductPurchase.product_purchase_price &&
+  //     data.product_selling_price ===
+  //       selectSingleProductPurchase.product_selling_price &&
+  //     data.product_retail_price ===
+  //       selectSingleProductPurchase.product_retail_price &&
+  //     data.product_old_mrp === selectSingleProductPurchase.product_old_mrp &&
+  //     data.special_offer === selectSingleProductPurchase.special_offer &&
+  //     data.zoneId === selectSingleProductPurchase.zoneId
+  //   ) {
+  //     cToastify({
+  //       type: "error",
+  //       message: "No changes found to update",
+  //     });
+  //     return;
+  //   }
 
-    const body: Partial<DATA_TYPE> = {};
+  //   const body: Partial<DATA_TYPE> = {};
 
-    for (const key in data) {
-      if (
-        data[key as keyof DATA_TYPE] !==
-        selectSingleProductPurchase[key as keyof DATA_TYPE]
-      ) {
-        const typedKey = key as keyof DATA_TYPE;
-        if (data[typedKey]) {
-          body[typedKey] = data[typedKey];
-        }
-      }
-    }
+  //   for (const key in data) {
+  //     if (
+  //       data[key as keyof DATA_TYPE] !==
+  //       selectSingleProductPurchase[key as keyof DATA_TYPE]
+  //     ) {
+  //       const typedKey = key as keyof DATA_TYPE;
+  //       if (data[typedKey]) {
+  //         body[typedKey] = data[typedKey];
+  //       }
+  //     }
+  //   }
 
-    try {
-      await updateProductPurchase({
-        productPurchaseId,
-        body,
-      });
-      cToastify({
-        type: "success",
-        message: "Product Purchase updated successfully",
-      });
-      setOpenEditModal(false);
-    } catch (error: any) {
-      if (error.status === 400) {
-        cToastify({
-          type: "error",
-          message: error.data.message || "Error uploading product Purchase",
-        });
-      }
-      console.error("Error updating product Purchase:", error);
-    }
-  };
+  //   try {
+  //     await updateProductPurchase({
+  //       productPurchaseId,
+  //       body,
+  //     });
+  //     cToastify({
+  //       type: "success",
+  //       message: "Product Purchase updated successfully",
+  //     });
+  //     setOpenEditModal(false);
+  //   } catch (error: any) {
+  //     if (error.status === 400) {
+  //       cToastify({
+  //         type: "error",
+  //         message: error.data.message || "Error uploading product Purchase",
+  //       });
+  //     }
+  //     console.error("Error updating product Purchase:", error);
+  //   }
+  // };
 
   return (
     <>
-      <form onSubmit={handleSubmitEdit}>
+      <form>
         <aside className="grid md:grid-cols-2 grid-cols-1 gap-4">
           <section className="md:col-span-1 col-span-2">
             <CInput
@@ -413,7 +412,11 @@ const EditProductPurchase = ({
         {/* //button  */}
 
         <section className="flex justify-end items-center mt-5">
-          <CButton variant="outline" type="submit" loading={isLoading}>
+          <CButton
+            variant="outline"
+            type="submit"
+            // loading={isLoading}
+          >
             Update
           </CButton>
         </section>
