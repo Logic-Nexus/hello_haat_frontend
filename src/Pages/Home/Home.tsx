@@ -7,6 +7,7 @@ import SideNav from "../../Components/Nav/SideNav/SideNav";
 import Layout from "../../Layout/Layout";
 import { useAppSelector } from "../../Store/Store";
 import { decryptData } from "../../constant/encrytion";
+import NotificationBadge from "../../Components/Notification/NotificationBadge/NotificationBadge";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -68,11 +69,12 @@ const Home = () => {
           </div>
 
           {/* Logout Button */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-7 justify-center">
+            <NotificationBadge />
             <span
               className="
-            text-primary mr-4 font-semibold text-sm
-            lg:text-md lg:mr-8
+            text-primary  font-semibold text-sm
+            lg:text-md 
             dark:text-gray-100
               bg-gray-200 dark:bg-gray-800
               px-2 py-1 rounded
