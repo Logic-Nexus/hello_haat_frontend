@@ -25,7 +25,8 @@ import {
   DeliveryCharge,
   CreateProductPurchase,
   AllOrders,
-  Income
+  Income,
+  Expenses
 } from "../Paths";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
@@ -277,6 +278,20 @@ const router = [
             element: (
               <SuspenseGlobal>
                 <Income />
+              </SuspenseGlobal>
+            ),
+          },
+        ],
+      },
+      // Expenses
+      {
+        path: "expenses",
+        children: [
+          {
+            path: "",
+            element: (
+              <SuspenseGlobal>
+                <Expenses />
               </SuspenseGlobal>
             ),
           },
