@@ -66,6 +66,7 @@ const AllOrders = React.lazy(() => import("../Pages/AllOrders"));
 // Income and Expenses
 const Income = React.lazy(() => import("../Pages/IncomeAndExpenses/Income"));
 const Expenses = React.lazy(() => import("../Pages/IncomeAndExpenses/Expenses"));
+const Withdrawal = React.lazy(() => import("../Pages/IncomeAndExpenses/Withdrawal"));
 
 export {
   Home,
@@ -93,4 +94,5 @@ export {
   AllOrders,
   Income,
   Expenses,
+  Withdrawal,
 };
