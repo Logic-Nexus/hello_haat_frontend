@@ -26,8 +26,22 @@ export const purchaseProduct_api_slice = apiSlice.injectEndpoints({
         return result ? ["product-purchase"] : [];
       },
     }),
+
+    //product-purchase delete
+    deleteProductPurchase: builder.mutation({
+      query: ({ productPurchaseId }: { productPurchaseId: any }) => ({
+        url: `/product-purchase/${productPurchaseId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result: any) => {
+        return result ? ["product-purchase"] : [];
+      },
+    }),
   }),
 });
 
-export const { useGetProductPurchaseQuery, useCreateProductPurchaseMutation } =
-  purchaseProduct_api_slice;
+export const {
+  useGetProductPurchaseQuery,
+  useCreateProductPurchaseMutation,
+  useDeleteProductPurchaseMutation,
+} = purchaseProduct_api_slice;

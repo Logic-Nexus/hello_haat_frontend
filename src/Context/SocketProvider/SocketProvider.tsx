@@ -12,6 +12,7 @@ interface ConnectedUser {
 interface SocketContextType {
   liveConnectedUsers: ConnectedUser[];
   socket: Socket | null;
+  productPurchaseLiveResponse: any;
 }
 
 export const SocketContext = React.createContext<SocketContextType | null>(
@@ -37,6 +38,9 @@ const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   const [liveConnectedUsers, setLiveConnectedUsers] = useState<ConnectedUser[]>(
     []
   );
+
+  const [productPurchaseLiveResponse, setProductPurchaseLiveResponse] =
+    useState<any>({});
 
   //get token from local storage
   const token = getToken();
@@ -75,6 +79,11 @@ const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
       );
     });
 
+    socket.on("productPurchaseLiveResponse", (data) => {
+      console.log("productPurchaseLiveResponse", data);
+      setProductPurchaseLiveResponse(data);
+    });
+
     return () => {
       socket?.off("connect");
       socket?.off("users-activity");
@@ -84,8 +93,8 @@ const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // set context value to provide to children components
   const contextValue = useMemo(
-    () => ({ liveConnectedUsers, socket }),
-    [liveConnectedUsers]
+    () => ({ liveConnectedUsers, socket, productPurchaseLiveResponse }),
+    [liveConnectedUsers, productPurchaseLiveResponse]
   );
 
   return (

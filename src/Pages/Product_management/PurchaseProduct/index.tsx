@@ -1,25 +1,35 @@
-import { useMemo, useState } from "react";
-import { CButton, CModal, CPagination, CSkeleton } from "../../../Utils";
-import { MdEdit } from "react-icons/md";
+import { useCallback, useMemo, useState } from "react";
+import { CButton, CPagination, CSkeleton } from "../../../Utils";
+// import { MdEdit } from "react-icons/md";
+import { FaTrashCan } from "react-icons/fa6";
 import { IoAddCircle } from "react-icons/io5";
 import MainCard from "../../../Utils/CCard/MainCard";
 import { Show } from "easy-beauty-components---react";
 import NotFoundData from "../../../Components/NotFoundData/NotFoundData";
 import MainTable from "../../../Utils/MainTable/MainTable";
 import { themeColor } from "../../../constant";
-import { useGetProductPurchaseQuery } from "../../../Store/feature/Product_management/PurchaseProduct/PurchaseProduct_api_slice";
+import {
+  useDeleteProductPurchaseMutation,
+  useGetProductPurchaseQuery,
+} from "../../../Store/feature/Product_management/PurchaseProduct/PurchaseProduct_api_slice";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { warningAlert } from "../../../Utils/alert-function";
+import { cToastify } from "../../../Shared";
+// import { setSelectSingleProductPurchase } from "../../../Store/feature/Product_management/PurchaseProduct/purchaseSlice";
 
 const PurchaseProduct = () => {
   const navigate = useNavigate();
-  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  // const dispatch = useAppDispatch();
+  // const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [deleteId, setDeleteId] = useState<any>();
 
   const {
     data: productPurchaseData,
     isSuccess,
-    isFetching,
+    isLoading,
+    // isFetching,
   } = useGetProductPurchaseQuery(
     {
       //   status: status,
@@ -31,6 +41,44 @@ const PurchaseProduct = () => {
       refetchOnFocus: true,
     }
   );
+
+  // ==================== delete  ====================
+
+  const [deleteProductPurchase, { isLoading: isLoadingDelete }] =
+    useDeleteProductPurchaseMutation();
+
+  const handleDelete = useCallback(
+    async (id: any) => {
+      warningAlert({
+        text: "Are you sure you want to delete this purchase?",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          setDeleteId(id);
+          try {
+            const res = await deleteProductPurchase({
+              productPurchaseId: id,
+            }).unwrap();
+            if (res.status === 200) {
+              cToastify({
+                type: "success",
+                message: "Purchase Deleted Successfully",
+              });
+            }
+          } catch (error: any) {
+            console.log(error);
+            if (error?.data?.status === 400) {
+              cToastify({
+                type: "error",
+                message: error?.data?.message,
+              });
+            }
+          }
+        }
+      });
+    },
+    [deleteProductPurchase]
+  );
+
   //==================== table data ======================
   const tableData = useMemo(() => {
     if (isSuccess) {
@@ -93,7 +141,7 @@ const PurchaseProduct = () => {
           ),
           action: (
             <section className="flex items-center justify-center space-x-2">
-              <CButton
+              {/* <CButton
                 variant="contained"
                 circle
                 tooltip
@@ -102,15 +150,15 @@ const PurchaseProduct = () => {
                 tooltipPosition="top-end"
                 className="w-8 h-8"
                 onClick={() => {
-                  //   dispatch(setSelectSingleProduct(item));
-                  //   setOpenEditModal(true);
+                  dispatch(setSelectSingleProductPurchase(item));
+                  setOpenEditModal(true);
                 }}
               >
                 <section className="text-md">
                   <MdEdit />
                 </section>
-              </CButton>
-              {/* <CButton
+              </CButton> */}
+              <CButton
                 variant="contained"
                 circle
                 color="bg-red-500 text-white dark:bg-red-600 dark:text-white hover:bg-red-700 dark:hover:bg-red-800"
@@ -119,22 +167,28 @@ const PurchaseProduct = () => {
                 tooltipContent="Delete Product Category"
                 tooltipPosition="right"
                 className="w-8 h-8"
-                // onClick={() => handleDelete(item?.id)}
-                // loading={
-                //   deleteId === item?.id && isLoadingDelete ? true : false
-                // }
+                onClick={() => handleDelete(item?.id)}
+                loading={
+                  deleteId === item?.id && isLoadingDelete ? true : false
+                }
               >
                 <section className="text-md">
                   <FaTrashCan />
                 </section>
-              </CButton> */}
+              </CButton>
             </section>
           ),
         };
       });
     }
     return [];
-  }, [isSuccess, productPurchaseData?.data]);
+  }, [
+    deleteId,
+    handleDelete,
+    isLoadingDelete,
+    isSuccess,
+    productPurchaseData?.data?.results,
+  ]);
 
   // ==================== show count in data =================
   const showCountInData = isSuccess
@@ -167,10 +221,10 @@ const PurchaseProduct = () => {
     >
       {/* table section */}
       <Show
-        when={!isFetching && tableData?.length > 0}
+        when={!isLoading && tableData?.length > 0}
         FallBack={
           <>
-            {isFetching ? (
+            {isLoading ? (
               // <Loader />
               <CSkeleton />
             ) : (
@@ -211,16 +265,16 @@ const PurchaseProduct = () => {
 
       {/* //edit modal  */}
 
-      <CModal
+      {/* <CModal
         open={openEditModal}
         onClose={() => setOpenEditModal(false)}
         title="Edit Purchase Product"
       >
-        {/* <EditProducts
+        <EditProductPurchase
           setOpenEditModal={setOpenEditModal}
           openEditModal={openEditModal}
-        /> */}
-      </CModal>
+        />
+      </CModal> */}
     </MainCard>
   );
 };

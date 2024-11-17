@@ -3,13 +3,17 @@ export const themeColor = {
   light_text_color: "#fff",
 };
 
-export const convertDataForSelect = (data: any, key: string) => {
+export const convertDataForSelect = (
+  data: any,
+  key: string,
+  code: string = ""
+) => {
   if (data?.length === 0) {
     return [];
   }
   return data?.map((item: any) => {
     return {
-      label: item[key],
+      label: item[code] ? `${item[key]} (${item[code]})` : item[key],
       value: item.id,
     };
   });

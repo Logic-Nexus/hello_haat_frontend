@@ -60,7 +60,6 @@ const CreateProductPurchase = () => {
     error_for_product_purchase_price: false,
     error_for_product_selling_price: false,
     error_for_product_retail_price: false,
-    error_for_special_offer: false,
     error_for_zoneId: false,
   });
 
@@ -76,7 +75,11 @@ const CreateProductPurchase = () => {
 
   const suppliersNameList = useMemo(() => {
     if (suppliersNameListData?.status === 200) {
-      return convertDataForSelect(suppliersNameListData?.data, "supplierName");
+      return convertDataForSelect(
+        suppliersNameListData?.data,
+        "supplierName",
+        "supplierUniqueId"
+      );
     }
   }, [suppliersNameListData?.data, suppliersNameListData?.status]);
 
@@ -102,7 +105,11 @@ const CreateProductPurchase = () => {
 
   const productsNameList = useMemo(() => {
     if (getProductsData?.status === 200) {
-      return convertDataForSelect(getProductsData?.data, "product_name");
+      return convertDataForSelect(
+        getProductsData?.data,
+        "product_name",
+        "product_code"
+      );
     }
   }, [getProductsData?.data, getProductsData?.status]);
 
@@ -154,7 +161,6 @@ const CreateProductPurchase = () => {
       !data.product_purchase_price ||
       !data.product_selling_price ||
       !data.product_retail_price ||
-      !data.special_offer ||
       !data.zoneId
     ) {
       setError({
@@ -164,7 +170,7 @@ const CreateProductPurchase = () => {
         error_for_product_purchase_price: !data.product_purchase_price,
         error_for_product_selling_price: !data.product_selling_price,
         error_for_product_retail_price: !data.product_retail_price,
-        error_for_special_offer: !data.special_offer,
+
         error_for_zoneId: !data.zoneId,
       });
       return;
@@ -395,20 +401,10 @@ const CreateProductPurchase = () => {
                 name="special_offer"
                 label="Special Offer"
                 value={data.special_offer}
-                errorQuery={error.error_for_special_offer}
-                tooltip={error.error_for_special_offer}
-                tooltipPosition="top-start"
-                tooltipContent="Special Offer is required"
-                tooltipVariant="error"
                 onChange={(e: any) => {
                   setData({
                     ...data,
                     special_offer: e.target.value,
-                  });
-
-                  setError({
-                    ...error,
-                    error_for_special_offer: false,
                   });
                 }}
               />
